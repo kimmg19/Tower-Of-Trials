@@ -23,6 +23,13 @@ public class PlayerController : MonoBehaviour
         float v = Input.GetAxisRaw("Vertical");
         Move(h, v);
         Turn(h, v);
+
+        
+    }
+    private void Update() {
+        if (Input.GetMouseButtonDown(0)) {
+            animator.SetTrigger("onWeaponAttack");
+        }
     }
 
     void Move(float h, float v)
