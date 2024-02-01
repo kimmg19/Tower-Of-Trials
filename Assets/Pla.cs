@@ -3,36 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Pla : MonoBehaviour
-{
+public class Pla : MonoBehaviour {
     private Animator animator;
     private Vector3 moveDirection;
     private float moveSpeed = 4f;
     private float rotationSpeed = 10f; // 회전 속도 조절값
     Rigidbody body;
-    void Start()
-    {
+    void Start() {
         animator = GetComponent<Animator>();
         body = GetComponent<Rigidbody>();
 
 
     }
 
-    void Update()
-    {
+    void Update() {
         Move();
     }
 
-    void Move()
-    {
-        Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+    void Move() {
+        Vector2 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         bool hasControl = input != Vector2.zero;
 
         // isMoving 애니메이션을 설정
         animator.SetBool("IsMoving", hasControl);
 
-        if (hasControl)
-        {
+        if (hasControl) {
             // input을 이용하여 이동 방향 설정
             moveDirection = new Vector3(input.x, 0f, input.y);
             moveDirection.Normalize();
@@ -48,17 +43,14 @@ public class Pla : MonoBehaviour
         }
     }
 
-    public void OnMove(InputAction.CallbackContext context)
-    {
+    public void OnMove(InputAction.CallbackContext context) {
         Vector2 input = context.ReadValue<Vector2>();
         // input.magnitude를 통해 움직임 여부를 확인
         animator.SetFloat("moveSpeed", input.magnitude);
     }
 
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Plane"))
-        {
+    void OnCollisionEnter(Collision collision) {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Plane")) {
             HandlePlaneCollision(collision);
             return;
         }
@@ -69,15 +61,13 @@ public class Pla : MonoBehaviour
         StartCoroutine(MoveCharacterDuringAnimation());
     }
 
-    void HandlePlaneCollision(Collision collision)
-    {
+    void HandlePlaneCollision(Collision collision) {
         // "Plane" 레이어를 가진 물체와의 충돌을 무시
         Physics.IgnoreCollision(collision.collider, GetComponent<Collider>());
 
         // Plane과의 충돌이면서 Rigidbody가 있다면 데시벨레이션을 바로 적용
         Rigidbody rigidbody = GetComponent<Rigidbody>();
-        if (rigidbody != null)
-        {
+        if (rigidbody != null) {
             rigidbody.velocity = Vector3.zero; // 물체의 속도를 0으로 만듦
             Debug.Log("Ignoring collision with: " + collision.collider.gameObject.name);
 
@@ -85,16 +75,14 @@ public class Pla : MonoBehaviour
     }
 
     // 애니메이션 이벤트에서 호출할 메서드
-    IEnumerator MoveCharacterDuringAnimation()
-    {
+    IEnumerator MoveCharacterDuringAnimation() {
         float duration = 0.5f; // 총 이동 시간
         float elapsed = 0f;
 
         Vector3 startPosition = transform.position;
         Vector3 endPosition = transform.position - transform.forward; // 뒤로 이동
 
-        while (elapsed < duration)
-        {
+        while (elapsed < duration) {
             float t = elapsed / duration;
             transform.position = Vector3.Lerp(startPosition, endPosition, t);
             elapsed += Time.deltaTime;
