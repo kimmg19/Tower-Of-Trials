@@ -8,10 +8,11 @@ public class TPSCharacterController : MonoBehaviour {
     Transform characterBody;
     [SerializeField]
     Transform cameraArm;
-
+    public float sensitivity;
     Animator animator;
     void Start() {
         animator = characterBody.GetComponent<Animator>();
+        
     }
 
     void Update() {
@@ -19,47 +20,46 @@ public class TPSCharacterController : MonoBehaviour {
         Move();
         Attack();
     }
+    
+    /*   void OnCollisionEnter(Collision collision) {
+           if (collision.gameObject.layer == LayerMask.NameToLayer("Plane")) {
+               HandlePlaneCollision(collision);
+               return;
+           }
 
-    void OnCollisionEnter(Collision collision) {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Plane")) {
-            HandlePlaneCollision(collision);
-            return;
-        }
+           Debug.Log("Collision with: " + collision.collider.gameObject.name);
+           animator.SetTrigger("HitTrigger"); // 충돌 상태로 변경
+                                              // HitTrigger를 실행한 후에 움직임을 추가하고 싶다면 여기서 함수 호출
+           StartCoroutine(MoveCharacterDuringAnimation());
+       }
 
-        Debug.Log("Collision with: " + collision.collider.gameObject.name);
-        animator.SetTrigger("HitTrigger"); // 충돌 상태로 변경
-                                           // HitTrigger를 실행한 후에 움직임을 추가하고 싶다면 여기서 함수 호출
-        StartCoroutine(MoveCharacterDuringAnimation());
-    }
+       void HandlePlaneCollision(Collision collision) {
+           // "Plane" 레이어를 가진 물체와의 충돌을 무시
+           Physics.IgnoreCollision(collision.collider, GetComponent<Collider>());
 
-    void HandlePlaneCollision(Collision collision) {
-        // "Plane" 레이어를 가진 물체와의 충돌을 무시
-        Physics.IgnoreCollision(collision.collider, GetComponent<Collider>());
+           // Plane과의 충돌이면서 Rigidbody가 있다면 데시벨레이션을 바로 적용
+           Rigidbody rigidbody = GetComponent<Rigidbody>();
+           if (rigidbody != null) {
+               rigidbody.velocity = Vector3.zero; // 물체의 속도를 0으로 만듦
+               Debug.Log("Ignoring collision with: " + collision.collider.gameObject.name);
+           }
+       }
+       IEnumerator MoveCharacterDuringAnimation() {
+           float duration = 0.5f; // 총 이동 시간
+           float elapsed = 0f;
 
-        // Plane과의 충돌이면서 Rigidbody가 있다면 데시벨레이션을 바로 적용
-        Rigidbody rigidbody = GetComponent<Rigidbody>();
-        if (rigidbody != null) {
-            rigidbody.velocity = Vector3.zero; // 물체의 속도를 0으로 만듦
-            Debug.Log("Ignoring collision with: " + collision.collider.gameObject.name);
+           Vector3 startPosition = transform.position;
+           Vector3 endPosition = transform.position - transform.forward; // 뒤로 이동
 
-        }
-    }
-    IEnumerator MoveCharacterDuringAnimation() {
-        float duration = 0.5f; // 총 이동 시간
-        float elapsed = 0f;
+           while (elapsed < duration) {
+               float t = elapsed / duration;
+               transform.position = Vector3.Lerp(startPosition, endPosition, t);
+               elapsed += Time.deltaTime;
+               yield return null;
+           }
 
-        Vector3 startPosition = transform.position;
-        Vector3 endPosition = transform.position - transform.forward; // 뒤로 이동
-
-        while (elapsed < duration) {
-            float t = elapsed / duration;
-            transform.position = Vector3.Lerp(startPosition, endPosition, t);
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-
-        // 이동이 끝난 후에 다른 처리를 추가할 수 있습니다.
-    }
+           // 이동이 끝난 후에 다른 처리를 추가할 수 있습니다.
+       }*/
 
     void Attack() {
         if (Input.GetMouseButtonDown(0)) {
@@ -81,7 +81,7 @@ public class TPSCharacterController : MonoBehaviour {
     }
 
     void LookAround() {
-        Vector2 mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+        Vector2 mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")*sensitivity);
         Vector3 camAngle = cameraArm.rotation.eulerAngles;
         float x = camAngle.x - mouseDelta.y;
         if (x < 180f) {
