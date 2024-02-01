@@ -18,11 +18,12 @@ public class TPSCharacterController : MonoBehaviour {
 
     void Start() {
         animator = characterBody.GetComponent<Animator>();
-    }    
+    }
 
     public void OnLookAround(InputAction.CallbackContext context) {
-        float mouseDeltaX = context.ReadValue<float>()* mouseSensitivity;
-        float mouseDeltaY = context.ReadValue<float>()* mouseSensitivity;
+        // X 및 Y 각각의 값을 따로 읽어오기
+        float mouseDeltaX = context.ReadValue<Vector2>().x * mouseSensitivity;
+        float mouseDeltaY = context.ReadValue<Vector2>().y * mouseSensitivity;
 
         Vector3 camAngle = cameraArm.rotation.eulerAngles;
         float x = camAngle.x - mouseDeltaY;
@@ -31,6 +32,7 @@ public class TPSCharacterController : MonoBehaviour {
 
         cameraArm.rotation = Quaternion.Euler(mouseY, camAngle.y + mouseDeltaX, camAngle.z);
     }
+
 
     public void OnMove(InputAction.CallbackContext context) {
         Vector2 moveInput = context.ReadValue<Vector2>();
