@@ -204,9 +204,6 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a26642c5efea9af429ddc967133180b5, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 392587107}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a26642c5efea9af429ddc967133180b5, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 392587110}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a26642c5efea9af429ddc967133180b5, type: 3}
       insertIndex: -1
@@ -217,30 +214,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a26642c5efea9af429ddc967133180b5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 392587120}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a26642c5efea9af429ddc967133180b5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 392587119}
   m_SourcePrefab: {fileID: 100100000, guid: a26642c5efea9af429ddc967133180b5, type: 3}
 --- !u!1 &392587106 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: a26642c5efea9af429ddc967133180b5, type: 3}
   m_PrefabInstance: {fileID: 392587105}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &392587107
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 392587106}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfbd75b0233bf7c4eac420afddcd43b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 2
-  RotationSpeed: 5
-  deceleration: 5
 --- !u!54 &392587110
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -317,18 +296,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a26642c5efea9af429ddc967133180b5, type: 3}
   m_PrefabInstance: {fileID: 392587105}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &392587119
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 392587106}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 475f37de197ed8d44b610a18cae45234, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &392587120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -356,7 +323,7 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 392587119}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Pla, Assembly-CSharp
         m_MethodName: OnMove
         m_Mode: 0
@@ -370,6 +337,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 24e0901b-b467-4110-85fe-13b00ce78433
     m_ActionName: PlayerActions/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9ce8ca7d-85dc-48fb-bad5-c017aa4ba150
+    m_ActionName: PlayerActions/Look[/Mouse/delta]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: PC
   m_DefaultActionMap: PlayerActions
