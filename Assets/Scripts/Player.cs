@@ -54,7 +54,9 @@ public class Player : MonoBehaviour {
         isColliding = false;
     }
     public void OnAttack(InputAction.CallbackContext context) {
-        animator.SetTrigger("onWeaponAttack");
+        if (context.performed) {
+            animator.SetTrigger("onWeaponAttack");
+        }
 
     }
 }
