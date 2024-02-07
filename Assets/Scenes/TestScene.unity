@@ -269,8 +269,8 @@ MonoBehaviour:
     m_ActionName: Player/Look[/Mouse/delta]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 392587124}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+      - m_Target: {fileID: 392587127}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
         m_MethodName: OnAttack
         m_Mode: 0
         m_Arguments:
@@ -386,6 +386,7 @@ MonoBehaviour:
   playerSpeed: 5
   smoothDampTime: 0.15
   gravity: -9.8
+  attackmotiontime: 0.35
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -566,7 +567,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.29417133, y: -0.000000020758133, z: 0.0000000063891505, w: 0.95575273}
+  m_LocalRotation: {x: 0.2941713, y: 0.000000023258055, z: -0.000000007158601, w: 0.95575273}
   m_LocalPosition: {x: 0, y: 3, z: -2.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -819,7 +820,7 @@ MonoBehaviour:
   m_XAxis:
     Value: 0
     m_SpeedMode: 0
-    m_MaxSpeed: 200
+    m_MaxSpeed: 150
     m_AccelTime: 0.1
     m_DecelTime: 0.1
     m_InputAxisName: Mouse X
@@ -993,7 +994,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1544962544}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.29417133, y: -0.000000020758135, z: 0.00000000638915, w: 0.95575273}
+  m_LocalRotation: {x: 0.2941713, y: 0.000000023258055, z: -0.000000007158601, w: 0.95575273}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1072,7 +1073,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1667082304}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.29417133, y: 0.000000033589277, z: -0.00000001033845, w: 0.95575273}
+  m_LocalRotation: {x: 0.2941713, y: 0.000000023264429, z: -0.000000007160562, w: 0.95575273}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1616,8 +1617,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2107771240}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.10600837, y: 0.00000002118124, z: 0.0000000022581133, w: 0.9943653}
-  m_LocalPosition: {x: 0, y: -1.999986, z: -0.0000030994415}
+  m_LocalRotation: {x: 0.24943042, y: 0.000000030978327, z: -0.000000007979136, w: 0.9683927}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
