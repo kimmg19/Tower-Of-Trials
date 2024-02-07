@@ -53,10 +53,5 @@ public class Player : MonoBehaviour {
         // 이동이 끝났으므로 충돌 상태를 해제합니다.
         isColliding = false;
     }
-    public void OnAttack(InputAction.CallbackContext context) {
-        if (context.performed) {
-            animator.SetTrigger("onWeaponAttack");
-        }
-
-    }
+    
 }
