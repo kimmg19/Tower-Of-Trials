@@ -323,6 +323,38 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 392587127}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: OnShield
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 9f96ba8f-2555-4925-907c-7fb7d98f4772
+    m_ActionName: Player/Shield[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 392587127}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: OnRoll
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 4e3ef0cc-d5df-46c7-a59c-7bbb13de8b0a
+    m_ActionName: Player/Roll[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -386,7 +418,9 @@ MonoBehaviour:
   playerSpeed: 5
   smoothDampTime: 0.15
   gravity: -9.8
-  attackmotiontime: 0.35
+  attackMotionTime: 0.35
+  shieldMotionTime: 0.35
+  rollMotionTime: 0.5
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -567,7 +601,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2941713, y: 0.000000023258055, z: -0.000000007158601, w: 0.95575273}
+  m_LocalRotation: {x: 0.2941713, y: 0.000000023256808, z: -0.0000000071582167, w: 0.95575273}
   m_LocalPosition: {x: 0, y: 3, z: -2.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -994,7 +1028,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1544962544}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2941713, y: 0.000000023258055, z: -0.000000007158601, w: 0.95575273}
+  m_LocalRotation: {x: 0.2941713, y: 0.000000023256808, z: -0.0000000071582167, w: 0.95575273}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1073,7 +1107,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1667082304}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2941713, y: 0.000000023264429, z: -0.000000007160562, w: 0.95575273}
+  m_LocalRotation: {x: 0.2941713, y: 0.000000023256808, z: -0.0000000071582167, w: 0.95575273}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1541,7 +1575,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 5, y: 2, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1617,7 +1651,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2107771240}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.24943042, y: 0.000000030978327, z: -0.000000007979136, w: 0.9683927}
+  m_LocalRotation: {x: 0.24943042, y: -0.000000030038812, z: 0.0000000077371425, w: 0.9683927}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

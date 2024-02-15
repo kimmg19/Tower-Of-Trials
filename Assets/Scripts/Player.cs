@@ -7,11 +7,9 @@ public class Player : MonoBehaviour {
     bool isColliding = false;
     CharacterController characterController;
 
-    public float moveDistance = 1.0f; // ÀÌµ¿ °Å¸® Á¶Àı °¡´É
-    public string hitTriggerName = "hitTrigger"; // Æ®¸®°Å ¾Ö´Ï¸ŞÀÌ¼Ç ÀÌ¸§
-    public float animationDuration = 0.5f; // ¾Ö´Ï¸ŞÀÌ¼Ç Àç»ı ½Ã°£
-
-
+    public float moveDistance = 1.0f; // ì´ë™ ê±°ë¦¬ ì¡°ì ˆ ë³€ìˆ˜
+    public string hitTriggerName = "hitTrigger"; // íŠ¸ë¦¬ê±° ì´ë¦„
+    public float animationDuration = 0.5f; // ì• ë‹ˆë©”ì´ì…˜ ì¬ìƒ ì‹œê°„
 
     void Start() {
         animator = GetComponent<Animator>();
@@ -19,10 +17,10 @@ public class Player : MonoBehaviour {
     }
 
     void OnControllerColliderHit(ControllerColliderHit hit) {
-
+        // íŠ¹ì • íƒœê·¸ì˜ ì˜¤ë¸Œì íŠ¸ì™€ ì¶©ëŒí•˜ê³  í˜„ì¬ ì¶©ëŒ ì¤‘ì´ ì•„ë‹ˆë©´
         if (hit.gameObject.CompareTag("Cube") && !isColliding) {
-            isColliding = true;
-            StartCoroutine(MoveCharacterWithAnimation());
+            isColliding = true; // ì¶©ëŒ ì¤‘ìœ¼ë¡œ í”Œë˜ê·¸ ì„¤ì •
+            StartCoroutine(MoveCharacterWithAnimation()); // ì• ë‹ˆë©”ì´ì…˜ê³¼ í•¨ê»˜ ìºë¦­í„° ì´ë™ ì‹œì‘
         }
     }
 
@@ -32,26 +30,21 @@ public class Player : MonoBehaviour {
         Vector3 startPosition = transform.position;
         Vector3 endPosition = transform.position - transform.forward * moveDistance;
 
-        // Æ®¸®°Å·Î ¼³Á¤µÈ ¾Ö´Ï¸ŞÀÌ¼Ç Àç»ı
+        // ì¶©ëŒ íŠ¸ë¦¬ê±°ë¥¼ ì„¤ì •í•˜ì—¬ ì• ë‹ˆë©”ì´ì…˜ ì‹œì‘
         animator.SetTrigger(hitTriggerName);
 
         while (elapsed < animationDuration) {
             float t = elapsed / animationDuration;
 
-            // ÀÌµ¿ º¤ÅÍ °è»ê
+            // ì´ë™ ë²¡í„° ê³„ì‚° ë° ìºë¦­í„° ì´ë™
             Vector3 moveVector = Vector3.Lerp(startPosition, endPosition, t) - transform.position;
-
-            // Ä³¸¯ÅÍ ÄÁÆ®·Ñ·¯¸¦ »ç¿ëÇÏ¿© ÀÌµ¿
             characterController.Move(moveVector);
 
             elapsed += Time.deltaTime;
             yield return null;
         }
 
-        // ÀÌµ¿ÀÌ ³¡³­ ÈÄ¿¡ ´Ù¸¥ Ã³¸®¸¦ Ãß°¡ÇÒ ¼ö ÀÖ½À´Ï´Ù.
-
-        // ÀÌµ¿ÀÌ ³¡³µÀ¸¹Ç·Î Ãæµ¹ »óÅÂ¸¦ ÇØÁ¦ÇÕ´Ï´Ù.
+        // ì´ë™ì´ ëë‚˜ë©´ ì¶©ëŒ í”Œë˜ê·¸ë¥¼ í•´ì œí•©ë‹ˆë‹¤.
         isColliding = false;
     }
-    
 }
