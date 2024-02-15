@@ -2,15 +2,12 @@ using UnityEngine;
 
 public class Monster : MonoBehaviour
 {
-
-    public int health;
-
+    public int health = 100;
     private Animator animator;
 
     void Start()
     {
-
-        Debug.Log("ï¿½ï¿½ ï¿½ÈµÇ³ï¿½ ï¿½ï¿½ï¿½ï¿½");
+        Debug.Log("¿Ö ¾ÈµÇ³Ä ¤µ¤²");
         animator = GetComponent<Animator>();
     }
 
@@ -18,10 +15,11 @@ public class Monster : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Sword"))
         {
+            // ¸ó½ºÅÍ¿¡°Ô µ¥¹ÌÁö¸¦ ÀÔÈû
+            TakeDamage(10); // ¿¹½Ã·Î 10ÀÇ µ¥¹ÌÁö¸¦ ÀÔÈû
+            Debug.Log("10 Damage"); // µ¥¹ÌÁö ÀÔÈ÷´Â µ¿ÀÛÀÌ ¹ß»ýÇÒ ¶§ ·Î±× Ãâ·Â
 
-            TakeDamage(10); // ï¿½ï¿½ï¿½Ã·ï¿½ 10ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-            Debug.Log("10 Damage"); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Î±ï¿½ ï¿½ï¿½ï¿½
-
+            // IsHitted ÆÄ¶ó¹ÌÅÍ¸¦ Æ®¸®°Å·Î È°¼ºÈ­ÇÏ¿© ¾Ö´Ï¸ÞÀÌ¼ÇÀ» Àç»ý
             animator.SetTrigger("IsHitted");
         }
     }
@@ -39,10 +37,8 @@ public class Monster : MonoBehaviour
 
     void Die()
     {
-
-       
-        Debug.Log("Monster died!"); // ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Î±ï¿½ ï¿½ï¿½ï¿½
-
+        // ¸ó½ºÅÍ°¡ »ç¸ÁÇßÀ» ¶§ÀÇ Ã³¸®
+        Debug.Log("Monster died!"); // ¸ó½ºÅÍ°¡ »ç¸ÁÇßÀ» ¶§ ·Î±× Ãâ·Â
         animator.SetTrigger("Die");
         
     }
