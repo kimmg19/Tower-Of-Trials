@@ -18,7 +18,7 @@ public class Player : MonoBehaviour {
 
     void OnControllerColliderHit(ControllerColliderHit hit) {
         // 특정 태그의 오브젝트와 충돌하고 현재 충돌 중이 아니면
-        if (hit.gameObject.CompareTag("Cube") && !isColliding) {
+        if (hit.gameObject.CompareTag("Enemy") && !isColliding) {
             isColliding = true; // 충돌 중으로 플래그 설정
             StartCoroutine(MoveCharacterWithAnimation()); // 애니메이션과 함께 캐릭터 이동 시작
         }

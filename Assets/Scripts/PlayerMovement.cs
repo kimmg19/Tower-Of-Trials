@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
     void Move()
     {
         // 공격, 방패, 구르기 중이 아닐 때에만 이동 가능
-        bool canMove = !isShielding && !isAttacking && !isRolling;
+        bool canMove = !isShielding && !isAttacking ;
 
         // 이동 중인지 확인하여 애니메이션 설정
         bool isMoving = canMove && moveInput.magnitude != 0;
