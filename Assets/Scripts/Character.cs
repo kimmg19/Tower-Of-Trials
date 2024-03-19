@@ -1,45 +1,46 @@
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Character : MonoBehaviour
 {
-    [SerializeField] Transform characterBody; // 플레이어 캐릭터의 몸체(Transform)
-    [SerializeField] Transform followCam; // 따라가는 카메라(Transform)
-
-    Vector2 moveInput; // 이동 입력
-    CharacterController characterController; // 캐릭터 컨트롤러
-    Animator animator; // 애니메이터
-    bool isRunning; // 달리는지 여부
-    bool isDodging; // 회피 중인지 여부
+    [SerializeField] Transform characterBody;   // 플레이어 캐릭터의 몸체
+    [SerializeField] Transform followCam;       // 따라가는 카메라
+    Vector2 moveInput;                          // 이동 입력   
+    Vector3 velocity;
+    CharacterController characterController;    // 캐릭터 컨트롤러
+    Animator animator;                          // 애니메이터
+    bool isRunning;                             // 달리는지 여부
+    bool isDodging ;                            // 회피 중인지 여부
+    public bool isAttacking = false;
     float turnSmoothVelocity;
-    public float playerSpeed = 5f; // 플레이어 이동 속도
-    public float sprintSpeed = 1.5f; // 플레이어 달리기 속도
-    public float smoothDampTime = 0.15f; // 회전 시 부드러운 감속 시간
-    float gravity = -9.8f; // 중력
-    Vector3 velocity; // 캐릭터의 속도
+    public float playerSpeed = 5f;              // 플레이어 이동 속도
+    public float sprintSpeed = 1.5f;            // 플레이어 달리기 속도
+    public float smoothDampTime = 0.15f;        // 회전 시 부드러운 감속 시간
+    float gravity = -9.8f;                      // 중력        
+    float timeSinceAttack = 0;
+    int currentAttack = 0;                      //현재 attack
 
     void Start()
     {
-        // 필요한 컴포넌트 초기화
         characterController = characterBody.GetComponent<CharacterController>();
         animator = characterBody.GetComponent<Animator>();
     }
 
     void Update()
     {
-        Move(); // 이동 메서드 호출
-        ApplyGravity(); // 중력 적용
+        timeSinceAttack += Time.deltaTime;
+        Move();
+        ApplyGravity();
     }
 
     void Move()
     {
-        bool isWalking = moveInput.magnitude != 0; // 이동 중인지 확인
+        if (isAttacking && !isDodging) return;
 
-        // 이동 및 달리기 상태를 애니메이터에 전달
-        animator.SetBool("isWalking", isWalking);
-        animator.SetBool("isRunning", isRunning);
-
-        if (isWalking)
+        float speed = isRunning ? sprintSpeed : 1f;
+        animator.SetFloat("speed", moveInput.magnitude * speed, 0.1f, Time.deltaTime);
+        if (moveInput.magnitude != 0)
         {
             // 카메라 기준 이동 방향 설정
             Vector3 lookForward = new Vector3(followCam.forward.x, 0f, followCam.forward.z).normalized;
@@ -52,37 +53,46 @@ public class Character : MonoBehaviour
             characterBody.rotation = Quaternion.Euler(0f, currentAngle, 0f);
 
             // 이동 속도에 따라 캐릭터 이동
-            characterController.Move(moveDir * Time.deltaTime * playerSpeed * (isRunning ? sprintSpeed : 1f));
+            characterController.Move(moveDir * Time.deltaTime * playerSpeed * speed);
         }
     }
 
     void ApplyGravity()
     {
         // 캐릭터가 땅에 있지 않으면 중력 적용
-        if (!characterController.isGrounded)
-        {
-            velocity.y += gravity * Time.deltaTime;
-        } else
-        {
-            // 땅에 닿아있을 때 수직 속도 초기화
-            velocity.y = -0.5f;
-        }
+        if (!characterController.isGrounded) velocity.y += gravity * Time.deltaTime;
+        else velocity.y = -0.5f;
+
         characterController.Move(velocity * Time.deltaTime);
     }
 
-    // 이동 입력을 처리하는 메서드
+    // 이동 입력을 처리하는 함수
     void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();
     }
 
-    // 달리기 입력을 처리하는 메서드
+    // 달리기 입력을 처리하는 함수
     void OnSprint()
     {
-        isRunning = !isRunning; // 달리기 상태 변경
+        isRunning = !isRunning; // 달리기 여부 변경
     }
 
-    // 회피 입력을 처리하는 메서드
+    void OnAttack()
+    {
+        //if (isAttacking) return;
+        if (!isAttacking&&timeSinceAttack > 0.8f && characterController.isGrounded && !isDodging)
+        {
+            isAttacking = true;
+            currentAttack++;
+            if (currentAttack > 3) currentAttack = 1;
+            if (timeSinceAttack > 1.0f) currentAttack = 1;
+            animator.SetTrigger("Attack" + currentAttack);
+            timeSinceAttack = 0;
+        }
+    }
+
+    // 회피 입력을 처리하는 함수
     void OnRoll()
     {
         if (moveInput.magnitude != 0 && !isDodging)
@@ -94,11 +104,17 @@ public class Character : MonoBehaviour
         }
     }
 
-    // 회피 애니메이션 종료 후 호출되는 메서드
-    public void EndDodge()
+    void ResetAttack()
     {
-        isDodging = false;
+        isAttacking = false;
+    }
+
+    // 회피 애니메이션 종료 후 호출되는 이벤트 함수
+    void EndDodge()
+    {
         characterController.center = new Vector3(0, 0.88f, 0);
         characterController.height = 1.6f;
+        isDodging = false;
+        ResetAttack();
     }
 }
