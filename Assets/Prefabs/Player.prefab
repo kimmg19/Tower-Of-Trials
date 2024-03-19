@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 480aed8444d32b843aeb73f49a508a26, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 21.73
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 480aed8444d32b843aeb73f49a508a26, type: 3}
       propertyPath: m_LocalPosition.y
@@ -18,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 480aed8444d32b843aeb73f49a508a26, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -22.99
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 480aed8444d32b843aeb73f49a508a26, type: 3}
       propertyPath: m_LocalRotation.w
@@ -111,13 +111,13 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 1.75
+  m_Height: 1.6
   m_Radius: 0.3
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.95, z: 0}
+  m_Center: {x: 0, y: 0.88, z: 0}
 --- !u!114 &7914736917618282163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,6 +214,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterBody: {fileID: 8365875462466756654}
   followCam: {fileID: 0}
+  isAttacking: 0
   playerSpeed: 5
   sprintSpeed: 1.5
-  smoothDampTime: 0.15
+  smoothDampTime: 0.1
