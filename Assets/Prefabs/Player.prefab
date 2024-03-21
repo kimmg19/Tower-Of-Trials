@@ -48,6 +48,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7764487651825262745, guid: 480aed8444d32b843aeb73f49a508a26, type: 3}
+      propertyPath: m_Name
+      value: Paladin_J_Nordstrom_Shield
+      objectReference: {fileID: 0}
+    - target: {fileID: -3685692520585564748, guid: 480aed8444d32b843aeb73f49a508a26, type: 3}
+      propertyPath: m_Name
+      value: Paladin_J_Nordstrom_Helmet
+      objectReference: {fileID: 0}
+    - target: {fileID: -1996471662184344498, guid: 480aed8444d32b843aeb73f49a508a26, type: 3}
+      propertyPath: m_Name
+      value: Sword_joint
+      objectReference: {fileID: 0}
+    - target: {fileID: -1283408554089789195, guid: 480aed8444d32b843aeb73f49a508a26, type: 3}
+      propertyPath: m_Name
+      value: Paladin_J_Nordstrom
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 480aed8444d32b843aeb73f49a508a26, type: 3}
       propertyPath: m_Name
       value: Player
@@ -55,6 +71,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 480aed8444d32b843aeb73f49a508a26, type: 3}
       propertyPath: m_TagString
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 1051571768989249988, guid: 480aed8444d32b843aeb73f49a508a26, type: 3}
+      propertyPath: m_Name
+      value: Paladin_J_Nordstrom_Sword
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 480aed8444d32b843aeb73f49a508a26, type: 3}
       propertyPath: m_Controller
@@ -113,7 +133,7 @@ CharacterController:
   serializedVersion: 3
   m_Height: 1.6
   m_Radius: 0.3
-  m_SlopeLimit: 45
+  m_SlopeLimit: 40
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
@@ -218,3 +238,4 @@ MonoBehaviour:
   playerSpeed: 5
   sprintSpeed: 1.5
   smoothDampTime: 0.1
+  speedDampTime: 0.2
