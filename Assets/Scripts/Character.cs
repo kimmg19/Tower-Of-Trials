@@ -4,26 +4,26 @@ using UnityEngine.InputSystem;
 
 public class Character : MonoBehaviour
 {
-    [SerializeField] Transform characterBody;   // Ä³¸¯ÅÍÀÇ ÁÖ¿ä ½ÅÃ¼
-    [SerializeField] Transform followCam;       // µû¶ó´Ù´Ï´Â Ä«¸Þ¶ó
-    Vector2 moveInput;                          // ÀÌµ¿ ÀÔ·Â   
-    Vector3 dodgeVec;                           // È¸ÇÇ º¤ÅÍ
-    Vector3 velocity;                           // ¼Óµµ
-    CharacterController characterController;    // Ä³¸¯ÅÍ ÄÁÆ®·Ñ·¯
-    Animator animator;                          // ¾Ö´Ï¸ÞÀÌÅÍ ÄÄÆ÷³ÍÆ®
-    bool isRunning;                             // ´Þ¸®´ÂÁö ¿©ºÎ¸¦ ³ªÅ¸³»´Â ÇÃ·¡±×
-    bool isDodging;                             // È¸ÇÇ ÁßÀÎÁö ¿©ºÎ¸¦ ³ªÅ¸³»´Â ÇÃ·¡±×
-    public bool isAttacking = false;            // °ø°Ý ÁßÀÎÁö ¿©ºÎ¸¦ ³ªÅ¸³»´Â ÇÃ·¡±×
+    [SerializeField] Transform characterBody;   // Ä³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¿ï¿½ ï¿½ï¿½Ã¼
+    [SerializeField] Transform followCam;       // ï¿½ï¿½ï¿½ï¿½Ù´Ï´ï¿½ Ä«ï¿½Þ¶ï¿½
+    Vector2 moveInput;                          // ï¿½Ìµï¿½ ï¿½Ô·ï¿½   
+    Vector3 dodgeVec;                           // È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    Vector3 velocity;                           // ï¿½Óµï¿½
+    CharacterController characterController;    // Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½Ñ·ï¿½
+    Animator animator;                          // ï¿½Ö´Ï¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+    bool isRunning;                             // ï¿½Þ¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î¸ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½ï¿½
+    bool isDodging;                             // È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î¸ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½ï¿½
+    public bool isAttacking = false;            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î¸ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½ï¿½
     float turnSmoothVelocity;
-    public float playerSpeed = 5f;              // Ä³¸¯ÅÍÀÇ ÀÌµ¿ ¼Óµµ
-    public float sprintSpeed = 1.5f;            // ´Þ¸®±â ¼Óµµ ¹è¼ö
-    public float smoothDampTime = 0.15f;        // ºÎµå·¯¿î È¸ÀüÀ» À§ÇÑ ½Ã°£
+    public float playerSpeed = 5f;              // Ä³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½Óµï¿½
+    public float sprintSpeed = 1.5f;            // ï¿½Þ¸ï¿½ï¿½ï¿½ ï¿½Óµï¿½ ï¿½ï¿½ï¿½
+    public float smoothDampTime = 0.15f;        // ï¿½Îµå·¯ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
     public float speedDampTime = 0.2f;
-    float gravity = -9.8f;                      // Áß·Â Èû        
+    float gravity = -9.8f;                      // ï¿½ß·ï¿½ ï¿½ï¿½        
     
     void Start()
     {
-        // ÇÊ¿äÇÑ ÄÄÆ÷³ÍÆ® °¡Á®¿À±â
+        // ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         characterController = characterBody.GetComponent<CharacterController>();
         animator = characterBody.GetComponent<Animator>();
     }
@@ -36,16 +36,16 @@ public class Character : MonoBehaviour
         
     }
 
-    // Ä³¸¯ÅÍ ÀÌµ¿ Ã³¸®
+    // Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ Ã³ï¿½ï¿½
     void Move()
     {
-        // °ø°Ý ÁßÀÌ¸é ÀÌµ¿ ±ÝÁö
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
         if (IsAttacking() && !isDodging) return;
 
         float speed = isRunning ? sprintSpeed : 1f;
         animator.SetFloat("speed", moveInput.magnitude * speed, speedDampTime, Time.deltaTime);
 
-        // È¸ÇÇ ÁßÀÌ¸é È¸ÇÇ ¹æÇâÀ¸·Î Ä³¸¯ÅÍ ÀÌµ¿
+        // È¸ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
         if (isDodging)
         {
             speed = sprintSpeed;
@@ -53,10 +53,10 @@ public class Character : MonoBehaviour
         } else
         {
 
-            // ÀÏ¹ÝÀûÀÎ ÀÌµ¿ ¹æÇâ °è»ê ¹× Ä³¸¯ÅÍ ÀÌµ¿
+            // ï¿½Ï¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
             Vector3 moveDirection = CalculateMoveDirection();
             characterController.Move(moveDirection * Time.deltaTime * playerSpeed * speed);
-            RotateCharacter(moveDirection); // Ä³¸¯ÅÍ È¸Àü
+            RotateCharacter(moveDirection); // Ä³ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½
         }
     }
 
@@ -67,7 +67,7 @@ public class Character : MonoBehaviour
                     animator.GetCurrentAnimatorStateInfo(0).IsName("Attack3") || isAttacking);
     }
 
-    // ÀÌµ¿ ¹æÇâ °è»ê
+    // ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
     Vector3 CalculateMoveDirection()
     {
         Vector3 lookForward = new Vector3(followCam.forward.x, 0f, followCam.forward.z).normalized;
@@ -75,7 +75,7 @@ public class Character : MonoBehaviour
         return lookForward * moveInput.y + lookRight * moveInput.x;
     }
 
-    // Ä³¸¯ÅÍ È¸Àü Ã³¸®
+    // Ä³ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ Ã³ï¿½ï¿½
     void RotateCharacter(Vector3 moveDirection)
     {
         if (moveDirection != Vector3.zero)
@@ -85,7 +85,7 @@ public class Character : MonoBehaviour
         }
     }
 
-    // Áß·Â Àû¿ë
+    // ï¿½ß·ï¿½ ï¿½ï¿½ï¿½ï¿½
     void ApplyGravity()
     {
         if (!characterController.isGrounded) velocity.y += gravity * Time.deltaTime;
@@ -94,19 +94,19 @@ public class Character : MonoBehaviour
         characterController.Move(velocity * Time.deltaTime);
     }
 
-    // ÀÌµ¿ ÀÔ·Â ÇÚµé·¯
+    // ï¿½Ìµï¿½ ï¿½Ô·ï¿½ ï¿½Úµé·¯
     void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();
     }
 
-    // ´Þ¸®±â ÀÔ·Â ÇÚµé·¯
+    // ï¿½Þ¸ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ ï¿½Úµé·¯
     void OnSprint()
     {
-        isRunning = !isRunning; // ´Þ¸®±â Åä±Û
+        isRunning = !isRunning; // ï¿½Þ¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
     }
 
-    // °ø°Ý ÀÔ·Â ÇÚµé·¯
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ ï¿½Úµé·¯
     void OnAttack()
     {
         if (characterController.isGrounded && !isDodging)
@@ -116,27 +116,28 @@ public class Character : MonoBehaviour
         }
     }
 
-    // È¸ÇÇ ÀÔ·Â ÇÚµé·¯
+    // È¸ï¿½ï¿½ ï¿½Ô·ï¿½ ï¿½Úµé·¯
     void OnRoll()
     {
         if (moveInput.magnitude != 0 && !isDodging && characterController.isGrounded)
         {
             isDodging = true;
-            dodgeVec = CalculateMoveDirection().normalized; // ÀÌµ¿ ¹æÇâÀ» È¸ÇÇ ¹æÇâÀ¸·Î ¼³Á¤
-            animator.SetTrigger("Dodge"); // È¸ÇÇ ¾Ö´Ï¸ÞÀÌ¼Ç Àç»ý
-            characterController.center = new Vector3(0, 0.5f, 0); // Ä³¸¯ÅÍ Áß½É º¯°æ
-            characterController.height = 1f; // Ä³¸¯ÅÍ ³ôÀÌ º¯°æ
-            // È¸ÇÇ ½ÃÀÛ ½Ã Ä³¸¯ÅÍ¸¦ È¸ÇÇ ¹æÇâÀ¸·Î ¹Ù·Î È¸Àü½ÃÅ´
+            AudioManager.instance.Play("PlayerRoll");
+            dodgeVec = CalculateMoveDirection().normalized; // ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            animator.SetTrigger("Dodge"); // È¸ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½
+            characterController.center = new Vector3(0, 0.5f, 0); // Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ß½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            characterController.height = 1f; // Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            // È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½Í¸ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù·ï¿½ È¸ï¿½ï¿½ï¿½ï¿½Å´
             characterBody.rotation = Quaternion.LookRotation(dodgeVec);
         }
     }
     
     void ResetAttack()=> isAttacking = false;   
 
-    // È¸ÇÇ ¾Ö´Ï¸ÞÀÌ¼ÇÀÌ ³¡³¯ ¶§ È£ÃâµÇ´Â ÀÌº¥Æ®
+    // È¸ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ È£ï¿½ï¿½Ç´ï¿½ ï¿½Ìºï¿½Æ®
     void EndDodge()
     {
-        // È¸ÇÇ Á¾·á ½Ã Ä³¸¯ÅÍ Áß½É°ú ³ôÀÌ¸¦ ÃÊ±âÈ­ÇÏ°í È¸ÇÇ ÇÃ·¡±×¸¦ ºñÈ°¼ºÈ­ÇÔ
+        // È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ß½É°ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½Ê±ï¿½È­ï¿½Ï°ï¿½ È¸ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½×¸ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­ï¿½ï¿½
         characterController.center = new Vector3(0, 0.88f, 0);
         characterController.height = 1.6f;
         isDodging = false;
