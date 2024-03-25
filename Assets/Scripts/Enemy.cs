@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField]
     private int HP = 100;
     public Slider healthBar;
     public Animator animator;

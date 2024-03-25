@@ -4,26 +4,25 @@ using UnityEngine.InputSystem;
 
 public class Character : MonoBehaviour
 {
-    [SerializeField] Transform characterBody;   // ĳ������ �ֿ� ��ü
-    [SerializeField] Transform followCam;       // ����ٴϴ� ī�޶�
-    Vector2 moveInput;                          // �̵� �Է�   
-    Vector3 dodgeVec;                           // ȸ�� ����
-    Vector3 velocity;                           // �ӵ�
-    CharacterController characterController;    // ĳ���� ��Ʈ�ѷ�
-    Animator animator;                          // �ִϸ����� ������Ʈ
-    bool isRunning;                             // �޸����� ���θ� ��Ÿ���� �÷���
-    bool isDodging;                             // ȸ�� ������ ���θ� ��Ÿ���� �÷���
-    public bool isAttacking = false;            // ���� ������ ���θ� ��Ÿ���� �÷���
+    [SerializeField] Transform characterBody;   
+    [SerializeField] Transform followCam;       
+    Vector2 moveInput;                             
+    Vector3 dodgeVec;                           
+    Vector3 velocity;                           
+    CharacterController characterController;    
+    Animator animator;                          
+    bool isRunning;                             
+    public bool isDodging;                             
+    public bool isAttacking = false;            
     float turnSmoothVelocity;
-    public float playerSpeed = 5f;              // ĳ������ �̵� �ӵ�
-    public float sprintSpeed = 1.5f;            // �޸��� �ӵ� ���
-    public float smoothDampTime = 0.15f;        // �ε巯�� ȸ���� ���� �ð�
+    public float playerSpeed = 5f;              
+    public float sprintSpeed = 1.5f;            
+    public float smoothDampTime = 0.15f;        
     public float speedDampTime = 0.2f;
-    float gravity = -9.8f;                      // �߷� ��        
+    float gravity = -9.8f;                      
     
     void Start()
     {
-        // �ʿ��� ������Ʈ ��������
         characterController = characterBody.GetComponent<CharacterController>();
         animator = characterBody.GetComponent<Animator>();
     }
@@ -36,16 +35,13 @@ public class Character : MonoBehaviour
         
     }
 
-    // ĳ���� �̵� ó��
     void Move()
     {
-        // ���� ���̸� �̵� ����
         if (IsAttacking() && !isDodging) return;
 
         float speed = isRunning ? sprintSpeed : 1f;
         animator.SetFloat("speed", moveInput.magnitude * speed, speedDampTime, Time.deltaTime);
 
-        // ȸ�� ���̸� ȸ�� �������� ĳ���� �̵�
         if (isDodging)
         {
             speed = sprintSpeed;
@@ -53,10 +49,9 @@ public class Character : MonoBehaviour
         } else
         {
 
-            // �Ϲ����� �̵� ���� ��� �� ĳ���� �̵�
             Vector3 moveDirection = CalculateMoveDirection();
             characterController.Move(moveDirection * Time.deltaTime * playerSpeed * speed);
-            RotateCharacter(moveDirection); // ĳ���� ȸ��
+            RotateCharacter(moveDirection);
         }
     }
 
@@ -67,7 +62,6 @@ public class Character : MonoBehaviour
                     animator.GetCurrentAnimatorStateInfo(0).IsName("Attack3") || isAttacking);
     }
 
-    // �̵� ���� ���
     Vector3 CalculateMoveDirection()
     {
         Vector3 lookForward = new Vector3(followCam.forward.x, 0f, followCam.forward.z).normalized;

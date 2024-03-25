@@ -10,9 +10,12 @@ public class Sword : MonoBehaviour
         {
         character = GameObject.FindObjectOfType<Character>();        }
     public int damageAmount = 20;
-    private void OnTriggerEnter(Collider other) {
-        if(other.tag == "Monster" && character.isAttacking){
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Monster" && character.isAttacking)
+        {
             other.GetComponent<Enemy>().TakeDamage(damageAmount);
         }
     }
+
 }
