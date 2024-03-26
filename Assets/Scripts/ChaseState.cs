@@ -7,7 +7,7 @@ public class ChaseState : StateMachineBehaviour
 {
     NavMeshAgent agent; // NavMeshAgent 컴포넌트를 저장하기 위한 변수
     Transform player; // 플레이어의 Transform을 저장하기 위한 변수
-    
+
     // 상태가 시작될 때 호출되는 메서드
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -26,17 +26,19 @@ public class ChaseState : StateMachineBehaviour
 
         // 캐릭터가 플레이어를 향해 이동하도록 설정
         agent.SetDestination(player.position);
-        
+
         // 캐릭터와 플레이어 사이의 거리를 계산
         float distance = Vector3.Distance(player.position, animator.transform.position);
-        
+
         // 캐릭터와 플레이어 사이의 거리가 10 이상이면 추격 상태를 종료하도록 설정
-        if(distance > 10){
+        if (distance > 10)
+        {
             animator.SetBool("isChasing", false);
         }
-        
+
         // 캐릭터와 플레이어 사이의 거리가 1이하이면 공격 상태로 전환하도록 설정
-        if(distance < 0.5f){
+        if (distance < 1.8f)
+        {
             animator.SetBool("isAttacking", true);
         }
     }

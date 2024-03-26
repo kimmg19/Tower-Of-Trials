@@ -1,38 +1,40 @@
+using System;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Character : MonoBehaviour
 {
-    [SerializeField] Transform characterBody;   
-    [SerializeField] Transform followCam;       
-    Vector2 moveInput;                             
-    Vector3 dodgeVec;                           
-    Vector3 velocity;                           
-    CharacterController characterController;    
-    Animator animator;                          
-    bool isRunning;                             
-    public bool isDodging;                             
-    public bool isAttacking = false;            
+    [SerializeField] Transform characterBody;
+    [SerializeField] Transform followCam;
+    Vector2 moveInput;
+    Vector3 dodgeVec;
+    Vector3 velocity;
+    CharacterController characterController;
+    Animator animator;
+    bool isRunning;
+    public bool isDodging;
+    public bool isAttacking = false;
+    public bool enableDamaging;
     float turnSmoothVelocity;
-    public float playerSpeed = 5f;              
-    public float sprintSpeed = 1.5f;            
-    public float smoothDampTime = 0.15f;        
+    public float playerSpeed = 5f;
+    public float sprintSpeed = 1.5f;
+    public float smoothDampTime = 0.15f;
     public float speedDampTime = 0.2f;
-    float gravity = -9.8f;                      
-    
+    float gravity = -9.8f;
+
     void Start()
     {
         characterController = characterBody.GetComponent<CharacterController>();
         animator = characterBody.GetComponent<Animator>();
     }
-    
+
     void Update()
     {
-        
+
         Move();
         ApplyGravity();
-        
+
     }
 
     void Move()
@@ -55,7 +57,7 @@ public class Character : MonoBehaviour
         }
     }
 
-     bool IsAttacking()
+    public bool IsAttacking()
     {
         return (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack1") ||
                     animator.GetCurrentAnimatorStateInfo(0).IsName("Attack2") ||
@@ -69,7 +71,6 @@ public class Character : MonoBehaviour
         return lookForward * moveInput.y + lookRight * moveInput.x;
     }
 
-    // ĳ���� ȸ�� ó��
     void RotateCharacter(Vector3 moveDirection)
     {
         if (moveDirection != Vector3.zero)
@@ -79,7 +80,6 @@ public class Character : MonoBehaviour
         }
     }
 
-    // �߷� ����
     void ApplyGravity()
     {
         if (!characterController.isGrounded) velocity.y += gravity * Time.deltaTime;
@@ -88,53 +88,50 @@ public class Character : MonoBehaviour
         characterController.Move(velocity * Time.deltaTime);
     }
 
-    // �̵� �Է� �ڵ鷯
     void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();
     }
 
-    // �޸��� �Է� �ڵ鷯
     void OnSprint()
     {
-        isRunning = !isRunning; // �޸��� ���
+        isRunning = !isRunning;
     }
 
-    // ���� �Է� �ڵ鷯
     void OnAttack()
     {
         if (characterController.isGrounded && !isDodging)
         {
-            isAttacking = true;            
-            animator.SetTrigger("Attack");            
+            isAttacking = true;
+            animator.SetTrigger("Attack");
         }
     }
+    void DamageEnable()
+    {
+        enableDamaging = !enableDamaging;
+    }  
 
-    // ȸ�� �Է� �ڵ鷯
     void OnRoll()
     {
         if (moveInput.magnitude != 0 && !isDodging && characterController.isGrounded)
         {
             isDodging = true;
             AudioManager.instance.Play("PlayerRoll");
-            dodgeVec = CalculateMoveDirection().normalized; // �̵� ������ ȸ�� �������� ����
-            animator.SetTrigger("Dodge"); // ȸ�� �ִϸ��̼� ���
-            characterController.center = new Vector3(0, 0.5f, 0); // ĳ���� �߽� ����
-            characterController.height = 1f; // ĳ���� ���� ����
-            // ȸ�� ���� �� ĳ���͸� ȸ�� �������� �ٷ� ȸ����Ŵ
+            dodgeVec = CalculateMoveDirection().normalized;
+            animator.SetTrigger("Dodge");
+            characterController.center = new Vector3(0, 0.5f, 0);
+            characterController.height = 1f;
             characterBody.rotation = Quaternion.LookRotation(dodgeVec);
         }
     }
-    
-    void ResetAttack()=> isAttacking = false;   
 
-    // ȸ�� �ִϸ��̼��� ���� �� ȣ��Ǵ� �̺�Ʈ
+    void OnFinishAttack() => isAttacking = false;
+
     void EndDodge()
     {
-        // ȸ�� ���� �� ĳ���� �߽ɰ� ���̸� �ʱ�ȭ�ϰ� ȸ�� �÷��׸� ��Ȱ��ȭ��
         characterController.center = new Vector3(0, 0.88f, 0);
         characterController.height = 1.6f;
         isDodging = false;
-        ResetAttack(); 
+        OnFinishAttack();
     }
 }

@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
     private int HP = 100;
     public Slider healthBar;
     public Animator animator;
-
+    public bool isDamaging;
 
     void Update(){
         healthBar.value = HP;
@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour
     // damageAmount 만큼 체력을 감소시키고, 체력이 0 이하일 때 애니메이션을 재생합니다.
     public void TakeDamage(int damageAmount)
     {
-        
+        isDamaging = true;
         HP -= damageAmount;
         if (HP <= 0)
         {
@@ -25,13 +25,21 @@ public class Enemy : MonoBehaviour
             AudioManager.instance.Play("ZombieDie");
             animator.SetTrigger("die");
             GetComponent<Collider>().enabled = false;
-        }
-        else
+
+            Invoke("DestroyEnemy",5f);
+        } else
         {
             // 피격 애니메이션 재생
             AudioManager.instance.Play("ZombieHit");
             animator.SetTrigger("damage");
             Debug.Log("Zombie get damage");
         }
+        
     }
+
+    private void DestroyEnemy()
+    {
+        gameObject.SetActive(false);
+    }
+    
 }
