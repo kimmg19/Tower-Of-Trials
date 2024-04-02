@@ -17,8 +17,8 @@
                 {
                     "name": "Look",
                     "type": "Value",
-                    "id": "0a93f976-0fd1-4fa6-b6f5-8b461194c841",
-                    "expectedControlType": "Delta",
+                    "id": "b0ba14dd-08d2-4b02-a529-31a015511daa",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -33,57 +33,12 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Crouch",
-                    "type": "Button",
-                    "id": "67c50d9f-559d-4ce1-8222-bbbbb363be2b",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Interact",
-                    "type": "Button",
-                    "id": "f6906fec-f17f-43b4-94f9-13c599b94a12",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Inventory",
-                    "type": "Button",
-                    "id": "e46bfd81-0143-4599-8ec3-3e12620d4c7a",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Aim",
-                    "type": "Button",
-                    "id": "08030219-09c3-449b-99d0-ed5ab5999867",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Sprint",
                     "type": "Button",
                     "id": "27a72a46-6827-428c-aaef-6d3e0d66aa80",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press(behavior=2)",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "DrawWeapon",
-                    "type": "Button",
-                    "id": "ee4ba800-2d6b-4eec-b0a5-5bf1e698a2fc",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Press",
                     "initialStateCheck": false
                 },
                 {
@@ -154,51 +109,40 @@
                 },
                 {
                     "name": "",
-                    "id": "9dc78217-53cb-48f0-872a-276e6de5cfd5",
-                    "path": "<Keyboard>/space",
+                    "id": "a9607b6e-aa77-41bc-9477-b948a1cfab03",
+                    "path": "<Joystick>/stick",
                     "interactions": "",
                     "processors": "",
-                    "groups": "PC",
-                    "action": "Roll",
+                    "groups": "",
+                    "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "8164cb36-0c57-4253-acdc-b494244c15ba",
-                    "path": "<Keyboard>/shift",
+                    "id": "f8ed0399-cdf9-42d8-83a6-761accbd3c8c",
+                    "path": "<Gamepad>/rightStick",
                     "interactions": "",
                     "processors": "",
-                    "groups": "PC",
-                    "action": "Sprint",
+                    "groups": "",
+                    "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "68d7f245-9c5a-4865-b9c2-14a90d4e1977",
-                    "path": "<Keyboard>/r",
+                    "id": "e6fde243-201c-4e06-91fe-3164354256e4",
+                    "path": "<Joystick>/{Hatswitch}",
                     "interactions": "",
                     "processors": "",
-                    "groups": "PC",
-                    "action": "DrawWeapon",
+                    "groups": "",
+                    "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "2e570564-a626-4956-90e5-35d9c309cf22",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "PC",
-                    "action": "Attack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "922768bb-9cab-4eb0-a747-2d8664c1c9ce",
+                    "id": "5bc81ab9-c32b-4b6e-8e71-9aa19aef3b9f",
                     "path": "<Pointer>/delta",
                     "interactions": "",
                     "processors": "",
@@ -209,78 +153,61 @@
                 },
                 {
                     "name": "",
-                    "id": "b3bc41a4-8c8b-4281-8f56-57dd8567224a",
-                    "path": "<Keyboard>/c",
+                    "id": "69b3f86f-c2d0-414f-87a4-2a60d4eeaec2",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Crouch",
+                    "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "a51ce4ef-9aa9-4596-87c3-b45a7a4ad2c9",
-                    "path": "",
+                    "id": "6c1f93ff-11f4-46c4-bb04-c0a9c6f84a44",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Interact",
+                    "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "f9af4dad-5f56-4285-91da-676bc98030d8",
-                    "path": "",
+                    "id": "adad1a11-5b6e-4f86-a164-8c1418f3e9e3",
+                    "path": "<Keyboard>/shift",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Inventory",
+                    "action": "Sprint",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "7dca5c1e-6300-4ebd-8a67-71393c3e2b6b",
-                    "path": "",
+                    "id": "6940d3e6-c674-4d04-9da5-24d7cbaf1591",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Aim",
+                    "action": "Roll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f5ebb3d1-7946-4096-b746-38df638912df",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Roll",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
             ]
         }
     ],
-    "controlSchemes": [
-        {
-            "name": "PC",
-            "bindingGroup": "PC",
-            "devices": [
-                {
-                    "devicePath": "<Keyboard>",
-                    "isOptional": false,
-                    "isOR": false
-                },
-                {
-                    "devicePath": "<Mouse>",
-                    "isOptional": false,
-                    "isOR": false
-                }
-            ]
-        },
-        {
-            "name": "Mobile",
-            "bindingGroup": "Mobile",
-            "devices": [
-                {
-                    "devicePath": "<Touchscreen>/{Hatswitch}",
-                    "isOptional": false,
-                    "isOR": false
-                }
-            ]
-        }
-    ]
+    "controlSchemes": []
 }
