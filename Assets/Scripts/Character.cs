@@ -93,7 +93,6 @@ public class Character : MonoBehaviour
     void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();
-        print(moveInput);
     }
 
     void OnSprint()

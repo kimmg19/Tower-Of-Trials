@@ -1,47 +1,49 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Portal : MonoBehaviour
 {
-    // Äµ¹ö½º¸¦ ÂüÁ¶ÇÒ º¯¼ö
+    // ê´€ë ¨ëœ UI ìº”ë²„ìŠ¤
     [SerializeField]
-    private Canvas canvas;
+    private GameObject floorSelection;
+   
+
 
     // Start is called before the first frame update
     void Start()
     {
-        // Äµ¹ö½º¸¦ ºñÈ°¼ºÈ­
-        if (canvas != null)
+        if (floorSelection != null)
         {
-            canvas.enabled = false;
+            floorSelection.SetActive(false);
         }
     }
 
-    // Ãæµ¹ÀÌ ½ÃÀÛµÉ ¶§ È£ÃâµÊ
+    // ì¶©ëŒì²´ê°€ ì´ í¬íƒˆì— ì§„ì…í•  ë•Œ í˜¸ì¶œë¨
     void OnTriggerEnter(Collider other)
     {
-        // Ãæµ¹ÇÑ ¿ÀºêÁ§Æ®°¡ "Portal" ÅÂ±×¸¦ °¡Áø °æ¿ì¿¡¸¸ Ã³¸®
+        // ì¶©ëŒì²´ê°€ "Player" íƒœê·¸ì¸ ê²½ìš°
         if (other.CompareTag("Player"))
         {
-            // Äµ¹ö½º¸¦ È°¼ºÈ­
-            if (canvas != null)
+            // ìº”ë²„ìŠ¤ í™œì„±í™”
+            if (floorSelection != null)
             {
-                canvas.enabled = true;
-                print("collision");
+                floorSelection.SetActive(true);
+                print("Player entered the portal.");
             }
-            
         }
     }
 
-    // Ãæµ¹ÀÌ ³¡³¯ ¶§ È£ÃâµÊ
+    // ì¶©ëŒì²´ê°€ ì´ í¬íƒˆì—ì„œ ë‚˜ê°ˆ ë•Œ í˜¸ì¶œë¨
     void OnTriggerExit(Collider other)
     {
-        // Ãæµ¹ÇÑ ¿ÀºêÁ§Æ®°¡ "Portal" ÅÂ±×¸¦ °¡Áø °æ¿ì¿¡¸¸ Ã³¸®
+        // ì¶©ëŒì²´ê°€ "Player" íƒœê·¸ì¸ ê²½ìš°
         if (other.CompareTag("Player"))
         {
-            // Äµ¹ö½º¸¦ ºñÈ°¼ºÈ­
-            if (canvas != null)
+            // ìº”ë²„ìŠ¤ ë¹„í™œì„±í™”
+            if (floorSelection != null)
             {
-                canvas.enabled = false;
+
+                floorSelection.SetActive(false);
             }
         }
     }
