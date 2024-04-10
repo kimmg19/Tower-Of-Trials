@@ -4,21 +4,30 @@ using UnityEngine;
 
 public class Sword : MonoBehaviour
 {
-    public Character character;
+    Character character;
     Enemy enemy;
-    Animator animator;
+    Dummy dummy;
+    TrailRenderer trailRenderer;
     private void Start()
     {
         character = FindObjectOfType<Character>();
         enemy = FindObjectOfType<Enemy>();
-        animator = GetComponentInParent<Animator>();
+        dummy = FindObjectOfType<Dummy>();
     }
+    
     public int damageAmount = 20;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Monster" && character.enableDamaging)
+        if (character.enableDamaging)
         {
-            other.GetComponent<Enemy>().TakeDamage(damageAmount);
+            if (other.CompareTag("Monster"))
+            {
+                enemy.TakeDamage(damageAmount);
+            } else if (other.CompareTag("Dummy"))
+            {
+                dummy.TakeDamage();
+            } else return;
         }
     }
+    
 }
