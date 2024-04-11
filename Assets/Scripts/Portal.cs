@@ -6,8 +6,10 @@ public class Portal : MonoBehaviour
     // 관련된 UI 캔버스
     [SerializeField]
     private GameObject floorSelection;
-   
+    [SerializeField]
+    private GameObject AskSelection;
 
+    private bool floorSelectionActive = false; // floorSelection의 현재 활성화 상태를 저장하는 변수
 
     // Start is called before the first frame update
     void Start()
@@ -15,6 +17,21 @@ public class Portal : MonoBehaviour
         if (floorSelection != null)
         {
             floorSelection.SetActive(false);
+        }
+
+        if (AskSelection != null)
+        {
+            AskSelection.SetActive(false);
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.G) && AskSelection.activeSelf)
+        {
+            AskSelection.SetActive(false);
+            floorSelection.SetActive(true);
         }
     }
 
@@ -25,9 +42,9 @@ public class Portal : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // 캔버스 활성화
-            if (floorSelection != null)
+            if (AskSelection != null)
             {
-                floorSelection.SetActive(true);
+                AskSelection.SetActive(true);
                 print("Player entered the portal.");
             }
         }
@@ -40,11 +57,20 @@ public class Portal : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // 캔버스 비활성화
+            if (AskSelection != null)
+            {
+                AskSelection.SetActive(false);
+            }
+
             if (floorSelection != null)
             {
-
                 floorSelection.SetActive(false);
             }
         }
+    }
+
+    public void OnClick1stFloor()
+    {
+        LoadingSceneManager.LoadScene("1stFloor");
     }
 }
