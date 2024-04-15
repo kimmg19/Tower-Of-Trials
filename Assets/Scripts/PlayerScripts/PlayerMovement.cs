@@ -3,45 +3,44 @@ using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Character : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] Transform characterBody;
     [SerializeField] Transform followCam;
     Vector2 moveInput;
     Vector3 dodgeVec;
     Vector3 velocity;
-    CharacterController characterController;
+    public CharacterController characterController;
     Animator animator;
+    AnimationEvent animationEvent;
     bool isRunning;
     public bool isDodging;
-    public bool isAttacking = false;
-    public bool enableDamaging;
     float turnSmoothVelocity;
-    public float playerSpeed = 5f;
-    public float sprintSpeed = 1.5f;
-    public float smoothDampTime = 0.15f;
-    public float speedDampTime = 0.2f;
+    [SerializeField] float playerSpeed = 5f;
+    [SerializeField] float sprintSpeed = 1.5f;
+    [SerializeField] float smoothDampTime = 0.15f;
+    [SerializeField] float speedDampTime = 0.2f;
     float gravity = -9.8f;
-    TrailRenderer trailRenderer;
     void Start()
     {
-        characterController = characterBody.GetComponent<CharacterController>();
-        animator = characterBody.GetComponent<Animator>();
-        trailRenderer = GetComponentInChildren<TrailRenderer>();
-        trailRenderer.gameObject.SetActive(false);
+        characterController = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
+        animationEvent = GetComponent<AnimationEvent>();
+        if (animationEvent == null || characterController == null || animator == null)
+        {
+            Debug.LogError("Component not found!");
+        }
     }
 
     void Update()
     {
-
         Move();
         ApplyGravity();
-
     }
 
     void Move()
     {
-        if (IsAttacking() && !isDodging) return;
+        if (animationEvent.IsAttacking() && !isDodging) return;
 
         float speed = isRunning ? sprintSpeed : 1f;
         animator.SetFloat("speed", moveInput.magnitude * speed, speedDampTime, Time.deltaTime);
@@ -59,13 +58,6 @@ public class Character : MonoBehaviour
         }
     }
 
-    public bool IsAttacking()
-    {
-        return (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack1") ||
-                    animator.GetCurrentAnimatorStateInfo(0).IsName("Attack2") ||
-                    animator.GetCurrentAnimatorStateInfo(0).IsName("Attack3") || isAttacking);
-    }
-
     Vector3 CalculateMoveDirection()
     {
         Vector3 lookForward = new Vector3(followCam.forward.x, 0f, followCam.forward.z).normalized;
@@ -77,8 +69,10 @@ public class Character : MonoBehaviour
     {
         if (moveDirection != Vector3.zero)
         {
-            Quaternion newRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
-            characterBody.rotation = Quaternion.Slerp(characterBody.rotation, newRotation, 0.15f);
+            // 캐릭터의 회전 각도 계산 부분에 smoothDampTime 적용
+            float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg;
+            float currentAngle = Mathf.SmoothDampAngle(characterBody.eulerAngles.y, targetAngle, ref turnSmoothVelocity, smoothDampTime);
+            characterBody.rotation = Quaternion.Euler(0f, currentAngle, 0f);
         }
     }
 
@@ -104,15 +98,10 @@ public class Character : MonoBehaviour
     {
         if (characterController.isGrounded && !isDodging)
         {
-            isAttacking = true;
+            animationEvent.isAttacking = true;
             animator.SetTrigger("Attack");
         }
     }
-    void DamageEnable()
-    {
-        enableDamaging = !enableDamaging;
-    }
-
     void OnRoll()
     {
         if (moveInput.magnitude != 0 && !isDodging && characterController.isGrounded)
@@ -126,27 +115,5 @@ public class Character : MonoBehaviour
             characterBody.rotation = Quaternion.LookRotation(dodgeVec);
         }
     }
-
-    void OnFinishAttack()
-    {
-        isAttacking = false;
-    }
-
-
-    void EndDodge()
-    {
-        characterController.center = new Vector3(0, 0.88f, 0);
-        characterController.height = 1.6f;
-        isDodging = false;
-        OnFinishAttack();
-    }
-
-    void AttackEffectOn()
-    {
-        trailRenderer.gameObject.SetActive(true);
-    }
-    void AtttackEffectOff()
-    {
-        trailRenderer.gameObject.SetActive(false);
-    }
 }
+

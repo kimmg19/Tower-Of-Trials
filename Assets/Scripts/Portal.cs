@@ -9,9 +9,6 @@ public class Portal : MonoBehaviour
     [SerializeField]
     private GameObject AskSelection;
 
-    private bool floorSelectionActive = false; // floorSelection의 현재 활성화 상태를 저장하는 변수
-
-    // Start is called before the first frame update
     void Start()
     {
         if (floorSelection != null)
@@ -25,7 +22,6 @@ public class Portal : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.G) && AskSelection.activeSelf)

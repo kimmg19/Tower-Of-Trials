@@ -777,7 +777,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 480aed8444d32b843aeb73f49a508a26, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 15.74
+      value: -14.4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 480aed8444d32b843aeb73f49a508a26, type: 3}
       propertyPath: m_LocalPosition.y
@@ -785,7 +785,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 480aed8444d32b843aeb73f49a508a26, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8.78
+      value: -90.1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 480aed8444d32b843aeb73f49a508a26, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2278,6 +2278,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 480aed8444d32b843aeb73f49a508a26, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5839540298067863406}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 480aed8444d32b843aeb73f49a508a26, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1191227111667406780}
   m_SourcePrefab: {fileID: 100100000, guid: 480aed8444d32b843aeb73f49a508a26, type: 3}
 --- !u!4 &920775616297853987 stripped
 Transform:
@@ -2314,7 +2317,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 1.6
-  m_Radius: 0.3
+  m_Radius: 0.4
   m_SlopeLimit: 40
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -2416,10 +2419,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterBody: {fileID: 8365875462466756654}
   followCam: {fileID: 0}
+  characterController: {fileID: 0}
   isDodging: 0
-  isAttacking: 0
-  enableDamaging: 0
   playerSpeed: 5
   sprintSpeed: 1.5
-  smoothDampTime: 0.15
+  smoothDampTime: 0.1
   speedDampTime: 0.2
+--- !u!114 &1191227111667406780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9174500687362177684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a792cb79026e6004b871e7b62ceeaa1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableDamaging: 0
+  isAttacking: 0
