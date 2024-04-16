@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class Portal : MonoBehaviour
 {
@@ -67,6 +68,7 @@ public class Portal : MonoBehaviour
 
     public void OnClick1stFloor()
     {
+        Destroy(AudioManager.instance.gameObject); // 층 넘어가면 bgm x
         LoadingSceneManager.LoadScene("1stFloor");
     }
 }

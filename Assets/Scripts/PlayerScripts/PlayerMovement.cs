@@ -5,22 +5,21 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] PlayerStats playerStats;
     [SerializeField] Transform characterBody;
     [SerializeField] Transform followCam;
-    Vector2 moveInput;
-    Vector3 dodgeVec;
-    Vector3 velocity;
     public CharacterController characterController;
     Animator animator;
     AnimationEvent animationEvent;
     bool isRunning;
     public bool isDodging;
     float turnSmoothVelocity;
-    [SerializeField] float playerSpeed = 5f;
-    [SerializeField] float sprintSpeed = 1.5f;
+    Vector2 moveInput;
+    Vector3 dodgeVec;
+    Vector3 velocity;
+    float gravity = -9.8f;
     [SerializeField] float smoothDampTime = 0.15f;
     [SerializeField] float speedDampTime = 0.2f;
-    float gravity = -9.8f;
     void Start()
     {
         characterController = GetComponent<CharacterController>();
@@ -42,18 +41,18 @@ public class PlayerMovement : MonoBehaviour
     {
         if (animationEvent.IsAttacking() && !isDodging) return;
 
-        float speed = isRunning ? sprintSpeed : 1f;
+        float speed = isRunning ? playerStats.sprintSpeed : 1f;
         animator.SetFloat("speed", moveInput.magnitude * speed, speedDampTime, Time.deltaTime);
 
         if (isDodging)
         {
-            speed = sprintSpeed;
-            characterController.Move(dodgeVec * Time.deltaTime * playerSpeed * speed);
+            speed = playerStats.sprintSpeed;
+            characterController.Move(dodgeVec * Time.deltaTime * playerStats.playerSpeed * speed);
         } else
         {
 
             Vector3 moveDirection = CalculateMoveDirection();
-            characterController.Move(moveDirection * Time.deltaTime * playerSpeed * speed);
+            characterController.Move(moveDirection * Time.deltaTime * playerStats.playerSpeed * speed);
             RotateCharacter(moveDirection);
         }
     }
@@ -69,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (moveDirection != Vector3.zero)
         {
-            // Ä³¸¯ÅÍÀÇ È¸Àü °¢µµ °è»ê ºÎºÐ¿¡ smoothDampTime Àû¿ë
+            // Ä³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ÎºÐ¿ï¿½ smoothDampTime ï¿½ï¿½ï¿½ï¿½
             float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg;
             float currentAngle = Mathf.SmoothDampAngle(characterBody.eulerAngles.y, targetAngle, ref turnSmoothVelocity, smoothDampTime);
             characterBody.rotation = Quaternion.Euler(0f, currentAngle, 0f);
