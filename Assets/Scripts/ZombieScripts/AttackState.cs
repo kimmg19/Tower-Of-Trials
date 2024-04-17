@@ -23,7 +23,7 @@ public class AttackState : StateMachineBehaviour
         float distance = Vector3.Distance(player.position, animator.transform.position);
 
         // 플레이어와의 거리가 3.5f 이상일 경우 공격 상태를 종료하도록 설정
-        if (distance > 2f)
+        if (distance > 1.3f)
         {
             animator.SetBool("isAttacking", false);
         }

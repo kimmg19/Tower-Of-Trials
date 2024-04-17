@@ -7,6 +7,8 @@ public class Sword : MonoBehaviour
     Enemy enemy;
     Dummy dummy;
     AnimationEvent animationEvent;
+    public int damageAmount = 20;
+
     private void Start()
     {
         animationEvent =GetComponentInParent<AnimationEvent>();
@@ -23,7 +25,6 @@ public class Sword : MonoBehaviour
             gameObject.GetComponent<BoxCollider>().enabled = false;
         }
     }
-    public int damageAmount = 20;
     private void OnTriggerEnter(Collider other)
     {
         if (animationEvent.enableDamaging)

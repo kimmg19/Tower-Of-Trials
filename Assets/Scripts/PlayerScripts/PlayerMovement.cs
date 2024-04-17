@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     Vector2 moveInput;
     Vector3 dodgeVec;
     Vector3 velocity;
+    public bool isGPress;
     float gravity = -9.8f;
     [SerializeField] float smoothDampTime = 0.15f;
     [SerializeField] float speedDampTime = 0.2f;
@@ -68,7 +69,6 @@ public class PlayerMovement : MonoBehaviour
     {
         if (moveDirection != Vector3.zero)
         {
-            // ĳ������ ȸ�� ���� ��� �κп� smoothDampTime ����
             float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg;
             float currentAngle = Mathf.SmoothDampAngle(characterBody.eulerAngles.y, targetAngle, ref turnSmoothVelocity, smoothDampTime);
             characterBody.rotation = Quaternion.Euler(0f, currentAngle, 0f);
@@ -113,6 +113,10 @@ public class PlayerMovement : MonoBehaviour
             characterController.height = 1f;
             characterBody.rotation = Quaternion.LookRotation(dodgeVec);
         }
+    }
+    void OnInteraction()
+    {
+        isGPress = true;
     }
 }
 

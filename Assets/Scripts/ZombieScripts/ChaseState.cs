@@ -37,7 +37,7 @@ public class ChaseState : StateMachineBehaviour
         }
 
         // 캐릭터와 플레이어 사이의 거리가 1이하이면 공격 상태로 전환하도록 설정
-        if (distance < 1.8f)
+        if (distance < 1.3f)
         {
             animator.SetBool("isAttacking", true);
         }

@@ -10,18 +10,25 @@ public class PlayerStats : MonoBehaviour
     public int currentHp { get; private set; }
     public int maxMp = 50;
     public int currentMp { get; private set;}
-
+    Animator animator;
     void Awake()
     {
+        animator = GetComponent<Animator>();
         currentHp = maxHp;
         currentMp = maxMp;
     }
 
     public void TakeDamage(int damage) // 데미지 입었을 때, hp 감소
     {
-        currentHp -= damage;
-        if (currentHp <= 0)
+        if (currentHp > 0)
         {
+            currentHp -= damage;
+            print("플레이어 공격 받음");
+            animator.SetTrigger("PlayerHit");
+        }        
+        else
+        {
+            print("플레이어 사망");
             Die();
         }
     }

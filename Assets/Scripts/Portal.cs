@@ -9,7 +9,8 @@ public class Portal : MonoBehaviour
     private GameObject floorSelection;
     [SerializeField]
     private GameObject AskSelection;
-
+    [SerializeField]
+    PlayerMovement playerMovement;
     void Start()
     {
         if (floorSelection != null)
@@ -22,10 +23,11 @@ public class Portal : MonoBehaviour
             AskSelection.SetActive(false);
         }
     }
+    
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G) && AskSelection.activeSelf)
+        if (playerMovement.isGPress && AskSelection.activeSelf)
         {
             AskSelection.SetActive(false);
             floorSelection.SetActive(true);
@@ -70,5 +72,10 @@ public class Portal : MonoBehaviour
     {
         Destroy(AudioManager.instance.gameObject); // 층 넘어가면 bgm x
         LoadingSceneManager.LoadScene("1stFloor");
+    }
+
+    public void OnClickCloseButton()
+    {
+        floorSelection.SetActive(false);
     }
 }

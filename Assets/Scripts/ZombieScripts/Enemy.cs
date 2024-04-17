@@ -5,14 +5,21 @@ using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField]
-    private int HP = 100;
+    [SerializeField] int HP = 100;
+
+    [SerializeField] int damageAmount = 10;
     public Slider healthBar;
     public Animator animator;
-
-    void Update(){
-        healthBar.value = HP;
+    [SerializeField] bool enableDamaging=false;
+    [SerializeField] PlayerStats playerStats;
+    void Start()
+    {
     }
+    void Update()
+    {
+        healthBar.value = HP;  
+        
+    } 
     // damageAmount 만큼 체력을 감소시키고, 체력이 0 이하일 때 애니메이션을 재생합니다.
     public void TakeDamage(int damageAmount)
     {
@@ -24,7 +31,7 @@ public class Enemy : MonoBehaviour
             animator.SetTrigger("die");
             GetComponent<Collider>().enabled = false;
 
-            Invoke("DestroyEnemy",5f);
+            Invoke("DestroyEnemy", 5f);
         } else
         {
             // 피격 애니메이션 재생
@@ -32,12 +39,27 @@ public class Enemy : MonoBehaviour
             animator.SetTrigger("damage");
             Debug.Log("Zombie get damage");
         }
-        
+
     }
 
     private void DestroyEnemy()
     {
         gameObject.SetActive(false);
     }
-    
+
+    void DamageEnable()
+    {
+        enableDamaging = !enableDamaging;
+    }
+    void OnTriggerEnter(Collider other)
+    {
+        if (enableDamaging)
+        {
+            if (other.CompareTag("Player"))
+            {
+                print("좀비 공격");
+                playerStats.TakeDamage(damageAmount);
+            }
+        }
+    }
 }
