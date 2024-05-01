@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    GameObject inGameCanvas;
     [SerializeField] PlayerStats playerStats;
     [SerializeField] Transform characterBody;
     [SerializeField] Transform followCam;
@@ -23,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float speedDampTime = 0.2f;
     void Start()
     {
+        inGameCanvas = GameObject.Find("InGameCanvas");
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         animationEvent = GetComponent<AnimationEvent>();
@@ -117,6 +119,10 @@ public class PlayerMovement : MonoBehaviour
     void OnInteraction()
     {
         isGPress = true;
+    }
+    void OnPause()
+    {
+        inGameCanvas.GetComponent<InGameCanvas>().ClickPuaseButton();
     }
 }
 

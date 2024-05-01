@@ -9,5 +9,5 @@ public class VillageBgm : MonoBehaviour
         AudioManager.instance.Play("VillageBgm");
     }
 
-    
+
 }
