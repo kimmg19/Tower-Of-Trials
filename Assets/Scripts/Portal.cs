@@ -10,9 +10,12 @@ public class Portal : MonoBehaviour
     [SerializeField]
     private GameObject AskSelection;
     [SerializeField]
+    GameObject obj;
     PlayerMovement playerMovement;
     void Start()
     {
+        obj = GameObject.Find("Player");
+        playerMovement = obj.GetComponent<PlayerMovement>();
         if (floorSelection != null)
         {
             floorSelection.SetActive(false);
@@ -23,21 +26,22 @@ public class Portal : MonoBehaviour
             AskSelection.SetActive(false);
         }
     }
-    
+
 
     void Update()
     {
         if (playerMovement.isGPress && AskSelection.activeSelf)
         {
-            AskSelection.SetActive(false);
             floorSelection.SetActive(true);
+            AskSelection.SetActive(false);
+
         }
+        else playerMovement.isGPress = false;
     }
 
-    // 충돌체가 이 포탈에 진입할 때 호출됨
+    // Player가 포탈에 진입할 때
     void OnTriggerEnter(Collider other)
     {
-        // 충돌체가 "Player" 태그인 경우
         if (other.CompareTag("Player"))
         {
             // 캔버스 활성화
@@ -49,10 +53,9 @@ public class Portal : MonoBehaviour
         }
     }
 
-    // 충돌체가 이 포탈에서 나갈 때 호출됨
+    // Player가 포탈에서 나갈 때
     void OnTriggerExit(Collider other)
     {
-        // 충돌체가 "Player" 태그인 경우
         if (other.CompareTag("Player"))
         {
             // 캔버스 비활성화
@@ -72,10 +75,19 @@ public class Portal : MonoBehaviour
     {
         Destroy(AudioManager.instance.gameObject); // 층 넘어가면 bgm x
         LoadingSceneManager.LoadScene("1stFloor");
+        Time.timeScale = 1f;
+    }
+
+    public void OnClick2ndFloor()
+    {
+        Destroy(AudioManager.instance.gameObject); // 층 넘어가면 bgm x
+        LoadingSceneManager.LoadScene("DockScene");
+        Time.timeScale = 1f;
     }
 
     public void OnClickCloseButton()
     {
+        AskSelection.SetActive(true);
         floorSelection.SetActive(false);
     }
 }
