@@ -118,7 +118,9 @@ public class PlayerMovement : MonoBehaviour
     }
     void OnInteraction()
     {
+        
         isGPress = true;
+
     }
     void OnPause()
     {

@@ -8,9 +8,12 @@ public class InGameCanvas : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject pauseButton;
     bool isGamePaused = false;
+    public GameObject playerUI;
+    public GameObject optionMenu;
     void Start()
     {
         pauseMenu.SetActive(false);
+        optionMenu.SetActive(false);
     }
     public void ClickPuaseButton()
     {
@@ -19,6 +22,7 @@ public class InGameCanvas : MonoBehaviour
             pauseMenu.SetActive(true);
             Time.timeScale = 0;
             isGamePaused = true;
+            playerUI.SetActive(false);
         } else
         {
             ClickResumeButton();
@@ -30,6 +34,13 @@ public class InGameCanvas : MonoBehaviour
         pauseMenu.SetActive(false);
         Time.timeScale = 1;
         isGamePaused = false;
+        playerUI.SetActive(true);
+        optionMenu.SetActive(false);
+    }
+    public void ClickOptionButton()
+    {
+        pauseMenu.SetActive(false);
+        optionMenu.SetActive(true);
     }
     public void ClickToMainButton()
     {
