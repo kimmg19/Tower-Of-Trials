@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     Vector3 dodgeVec;
     Vector3 velocity;
     public bool isGPress;
+    float speed = 1.0f;
     float gravity = -9.8f;
     [SerializeField] float smoothDampTime = 0.15f;
     [SerializeField] float speedDampTime = 0.2f;
@@ -36,29 +37,44 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        Move();
+        Move(speed); // 수정된 속도 값을 전달하여 Move 호출
         ApplyGravity();
     }
 
-    void Move()
+    public void Buffspeed()
+    {
+        speed += 0.5f;
+        playerStats.sprintSpeed += 0.5f;
+        Move(speed); // Move 메서드 호출 시 수정된 speed 값을 전달
+    }
+
+    public void Debuffspeed()
+    {
+        speed -= 0.5f;
+        playerStats.sprintSpeed -= 0.5f;
+        Move(speed); // Move 메서드 호출 시 수정된 speed 값을 전달
+    }
+
+    public void Move(float newSpeed)
     {
         if (animationEvent.IsAttacking() && !isDodging) return;
 
-        float speed = isRunning ? playerStats.sprintSpeed : 1f;
+        float speed = isRunning ? playerStats.sprintSpeed : newSpeed; // 수정된 speed 값을 사용
         animator.SetFloat("speed", moveInput.magnitude * speed, speedDampTime, Time.deltaTime);
 
         if (isDodging)
         {
             speed = playerStats.sprintSpeed;
             characterController.Move(dodgeVec * Time.deltaTime * playerStats.playerSpeed * speed);
-        } else
+        }
+        else
         {
-
             Vector3 moveDirection = CalculateMoveDirection();
             characterController.Move(moveDirection * Time.deltaTime * playerStats.playerSpeed * speed);
             RotateCharacter(moveDirection);
         }
     }
+
 
     Vector3 CalculateMoveDirection()
     {

@@ -9,7 +9,6 @@ public class Portal : MonoBehaviour
     private GameObject floorSelection;
     [SerializeField]
     private GameObject AskSelection;
-    [SerializeField]
     GameObject obj;
     PlayerMovement playerMovement;
     void Start()
