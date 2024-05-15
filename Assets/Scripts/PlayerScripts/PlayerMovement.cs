@@ -36,29 +36,31 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        Move(speed); // ¼öÁ¤µÈ ¼Óµµ °ªÀ» Àü´ÞÇÏ¿© Move È£Ãâ
+        if(playerStats.playerAlive){
+        Move(speed); 
         ApplyGravity();
+        }
     }
 
     public void Buffspeed()
     {
         speed += 0.5f;
         playerStats.sprintSpeed += 0.5f;
-        Move(speed); // Move ¸Þ¼­µå È£Ãâ ½Ã ¼öÁ¤µÈ speed °ªÀ» Àü´Þ
+        Move(speed); // Move ï¿½Þ¼ï¿½ï¿½ï¿½ È£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ speed ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
 
     public void Debuffspeed()
     {
         speed -= 0.5f;
         playerStats.sprintSpeed -= 0.5f;
-        Move(speed); // Move ¸Þ¼­µå È£Ãâ ½Ã ¼öÁ¤µÈ speed °ªÀ» Àü´Þ
+        Move(speed); // Move ï¿½Þ¼ï¿½ï¿½ï¿½ È£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ speed ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
 
     public void Move(float newSpeed)
     {
         if (animationEvent.IsAttacking() && !isDodging) return;
 
-        float speed = isRunning ? playerStats.sprintSpeed : newSpeed; // ¼öÁ¤µÈ speed °ªÀ» »ç¿ë
+        float speed = isRunning ? playerStats.sprintSpeed : newSpeed; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ speed ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         animator.SetFloat("speed", moveInput.magnitude * speed, speedDampTime, Time.deltaTime);
 
         if (isDodging)

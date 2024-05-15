@@ -13,11 +13,9 @@ public class PlayerStats : MonoBehaviour
     public int currentMp { get; private set;}
     Animator animator;
     public bool playerAlive = true;
-    Enemy enemy;
 
     void Start(){
         dieImage = GameObject.Find("die");
-        enemy = GameObject.FindGameObjectWithTag("Monster").GetComponent<Enemy>();
         dieImage.SetActive(false);
     }
     void Awake()
@@ -58,7 +56,6 @@ public class PlayerStats : MonoBehaviour
         animator.SetTrigger("PlayerDie");
         AudioManager.instance.Play("PlayerDie");
         playerAlive = false;
-        enemy.enableDamaging = false;
         dieImage.SetActive(true);
     }
 

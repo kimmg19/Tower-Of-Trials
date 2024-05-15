@@ -7,7 +7,6 @@ public class FirstFloor : MonoBehaviour
 
     void Start()
     {
-        AudioManager.instance.Play("Dungeon");
         StartCoroutine(DisplayFloorCanvas());
     }
 
