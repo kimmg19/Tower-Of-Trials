@@ -47,7 +47,6 @@ public class Portal : MonoBehaviour
             if (AskSelection != null)
             {
                 AskSelection.SetActive(true);
-                print("Player entered the portal.");
             }
         }
     }
@@ -72,15 +71,13 @@ public class Portal : MonoBehaviour
 
     public void OnClick1stFloor()
     {
-        Destroy(AudioManager.instance.gameObject); // 층 넘어가면 bgm x
-        LoadingSceneManager.LoadScene("1stFloor");
+        LoadingSceneManager.LoadScene(3);
         Time.timeScale = 1f;
     }
 
     public void OnClick2ndFloor()
     {
-        Destroy(AudioManager.instance.gameObject); // 층 넘어가면 bgm x
-        LoadingSceneManager.LoadScene("DockScene");
+        LoadingSceneManager.LoadScene(4);
         Time.timeScale = 1f;
     }
 
