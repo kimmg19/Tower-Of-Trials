@@ -5,17 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    void Start()
-    {
-        AudioManager.instance.Play("Main");
-    }
-
-
     public void OnClickGameStart()
     {
-        Debug.Log("GameStart");
-        Destroy(AudioManager.instance.gameObject);
-        LoadingSceneManager.LoadScene("InGameScene");
+        LoadingSceneManager.LoadScene(2);
     }
 
     public void OnClickLoad()

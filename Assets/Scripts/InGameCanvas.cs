@@ -44,9 +44,8 @@ public class InGameCanvas : MonoBehaviour
     }
     public void ClickToMainButton()
     {
-        AudioManager.instance.Stop("VillageBgm");
         Time.timeScale = 1;
-        SceneManager.LoadScene("GameTitleScene");
+        SceneManager.LoadScene(0);
     }
     public void ClickQuitButton()
     {
