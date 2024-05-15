@@ -7,10 +7,10 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] int HP = 100;
 
-    [SerializeField] int damageAmount = 10;
+    [SerializeField] int damageAmount;
     public Slider healthBar;
     public Animator animator;
-    [SerializeField] bool enableDamaging=false;
+    public bool enableDamaging=false;
     [SerializeField] PlayerStats playerStats;
     void Start()
     {
@@ -53,7 +53,7 @@ public class Enemy : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
-        if (enableDamaging)
+        if (enableDamaging || playerStats.playerAlive)
         {
             if (other.CompareTag("Player"))
             {

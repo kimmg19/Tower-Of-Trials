@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PatrolState : StateMachineBehaviour
 {
+    PlayerStats playerStats;
     float timer;
     Transform player;
     float chaseRange = 8;
@@ -14,6 +15,8 @@ public class PatrolState : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         player = GameObject.FindWithTag("Player").transform;
+        playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
+
         agent = animator.GetComponent<NavMeshAgent>();
         agent.speed = 1.5f;
         timer = 0;
@@ -39,7 +42,7 @@ public class PatrolState : StateMachineBehaviour
             animator.SetBool("isPatrolling", false);
         }
         float distance = Vector3.Distance(player.position, animator.transform.position);
-        if (distance < chaseRange)
+        if (distance < chaseRange && playerStats.playerAlive)
         {
             animator.SetBool("isChasing", true);
         }

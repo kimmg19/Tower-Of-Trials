@@ -5,20 +5,25 @@ using UnityEngine;
 public class AttackState : StateMachineBehaviour
 {
     Transform player; // 플레이어의 Transform을 저장하기 위한 변수
+    PlayerStats playerStats;
+
 
     // 상태가 시작될 때 호출되는 메서드
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         // 플레이어의 Transform을 찾아서 player 변수에 저장
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
+
     }
 
     // 상태가 업데이트될 때 호출되는 메서드
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         // 적 캐릭터가 플레이어를 향해 바라보도록 회전
+        if (playerStats.playerAlive){
         animator.transform.LookAt(player);
-
+        }
         // 플레이어와 적 캐릭터의 거리를 계산
         float distance = Vector3.Distance(player.position, animator.transform.position);
 
@@ -26,6 +31,10 @@ public class AttackState : StateMachineBehaviour
         if (distance > 1.3f)
         {
             animator.SetBool("isAttacking", false);
+        }
+        else if (playerStats != null && !playerStats.playerAlive){
+            animator.SetBool("isAttacking", false);
+
         }
     }
 

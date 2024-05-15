@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
+    public GameObject dieImage;
     public float playerSpeed = 5f;
     public float sprintSpeed = 1.5f;
     public int maxHp = 100;
@@ -11,6 +12,14 @@ public class PlayerStats : MonoBehaviour
     public int maxMp = 50;
     public int currentMp { get; private set;}
     Animator animator;
+    public bool playerAlive = true;
+    Enemy enemy;
+
+    void Start(){
+        dieImage = GameObject.Find("die");
+        enemy = GameObject.FindGameObjectWithTag("Monster").GetComponent<Enemy>();
+        dieImage.SetActive(false);
+    }
     void Awake()
     {
         animator = GetComponent<Animator>();
@@ -23,16 +32,16 @@ public class PlayerStats : MonoBehaviour
         if (currentHp > 0)
         {
             currentHp -= damage;
-            print("플레이어 공격 받음");
             animator.SetTrigger("PlayerHit");
+            AudioManager.instance.Play("PlayerHit");
+            print("플레이어 공격 받음");
         }        
-        else
+        else if(currentHp <= 0)
         {
-            print("플레이어 사망");
             Die();
         }
     }
-    public void UseMana(int amount) // 마나 사용했을 때, mp감소
+    public void UseMana(int amount) // 마나 사용했을 때, mp감소 - 나중에 스태미나 형식으로 바꿀듯
     {
         currentMp -= amount;
         if (currentMp < 0)
@@ -42,10 +51,17 @@ public class PlayerStats : MonoBehaviour
     }
     private void Die()
     {
-        // 플레이어 사망 처리
-        Debug.Log("Player Died");
-        // 이후에 애니메이션 추가하면 될듯
+        if (!playerAlive)
+            return;
+
+        print("플레이어 사망");
+        animator.SetTrigger("PlayerDie");
+        AudioManager.instance.Play("PlayerDie");
+        playerAlive = false;
+        enemy.enableDamaging = false;
+        dieImage.SetActive(true);
     }
+
 
     // 체력 회복 등의 추가적인 메서드 구현 가능
 }

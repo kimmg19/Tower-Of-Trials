@@ -36,8 +36,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if(playerStats.playerAlive){
         Move();
         ApplyGravity();
+        }
     }
 
     void Move()
