@@ -4,34 +4,30 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    GameObject inGameCanvas;
-    [SerializeField] PlayerStats playerStats;
-    [SerializeField] Transform characterBody;
+    PlayerStats playerStats;
+    PlayerInputs playerInputs;
+    [SerializeField] public Transform characterBody;
     [SerializeField] Transform followCam;
     public CharacterController characterController;
     Animator animator;
-    AnimationEvent animationEvent;
-    bool isRunning;
-    public bool isDodging;
+    AnimationEvents animationEvents;
     float turnSmoothVelocity;
-    Vector2 moveInput;
-    Vector3 dodgeVec;
     Vector3 velocity;
-    public bool isGPress;
     float speed = 1.0f;
     float gravity = -9.8f;
-    [SerializeField] float smoothDampTime = 0.15f;
-    [SerializeField] float speedDampTime = 0.2f;
+    float smoothDampTime = 0.1f;
+    float speedDampTime = 0.2f;
     void Start()
     {
-        inGameCanvas = GameObject.Find("InGameCanvas");
+        playerStats = GetComponent<PlayerStats>();
+        playerInputs = GetComponent<PlayerInputs>();
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
-        animationEvent = GetComponent<AnimationEvent>();
-        if (animationEvent == null || characterController == null || animator == null)
-        {
-            Debug.LogError("Component not found!");
-        }
+        animationEvents = GetComponent<AnimationEvents>();
+        // if (animationEvent == null || characterController == null || animator == null)
+        // {
+        //     Debug.LogError("Component not found!");
+        // }
     }
 
     void Update()
@@ -58,15 +54,15 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(float newSpeed)
     {
-        if (animationEvent.IsAttacking() && !isDodging) return;
+        if (animationEvents.IsAttacking() && !playerInputs.isDodging) return;
 
-        float speed = isRunning ? playerStats.sprintSpeed : newSpeed; // ������ speed ���� ���
-        animator.SetFloat("speed", moveInput.magnitude * speed, speedDampTime, Time.deltaTime);
+        float speed = playerInputs.isRunning ? playerStats.sprintSpeed : newSpeed; // ������ speed ���� ���
+        animator.SetFloat("speed", playerInputs.moveInput.magnitude * speed, speedDampTime, Time.deltaTime);
 
-        if (isDodging)
+        if (playerInputs.isDodging)
         {
             speed = playerStats.sprintSpeed;
-            characterController.Move(dodgeVec * Time.deltaTime * playerStats.playerSpeed * speed);
+            characterController.Move(playerInputs.dodgeVec * Time.deltaTime * playerStats.playerSpeed * speed);
         }
         else
         {
@@ -77,11 +73,11 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    Vector3 CalculateMoveDirection()
+    public Vector3 CalculateMoveDirection()
     {
         Vector3 lookForward = new Vector3(followCam.forward.x, 0f, followCam.forward.z).normalized;
         Vector3 lookRight = new Vector3(followCam.right.x, 0f, followCam.right.z).normalized;
-        return lookForward * moveInput.y + lookRight * moveInput.x;
+        return lookForward * playerInputs.moveInput.y + lookRight * playerInputs.moveInput.x;
     }
 
     void RotateCharacter(Vector3 moveDirection)
@@ -102,46 +98,5 @@ public class PlayerMovement : MonoBehaviour
         characterController.Move(velocity * Time.deltaTime);
     }
 
-    void OnMove(InputValue value)
-    {
-        moveInput = value.Get<Vector2>();
-    }
-
-    void OnSprint()
-    {
-        isRunning = !isRunning;
-    }
-
-    void OnAttack()
-    {
-        if (characterController.isGrounded && !isDodging)
-        {
-            animationEvent.isAttacking = true;
-            animator.SetTrigger("Attack");
-        }
-    }
-    void OnRoll()
-    {
-        if (moveInput.magnitude != 0 && !isDodging && characterController.isGrounded)
-        {
-            isDodging = true;
-            AudioManager.instance.Play("PlayerRoll");
-            dodgeVec = CalculateMoveDirection().normalized;
-            animator.SetTrigger("Dodge");
-            characterController.center = new Vector3(0, 0.5f, 0);
-            characterController.height = 1f;
-            characterBody.rotation = Quaternion.LookRotation(dodgeVec);
-        }
-    }
-    void OnInteraction()
-    {
-        
-        isGPress = true;
-
-    }
-    void OnPause()
-    {
-        inGameCanvas.GetComponent<InGameCanvas>().ClickPuaseButton();
-    }
 }
 

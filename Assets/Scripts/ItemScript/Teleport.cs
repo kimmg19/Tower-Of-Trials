@@ -5,19 +5,19 @@ using UnityEngine;
 
 public class Teleport : MonoBehaviour
 {
+    PlayerInputs playerInputs;
     [SerializeField]
     private GameObject outPortal;
     [SerializeField]
     private GameObject AskSelection;
 
     GameObject obj;
-    PlayerMovement playerMovement;
 
     // Start is called before the first frame update
     void Start()
     {
         obj = GameObject.Find("Player");
-        playerMovement = obj.GetComponent<PlayerMovement>();
+        playerInputs = obj.GetComponent<PlayerInputs>();
 
         if (AskSelection != null)
         {
@@ -28,22 +28,22 @@ public class Teleport : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerMovement.isGPress && AskSelection.activeSelf)
+        if (playerInputs.isGPress && AskSelection.activeSelf)
         {
             AskSelection.SetActive(false);
-            obj.SetActive(false); // ¼ø°£ÀÌµ¿ Àü¿¡ player ºñÈ°¼ºÈ­ÇØ¾ßµÊ
+            obj.SetActive(false); // ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ player ï¿½ï¿½È°ï¿½ï¿½È­ï¿½Ø¾ßµï¿½
             obj.transform.position = outPortal.transform.position;
             obj.SetActive(true);
-            print("GÅ° ÀÔ·Â");
+            print("GÅ° ï¿½Ô·ï¿½");
         }
-        else playerMovement.isGPress = false;
+        else playerInputs.isGPress = false;
     }
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            print("»¡°£ Æ÷Å» Ãæµ¹");
+            print("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å» ï¿½æµ¹");
             AskSelection.SetActive(true);
         }
     }

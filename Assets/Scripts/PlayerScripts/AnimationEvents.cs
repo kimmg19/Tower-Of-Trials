@@ -2,15 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimationEvent : MonoBehaviour
+public class AnimationEvents : MonoBehaviour
 {
+    PlayerInputs playerInputs;
     PlayerMovement playerMovement;
     TrailRenderer trailRenderer;
-    public bool enableDamaging;
+    public bool enableDamaging= false;
     public bool isAttacking = false;
     Animator animator;
     void Start()
     {
+        playerInputs = GetComponent<PlayerInputs>();
         playerMovement = GetComponent<PlayerMovement>();
         trailRenderer = GetComponentInChildren<TrailRenderer>();
         trailRenderer.gameObject.SetActive(false);
@@ -38,7 +40,7 @@ public class AnimationEvent : MonoBehaviour
     {
         playerMovement.characterController.center = new Vector3(0, 0.88f, 0);
         playerMovement.characterController.height = 1.6f;
-        playerMovement.isDodging = false;
+        playerInputs.isDodging = false;
         OnFinishAttack();
     }
     public bool IsAttacking()

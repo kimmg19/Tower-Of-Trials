@@ -14,7 +14,7 @@ public class Buff : MonoBehaviour
     [SerializeField] public GameObject Debuff_icon;
 
     GameObject obj;
-    PlyaerUI ui;
+    PlayerUI ui;
     PlayerMovement playerMovement;
 
     // Start is called before the first frame update
@@ -22,7 +22,7 @@ public class Buff : MonoBehaviour
     {
         obj = GameObject.Find("Player");
         playerMovement = obj.GetComponent<PlayerMovement>();
-        ui = obj.GetComponent<PlyaerUI>();
+        ui = obj.GetComponent<PlayerUI>();
    
         if (buff != null)
         {
@@ -57,11 +57,11 @@ public class Buff : MonoBehaviour
         {
             
             //Randombuff.SetActive(false);
-            // ·£´ýÇÏ°Ô 1 ¶Ç´Â 2¸¦ »ý¼º
+            // ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ 1 ï¿½Ç´ï¿½ 2ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             int randomNumber = Random.Range(1, 3);
             if(randomNumber == 1)
             {
-                print("¹öÇÁ ¤º¤º");
+                print("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
                 buff.SetActive(true);
                 Buff_icon.SetActive(true);
                 //playerMovement.speed += 0.5f;
@@ -71,7 +71,7 @@ public class Buff : MonoBehaviour
             }
             else
             {
-                print("µð¹öÇÁ ¤»¤»");
+                print("ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
                 debuff.SetActive(true);
                 Debuff_icon.SetActive(true);
                 //playerMovement.speed -= 0.5f;
@@ -83,13 +83,13 @@ public class Buff : MonoBehaviour
     }
     IEnumerator OnBuff()
     {
-        // 1ÃÊ ´ë±â
+        // 1ï¿½ï¿½ ï¿½ï¿½ï¿½
         yield return new WaitForSeconds(5.0f);
 
-        // 1ÃÊ ÈÄ¿¡ buff¸¦ ºñÈ°¼ºÈ­
+        // 1ï¿½ï¿½ ï¿½Ä¿ï¿½ buffï¿½ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­
         buff.SetActive(false);
         debuff.SetActive(false);
         Randombuff.SetActive(false);
-        print("ÄÚ·çÆ¾ÀÛµ¿");
+        print("ï¿½Ú·ï¿½Æ¾ï¿½Ûµï¿½");
     }
 }
