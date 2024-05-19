@@ -7,7 +7,7 @@ public class ChaseState : StateMachineBehaviour
 {
     NavMeshAgent agent; // NavMeshAgent 컴포넌트를 저장하기 위한 변수
     Transform player; // 플레이어의 Transform을 저장하기 위한 변수
-    PlayerStats playerStats;
+    PlayerStatus playerStatus;
 
     // 상태가 시작될 때 호출되는 메서드
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -16,7 +16,7 @@ public class ChaseState : StateMachineBehaviour
         agent = animator.GetComponent<NavMeshAgent>();
         // 플레이어의 Transform을 찾아서 player 변수에 할당
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
+        playerStatus = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStatus>();
 
         // 캐릭터의 이동 속도를 설정
         agent.speed = 3.5f;
@@ -38,11 +38,11 @@ public class ChaseState : StateMachineBehaviour
         {
             animator.SetBool("isChasing", false);
         }
-        if (!playerStats.playerAlive){
+        if (!playerStatus.playerAlive){
             animator.SetBool("isChasing", false);
         }
         // 캐릭터와 플레이어 사이의 거리가 1이하이면 공격 상태로 전환하도록 설정
-        if (distance < 1.3f && playerStats.playerAlive)
+        if (distance < 1.3f && playerStatus.playerAlive)
         {
             animator.SetBool("isAttacking", true);
         }

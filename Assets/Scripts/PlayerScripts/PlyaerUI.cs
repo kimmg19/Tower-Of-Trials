@@ -6,8 +6,9 @@ using UnityEngine.UI;
 public class PlyaerUI : MonoBehaviour
 {
     [SerializeField] private Slider hpbar;
-    [SerializeField] private Slider mpbar;
-    [SerializeField] private PlayerStats playerStats;
+    [SerializeField] private Slider staminabar;
+    [SerializeField] PlayerStats playerStats;
+    [SerializeField] PlayerStatus playerStatus;
     void Start()
     {
         hpbar.value = (float)playerStats.currentHp / (float)playerStats.maxHp;
@@ -15,10 +16,10 @@ public class PlyaerUI : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q)){playerStats.TakeDamage(10);} // q 누르면 피 깎임. 테스트용
-        if (Input.GetKeyDown(KeyCode.E)){playerStats.UseMana(10);} // e누르면 mp 깎임. 테스트용
+        if (Input.GetKeyDown(KeyCode.Q)){playerStatus.TakeDamage(10);} // q 누르면 피 깎임. 테스트용
+        if (Input.GetKeyDown(KeyCode.E)){playerStatus.UseStamina(10);} // e누르면 stamina 깎임. 테스트용
         HandleHp();
-        HandleMp();
+        HandleStamina();
     }
 
     private void HandleHp(){
@@ -27,9 +28,9 @@ public class PlyaerUI : MonoBehaviour
 
     }
 
-    private void HandleMp(){
+    private void HandleStamina(){
     
-        mpbar.value = Mathf.Lerp(mpbar.value, (float)playerStats.currentMp / (float)playerStats.maxMp, Time.deltaTime *10);
+        staminabar.value = Mathf.Lerp(staminabar.value, (float)playerStats.currentStamina / (float)playerStats.maxStamina, Time.deltaTime *10);
 
     }
 }

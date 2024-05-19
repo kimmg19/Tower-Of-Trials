@@ -11,9 +11,16 @@ public class Enemy : MonoBehaviour
     public Slider healthBar;
     public Animator animator;
     public bool enableDamaging=false;
-    [SerializeField] PlayerStats playerStats;
+    PlayerStats playerStats;
+    PlayerStatus playerStatus;
     void Start()
     {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if(player != null)
+        {
+            playerStats = player.GetComponent<PlayerStats>();
+            playerStatus = player.GetComponent<PlayerStatus>();
+        }
     }
     void Update()
     {
@@ -53,12 +60,12 @@ public class Enemy : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
-        if (enableDamaging || playerStats.playerAlive)
+        if (enableDamaging || playerStatus.playerAlive)
         {
             if (other.CompareTag("Player"))
             {
                 print("좀비 공격");
-                playerStats.TakeDamage(damageAmount);
+                playerStatus.TakeDamage(damageAmount);
             }
         }
     }

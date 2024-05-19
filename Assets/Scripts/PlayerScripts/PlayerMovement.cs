@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     Animator animator;
     AnimationEvent animationEvent;
     PlayerStats playerStats;
+    PlayerStatus playerStatus;
     PlayerInputs playerInputs;
     Vector3 velocity;
     float turnSmoothVelocity;
@@ -20,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     float speedDampTime = 0.2f;
     void Start()
     {
+        playerStatus = GetComponent<PlayerStatus>();
         playerStats = GetComponent<PlayerStats>();
         playerInputs = GetComponent<PlayerInputs>();
         followCam = GameObject.Find("Main Camera").transform;
@@ -31,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
-        if (playerStats.playerAlive)
+        if (playerStatus.playerAlive)
         {
             Move(speed);
             ApplyGravity();
