@@ -4,15 +4,16 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    Transform followCam;
+    [HideInInspector] public Transform characterBody;
+    [HideInInspector] public CharacterController characterController;
+    [HideInInspector] public Vector3 dodgeVec;
+    Animator animator;
+    AnimationEvent animationEvent;
     PlayerStats playerStats;
     PlayerInputs playerInputs;
-    [SerializeField] public Transform characterBody;
-    [SerializeField] Transform followCam;
-    public CharacterController characterController;
-    Animator animator;
-    AnimationEvents animationEvents;
-    float turnSmoothVelocity;
     Vector3 velocity;
+    float turnSmoothVelocity;
     float speed = 1.0f;
     float gravity = -9.8f;
     float smoothDampTime = 0.1f;
@@ -21,30 +22,27 @@ public class PlayerMovement : MonoBehaviour
     {
         playerStats = GetComponent<PlayerStats>();
         playerInputs = GetComponent<PlayerInputs>();
+        followCam = GameObject.Find("Main Camera").transform;
+        characterBody = GameObject.Find("Player").transform;
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
-        animationEvents = GetComponent<AnimationEvents>();
-        // if (animationEvent == null || characterController == null || animator == null)
-        // {
-        //     Debug.LogError("Component not found!");
-        // }
+        animationEvent = GetComponent<AnimationEvent>();
+        
     }
-
     void Update()
     {
-        if(playerStats.playerAlive){
-        Move(speed); 
-        ApplyGravity();
+        if (playerStats.playerAlive)
+        {
+            Move(speed);
+            ApplyGravity();
         }
     }
-
     public void Buffspeed()
     {
         speed += 0.5f;
         playerStats.sprintSpeed += 0.5f;
         Move(speed); // Move �޼��� ȣ�� �� ������ speed ���� ����
     }
-
     public void Debuffspeed()
     {
         speed -= 0.5f;
@@ -54,25 +52,22 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(float newSpeed)
     {
-        if (animationEvents.IsAttacking() && !playerInputs.isDodging) return;
+        if (animationEvent.IsAttacking() && !playerInputs.isDodging) return;
 
-        float speed = playerInputs.isRunning ? playerStats.sprintSpeed : newSpeed; // ������ speed ���� ���
+        float speed = playerInputs.isRunning ? playerStats.sprintSpeed : newSpeed;
         animator.SetFloat("speed", playerInputs.moveInput.magnitude * speed, speedDampTime, Time.deltaTime);
 
         if (playerInputs.isDodging)
         {
             speed = playerStats.sprintSpeed;
-            characterController.Move(playerInputs.dodgeVec * Time.deltaTime * playerStats.playerSpeed * speed);
-        }
-        else
+            characterController.Move(dodgeVec * Time.deltaTime * playerStats.playerSpeed * speed);
+        } else
         {
             Vector3 moveDirection = CalculateMoveDirection();
             characterController.Move(moveDirection * Time.deltaTime * playerStats.playerSpeed * speed);
             RotateCharacter(moveDirection);
         }
     }
-
-
     public Vector3 CalculateMoveDirection()
     {
         Vector3 lookForward = new Vector3(followCam.forward.x, 0f, followCam.forward.z).normalized;
@@ -97,6 +92,5 @@ public class PlayerMovement : MonoBehaviour
 
         characterController.Move(velocity * Time.deltaTime);
     }
-
 }
 

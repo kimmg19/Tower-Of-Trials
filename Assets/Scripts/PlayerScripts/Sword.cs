@@ -6,18 +6,18 @@ public class Sword : MonoBehaviour
 {
     Enemy enemy;
     Dummy dummy;
-    AnimationEvents animationEvents;
+    AnimationEvent animationEvent;
     public int damageAmount = 20;
 
     private void Start()
     {
-        animationEvents =GetComponentInParent<AnimationEvents>();
+        animationEvent =GetComponentInParent<AnimationEvent>();
         enemy = FindObjectOfType<Enemy>();
         dummy = FindObjectOfType<Dummy>();
     }
     void Update()
     {
-        if (animationEvents.enableDamaging)
+        if (animationEvent.enableDamaging)
         {
             gameObject.GetComponent<BoxCollider>().enabled = true;
         } else
@@ -27,7 +27,7 @@ public class Sword : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (animationEvents.enableDamaging)
+        if (animationEvent.enableDamaging)
         {
             if (other.CompareTag("Monster"))
             {
