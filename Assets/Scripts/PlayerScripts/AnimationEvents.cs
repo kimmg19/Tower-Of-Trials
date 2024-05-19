@@ -1,20 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class AnimationEvent : MonoBehaviour
+public class AnimationEvents : MonoBehaviour
 {
-    PlayerMovement playerMovement;
     PlayerInputs playerInputs;
-
+    PlayerMovement playerMovement;
     TrailRenderer trailRenderer;
-    [HideInInspector]public bool enableDamaging;
-    [HideInInspector]public bool isAttacking = false;
+    public bool enableDamaging= false;
+    public bool isAttacking = false;
     Animator animator;
     void Start()
     {
-        playerInputs=GetComponent<PlayerInputs>();
+        playerInputs = GetComponent<PlayerInputs>();
         playerMovement = GetComponent<PlayerMovement>();
         trailRenderer = GetComponentInChildren<TrailRenderer>();
         trailRenderer.gameObject.SetActive(false);

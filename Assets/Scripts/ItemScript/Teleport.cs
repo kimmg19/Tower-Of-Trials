@@ -1,19 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 
 public class Teleport : MonoBehaviour
 {
+    PlayerInputs playerInputs;
     [SerializeField]
     private GameObject outPortal;
     [SerializeField]
     private GameObject AskSelection;
 
     GameObject obj;
-    PlayerInputs playerInputs;
 
+    // Start is called before the first frame update
     void Start()
     {
         obj = GameObject.Find("Player");
@@ -25,15 +25,16 @@ public class Teleport : MonoBehaviour
         }
     }
 
+    // Update is called once per frame
     void Update()
     {
         if (playerInputs.isGPress && AskSelection.activeSelf)
         {
             AskSelection.SetActive(false);
-            obj.SetActive(false); // ¼ø°£ÀÌµ¿ Àü¿¡ player ºñÈ°¼ºÈ­ÇØ¾ßµÊ
+            obj.SetActive(false); // ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ player ï¿½ï¿½È°ï¿½ï¿½È­ï¿½Ø¾ßµï¿½
             obj.transform.position = outPortal.transform.position;
             obj.SetActive(true);
-            print("GÅ° ÀÔ·Â");
+            print("GÅ° ï¿½Ô·ï¿½");
         }
         else playerInputs.isGPress = false;
     }
@@ -42,7 +43,7 @@ public class Teleport : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            print("»¡°£ Æ÷Å» Ãæµ¹");
+            print("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å» ï¿½æµ¹");
             AskSelection.SetActive(true);
         }
     }

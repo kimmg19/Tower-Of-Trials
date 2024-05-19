@@ -5,23 +5,30 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputs : MonoBehaviour
 {
-    GameObject inGameCanvas;
-    AnimationEvent animationEvent;
-
     PlayerMovement playerMovement;
-    [HideInInspector]public Vector2 moveInput;
-    [HideInInspector] public bool isRunning=false;
-    [HideInInspector] public bool isDodging;
-    [HideInInspector] public bool isGPress;
+    GameObject inGameCanvas;
     Animator animator;
+    AnimationEvents animationEvents;
+    public Vector2 moveInput;
+    public Vector3 dodgeVec;
+    public bool isRunning = false;
+    public bool isDodging = false;
+    public bool isGPress = false;
+
     void Start()
     {
-        playerMovement=GetComponent<PlayerMovement>();
+        playerMovement = GetComponent<PlayerMovement>();
         inGameCanvas = GameObject.Find("InGameCanvas");
-        animationEvent = GetComponent<AnimationEvent>();
         animator = GetComponent<Animator>();
-
+        animationEvents = GetComponent<AnimationEvents>();
     }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
     void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();
@@ -36,7 +43,7 @@ public class PlayerInputs : MonoBehaviour
     {
         if (playerMovement.characterController.isGrounded && !isDodging)
         {
-            animationEvent.isAttacking = true;
+            animationEvents.isAttacking = true;
             animator.SetTrigger("Attack");
         }
     }
@@ -46,16 +53,16 @@ public class PlayerInputs : MonoBehaviour
         {
             isDodging = true;
             AudioManager.instance.Play("PlayerRoll");
-            playerMovement.dodgeVec = playerMovement.CalculateMoveDirection().normalized;
+            dodgeVec = playerMovement.CalculateMoveDirection().normalized;
             animator.SetTrigger("Dodge");
             playerMovement.characterController.center = new Vector3(0, 0.5f, 0);
             playerMovement.characterController.height = 1f;
-            playerMovement.characterBody.rotation = Quaternion.LookRotation(playerMovement.dodgeVec);
+            playerMovement.characterBody.rotation = Quaternion.LookRotation(dodgeVec);
         }
     }
     void OnInteraction()
     {
-
+        
         isGPress = true;
 
     }

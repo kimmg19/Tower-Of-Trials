@@ -4,17 +4,18 @@ using UnityEngine.InputSystem;
 
 public class Portal : MonoBehaviour
 {
+    PlayerInputs playerInputs;
     // 관련된 UI 캔버스
     [SerializeField]
     private GameObject floorSelection;
     [SerializeField]
     private GameObject AskSelection;
     GameObject obj;
-    PlayerInputs playerInputs;
     void Start()
     {
         obj = GameObject.Find("Player");
         playerInputs = obj.GetComponent<PlayerInputs>();
+
         if (floorSelection != null)
         {
             floorSelection.SetActive(false);
