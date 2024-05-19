@@ -4,51 +4,45 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    GameObject inGameCanvas;
-    [SerializeField] PlayerStats playerStats;
-    [SerializeField] Transform characterBody;
-    [SerializeField] Transform followCam;
-    public CharacterController characterController;
+    Transform followCam;
+    [HideInInspector] public Transform characterBody;
+    [HideInInspector] public CharacterController characterController;
+    [HideInInspector] public Vector3 dodgeVec;
     Animator animator;
     AnimationEvent animationEvent;
-    bool isRunning;
-    public bool isDodging;
-    float turnSmoothVelocity;
-    Vector2 moveInput;
-    Vector3 dodgeVec;
+    PlayerStats playerStats;
+    PlayerInputs playerInputs;
     Vector3 velocity;
-    public bool isGPress;
+    float turnSmoothVelocity;
     float speed = 1.0f;
     float gravity = -9.8f;
-    [SerializeField] float smoothDampTime = 0.15f;
-    [SerializeField] float speedDampTime = 0.2f;
+    float smoothDampTime = 0.1f;
+    float speedDampTime = 0.2f;
     void Start()
     {
-        inGameCanvas = GameObject.Find("InGameCanvas");
+        playerStats = GetComponent<PlayerStats>();
+        playerInputs = GetComponent<PlayerInputs>();
+        followCam = GameObject.Find("Main Camera").transform;
+        characterBody = GameObject.Find("Player").transform;
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         animationEvent = GetComponent<AnimationEvent>();
-        if (animationEvent == null || characterController == null || animator == null)
-        {
-            Debug.LogError("Component not found!");
-        }
+        
     }
-
     void Update()
     {
-        if(playerStats.playerAlive){
-        Move(speed); 
-        ApplyGravity();
+        if (playerStats.playerAlive)
+        {
+            Move(speed);
+            ApplyGravity();
         }
     }
-
     public void Buffspeed()
     {
         speed += 0.5f;
         playerStats.sprintSpeed += 0.5f;
         Move(speed); // Move �޼��� ȣ�� �� ������ speed ���� ����
     }
-
     public void Debuffspeed()
     {
         speed -= 0.5f;
@@ -58,30 +52,27 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(float newSpeed)
     {
-        if (animationEvent.IsAttacking() && !isDodging) return;
+        if (animationEvent.IsAttacking() && !playerInputs.isDodging) return;
 
-        float speed = isRunning ? playerStats.sprintSpeed : newSpeed; // ������ speed ���� ���
-        animator.SetFloat("speed", moveInput.magnitude * speed, speedDampTime, Time.deltaTime);
+        float speed = playerInputs.isRunning ? playerStats.sprintSpeed : newSpeed;
+        animator.SetFloat("speed", playerInputs.moveInput.magnitude * speed, speedDampTime, Time.deltaTime);
 
-        if (isDodging)
+        if (playerInputs.isDodging)
         {
             speed = playerStats.sprintSpeed;
             characterController.Move(dodgeVec * Time.deltaTime * playerStats.playerSpeed * speed);
-        }
-        else
+        } else
         {
             Vector3 moveDirection = CalculateMoveDirection();
             characterController.Move(moveDirection * Time.deltaTime * playerStats.playerSpeed * speed);
             RotateCharacter(moveDirection);
         }
     }
-
-
-    Vector3 CalculateMoveDirection()
+    public Vector3 CalculateMoveDirection()
     {
         Vector3 lookForward = new Vector3(followCam.forward.x, 0f, followCam.forward.z).normalized;
         Vector3 lookRight = new Vector3(followCam.right.x, 0f, followCam.right.z).normalized;
-        return lookForward * moveInput.y + lookRight * moveInput.x;
+        return lookForward * playerInputs.moveInput.y + lookRight * playerInputs.moveInput.x;
     }
 
     void RotateCharacter(Vector3 moveDirection)
@@ -100,48 +91,6 @@ public class PlayerMovement : MonoBehaviour
         else velocity.y = -0.5f;
 
         characterController.Move(velocity * Time.deltaTime);
-    }
-
-    void OnMove(InputValue value)
-    {
-        moveInput = value.Get<Vector2>();
-    }
-
-    void OnSprint()
-    {
-        isRunning = !isRunning;
-    }
-
-    void OnAttack()
-    {
-        if (characterController.isGrounded && !isDodging)
-        {
-            animationEvent.isAttacking = true;
-            animator.SetTrigger("Attack");
-        }
-    }
-    void OnRoll()
-    {
-        if (moveInput.magnitude != 0 && !isDodging && characterController.isGrounded)
-        {
-            isDodging = true;
-            AudioManager.instance.Play("PlayerRoll");
-            dodgeVec = CalculateMoveDirection().normalized;
-            animator.SetTrigger("Dodge");
-            characterController.center = new Vector3(0, 0.5f, 0);
-            characterController.height = 1f;
-            characterBody.rotation = Quaternion.LookRotation(dodgeVec);
-        }
-    }
-    void OnInteraction()
-    {
-        
-        isGPress = true;
-
-    }
-    void OnPause()
-    {
-        inGameCanvas.GetComponent<InGameCanvas>().ClickPuaseButton();
     }
 }
 

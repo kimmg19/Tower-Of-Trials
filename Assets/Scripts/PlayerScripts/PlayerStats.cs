@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
-    public GameObject dieImage;
+    [SerializeField]GameObject dieImage;
     public float playerSpeed = 5f;
     public float sprintSpeed = 1.5f;
     public int maxHp = 100;
     public int currentHp { get; private set; }
     public int maxMp = 50;
-    public int currentMp { get; private set;}
+    public int currentMp { get; private set; }
     Animator animator;
-    public bool playerAlive = true;
+    [HideInInspector] public bool playerAlive = true;
 
-    void Start(){
+    void Start()
+    {
         dieImage = GameObject.Find("die");
         dieImage.SetActive(false);
     }
@@ -33,8 +34,7 @@ public class PlayerStats : MonoBehaviour
             animator.SetTrigger("PlayerHit");
             AudioManager.instance.Play("PlayerHit");
             print("플레이어 공격 받음");
-        }        
-        else if(currentHp <= 0)
+        } else if (currentHp <= 0)
         {
             Die();
         }

@@ -1055,17 +1055,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8354671147304600919, guid: 823a37f4d661b5a47a32bcae2f480fe3, type: 3}
   m_PrefabInstance: {fileID: 7042024115944353248}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &968663163 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7794295839266728324, guid: 6dc4cf4496348884d8ee27743ae38562, type: 3}
-  m_PrefabInstance: {fileID: 24291631}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2e9858e135fad64e8d17f7e00534e8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &997901582 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4859187054875864, guid: 796a8142bd2966640821b474e7fd3ed6, type: 3}
@@ -2542,10 +2531,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 963194227}
-    - target: {fileID: 4822667889998046958, guid: 7971b752d7819764389b0921d5af008b, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5803735582250183327, guid: 7971b752d7819764389b0921d5af008b, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -2631,9 +2616,7 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1648847293}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 7196255077249364316, guid: 7971b752d7819764389b0921d5af008b, type: 3}
-    - {fileID: 8493520843448231684, guid: 7971b752d7819764389b0921d5af008b, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7971b752d7819764389b0921d5af008b, type: 3}
@@ -2672,15 +2655,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8354671147304600919, guid: 823a37f4d661b5a47a32bcae2f480fe3, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.26120487
+      value: 0.26120484
       objectReference: {fileID: 0}
     - target: {fileID: 8354671147304600919, guid: 823a37f4d661b5a47a32bcae2f480fe3, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000016609036
+      value: -0.000000033218072
       objectReference: {fileID: 0}
     - target: {fileID: 8354671147304600919, guid: 823a37f4d661b5a47a32bcae2f480fe3, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000000004494391
+      value: 0.00000000898878
       objectReference: {fileID: 0}
     - target: {fileID: 8354671147304600919, guid: 823a37f4d661b5a47a32bcae2f480fe3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2791,15 +2774,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3931227923710358929, guid: c4433ea814b220b42a29355411de6c53, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.2612048
+      value: 0.26120478
       objectReference: {fileID: 0}
     - target: {fileID: 3931227923710358929, guid: c4433ea814b220b42a29355411de6c53, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000016609032
+      value: -0.00000001660904
       objectReference: {fileID: 0}
     - target: {fileID: 3931227923710358929, guid: c4433ea814b220b42a29355411de6c53, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000000044943884
+      value: 0.0000000044943906
       objectReference: {fileID: 0}
     - target: {fileID: 6510601019358821631, guid: c4433ea814b220b42a29355411de6c53, type: 3}
       propertyPath: m_Follow
@@ -2948,15 +2931,7 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 963194228}
     - target: {fileID: 6661789107943835896, guid: 7be018cadeba43042981e2c1888caa11, type: 3}
-      propertyPath: enemy
-      value: 
-      objectReference: {fileID: 968663163}
-    - target: {fileID: 6661789107943835896, guid: 7be018cadeba43042981e2c1888caa11, type: 3}
       propertyPath: dieImage
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6661789107943835896, guid: 7be018cadeba43042981e2c1888caa11, type: 3}
-      propertyPath: DieCanvas
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8365875462466756654, guid: 7be018cadeba43042981e2c1888caa11, type: 3}

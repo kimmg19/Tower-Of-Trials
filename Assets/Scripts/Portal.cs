@@ -10,11 +10,11 @@ public class Portal : MonoBehaviour
     [SerializeField]
     private GameObject AskSelection;
     GameObject obj;
-    PlayerMovement playerMovement;
+    PlayerInputs playerInputs;
     void Start()
     {
         obj = GameObject.Find("Player");
-        playerMovement = obj.GetComponent<PlayerMovement>();
+        playerInputs = obj.GetComponent<PlayerInputs>();
         if (floorSelection != null)
         {
             floorSelection.SetActive(false);
@@ -29,13 +29,13 @@ public class Portal : MonoBehaviour
 
     void Update()
     {
-        if (playerMovement.isGPress && AskSelection.activeSelf)
+        if (playerInputs.isGPress && AskSelection.activeSelf)
         {
             floorSelection.SetActive(true);
             AskSelection.SetActive(false);
 
         }
-        else playerMovement.isGPress = false;
+        else playerInputs.isGPress = false;
     }
 
     // Player가 포탈에 진입할 때
