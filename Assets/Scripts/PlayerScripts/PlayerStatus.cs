@@ -2,15 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerStatus : MonoBehaviour
 {
-    [SerializeField] private GameObject dieImage;
+    InGameCanvas inGameCanvas;
     private Animator animator;
     [HideInInspector] public bool playerAlive = true;
     PlayerStats playerStats;
 
     void Start (){
+
+        inGameCanvas = GetComponent<InGameCanvas>();
         animator = GetComponent<Animator>();
         playerStats = GetComponent<PlayerStats>();
     }
@@ -48,6 +51,6 @@ public class PlayerStatus : MonoBehaviour
         animator.SetTrigger("PlayerDie");
         AudioManager.instance.Play("PlayerDie");
         playerAlive = false;
-        dieImage.SetActive(true);
+        inGameCanvas.dieImage.SetActive(true);
     }
 }

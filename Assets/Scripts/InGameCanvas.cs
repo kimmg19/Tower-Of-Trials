@@ -5,15 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class InGameCanvas : MonoBehaviour
 {
+    public GameObject dieImage;
     public GameObject pauseMenu;
     public GameObject pauseButton;
     bool isGamePaused = false;
-    public GameObject playerUI;
+    [SerializeField]GameObject playerUI;
     public GameObject optionMenu;
     void Start()
     {
+        playerUI = GameObject.Find("PlayerUI");
         pauseMenu.SetActive(false);
         optionMenu.SetActive(false);
+        dieImage.SetActive(false);
     }
     public void ClickPuaseButton()
     {
