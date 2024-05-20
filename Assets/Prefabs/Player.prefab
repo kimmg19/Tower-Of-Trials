@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.084549636, g: 0.3807039, b: 0.9433962, a: 1}
+  m_Color: {r: 0.8584906, g: 0.83805275, b: 0.19032574, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -897,8 +897,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hpbar: {fileID: 4425323965448626955}
-  mpbar: {fileID: 3173793505405835868}
+  staminabar: {fileID: 3173793505405835868}
   playerStats: {fileID: 6661789107943835896}
+  playerStatus: {fileID: 6852241204750624980}
 --- !u!1 &8034418986036718617
 GameObject:
   m_ObjectHideFlags: 0
@@ -910,7 +911,7 @@ GameObject:
   - component: {fileID: 8661324276681343643}
   - component: {fileID: 3173793505405835868}
   m_Layer: 0
-  m_Name: PlayerMp
+  m_Name: PlayerStamina
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3054,6 +3055,9 @@ PrefabInstance:
       addedObject: {fileID: 6661789107943835896}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 480aed8444d32b843aeb73f49a508a26, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 6852241204750624980}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 480aed8444d32b843aeb73f49a508a26, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 7455102184359298209}
   m_SourcePrefab: {fileID: 100100000, guid: 480aed8444d32b843aeb73f49a508a26, type: 3}
 --- !u!4 &920775616297853987 stripped
@@ -3191,9 +3195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a58db4cbf6e8d30459ba5819d51943d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStats: {fileID: 6661789107943835896}
   characterBody: {fileID: 8365875462466756654}
-  followCam: {fileID: 0}
   characterController: {fileID: 8664390003632369813}
   dodgeVec: {x: 0, y: 0, z: 0}
 --- !u!114 &1191227111667406780
@@ -3222,11 +3224,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a74474d52fbd4245a7153c4c19ff01e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dieImage: {fileID: 0}
   playerSpeed: 5
   sprintSpeed: 1.5
   maxHp: 100
-  maxMp: 50
+  maxStamina: 50
+--- !u!114 &6852241204750624980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9174500687362177684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6e4966a112ca94ea16dac1b4ad779b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dieImage: {fileID: 0}
   playerAlive: 1
 --- !u!114 &7455102184359298209
 MonoBehaviour:

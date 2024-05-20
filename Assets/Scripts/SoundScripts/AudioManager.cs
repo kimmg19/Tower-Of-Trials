@@ -14,7 +14,7 @@ public class AudioManager : MonoBehaviour
     {
         if (instance == null)
         {
-            SceneManager.sceneLoaded += LoadsceneEvent;//sceneLoadÀÌº¥Æ®¿¡ LoadsceneEvent ÇÔ¼ö Ãß°¡.
+            SceneManager.sceneLoaded += LoadsceneEvent;//sceneLoadï¿½Ìºï¿½Æ®ï¿½ï¿½ LoadsceneEvent ï¿½Ô¼ï¿½ ï¿½ß°ï¿½.
             instance = this;
             DontDestroyOnLoad(gameObject);
             foreach (Sound s in sounds)
@@ -33,8 +33,8 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    //¾À ÀüÈ¯½Ã »ç¿îµå º¯°æÇÏ´Â-Unity¿£Áø¿¡¼­ ÀÚµ¿À¸·Î ¸Å°³º¯¼ö Àü´Þ.
-    //mode´Â ¾À ·Îµå ¹æ½Ä. Single(»õ·Î, ÀÌÀü ¾À Á¦°Å),Additive(¾À À§¿¡ Ãß°¡·Î)
+    //ï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½-Unityï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
+    //modeï¿½ï¿½ ï¿½ï¿½ ï¿½Îµï¿½ ï¿½ï¿½ï¿½. Single(ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½),Additive(ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½)
     private void LoadsceneEvent(Scene scene, LoadSceneMode mode)
     {
         StopPreviousSceneAudio();
