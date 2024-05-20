@@ -14,7 +14,7 @@ public class Buff : MonoBehaviour
     [SerializeField] public GameObject Debuff_icon;
 
     GameObject obj;
-    PlyaerUI ui;
+    PlayerUI ui;
     PlayerMovement playerMovement;
 
     // Start is called before the first frame update
@@ -22,7 +22,7 @@ public class Buff : MonoBehaviour
     {
         obj = GameObject.Find("Player");
         playerMovement = obj.GetComponent<PlayerMovement>();
-        ui = obj.GetComponent<PlyaerUI>();
+        ui = obj.GetComponent<PlayerUI>();
    
         if (buff != null)
         {

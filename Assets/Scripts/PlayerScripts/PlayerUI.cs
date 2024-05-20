@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlyaerUI : MonoBehaviour
+public class PlayerUI : MonoBehaviour
 {
     [SerializeField] private Slider hpbar;
     [SerializeField] private Slider staminabar;

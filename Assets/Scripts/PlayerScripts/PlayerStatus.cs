@@ -13,7 +13,7 @@ public class PlayerStatus : MonoBehaviour
 
     void Start (){
 
-        inGameCanvas = GetComponent<InGameCanvas>();
+        inGameCanvas = FindObjectOfType<InGameCanvas>();
         animator = GetComponent<Animator>();
         playerStats = GetComponent<PlayerStats>();
     }
