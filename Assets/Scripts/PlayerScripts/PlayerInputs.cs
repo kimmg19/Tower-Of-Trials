@@ -13,6 +13,7 @@ public class PlayerInputs : MonoBehaviour
     [HideInInspector] public bool isRunning=false;
     [HideInInspector] public bool isDodging;
     [HideInInspector] public bool isGPress;
+    //[HideInInspector] public bool isTPress;
     Animator animator;
     void Start()
     {
@@ -55,9 +56,7 @@ public class PlayerInputs : MonoBehaviour
     }
     void OnInteraction()
     {
-
         isGPress = true;
-
     }
     void OnPause()
     {

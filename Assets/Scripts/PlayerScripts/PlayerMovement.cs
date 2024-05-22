@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     PlayerInputs playerInputs;
     Vector3 velocity;
     float turnSmoothVelocity;
-    float speed = 1.0f;
+    public float speed = 1.0f;
     float gravity = -9.8f;
     float smoothDampTime = 0.1f;
     float speedDampTime = 0.2f;
@@ -43,13 +43,13 @@ public class PlayerMovement : MonoBehaviour
     {
         speed += 0.5f;
         playerStats.sprintSpeed += 0.5f;
-        Move(speed); // Move �޼��� ȣ�� �� ������ speed ���� ����
+        Move(speed);
     }
     public void Debuffspeed()
     {
         speed -= 0.5f;
         playerStats.sprintSpeed -= 0.5f;
-        Move(speed); // Move �޼��� ȣ�� �� ������ speed ���� ����
+        Move(speed);
     }
 
     public void Move(float newSpeed)

@@ -14,15 +14,18 @@ public class BuffManagement : MonoBehaviour
     private GameObject buffyicon;
     [SerializeField]
     private GameObject debuffyicon;
+    //private bool hasCollided = false;
 
     GameObject obj;
     PlayerMovement playerMovement;
+    PlayerStats playerstats;
 
     // Start is called before the first frame update
     void Start()
     {
         obj = GameObject.Find("Player");
         playerMovement = obj.GetComponent<PlayerMovement>();
+        playerstats = obj.GetComponent<PlayerStats>();
    
         if (buff != null)
         {
@@ -36,12 +39,17 @@ public class BuffManagement : MonoBehaviour
 
         if (buffyicon != null)
         {
-            buffyicon.SetActive(false);
+           buffyicon.SetActive(false);
         }
 
         if (debuffyicon != null)
         {
             debuffyicon.SetActive(false);
+        }
+
+        if (Randombuff == null)
+        {
+            Debug.LogError("Randombuff가 할당되지 않았습니다.");
         }
     }
 
@@ -55,8 +63,6 @@ public class BuffManagement : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            
-            //Randombuff.SetActive(false);
             // 랜덤하게 1 또는 2를 생성
             int randomNumber = Random.Range(1, 3);
             if(randomNumber == 1)
@@ -64,45 +70,57 @@ public class BuffManagement : MonoBehaviour
                 print("버프 ㅊㅊ");
                 buff.SetActive(true);
                 buffyicon.SetActive(true);
+                Randombuff.SetActive(false);
                 playerMovement.Buffspeed();
-                //playerMovement.SetSpeed(playerMovement.speed + 1.5f);
-                StartCoroutine(OnBuff());
+
+                Invoke("BuffBlinkoff", 3.0f);
+                Invoke("BuffBlinkon", 3.5f);
+                Invoke("BuffBlinkoff", 4.0f);
+                Invoke("BuffBlinkon", 4.5f);
+                Invoke("BuffBlinkoff", 5.0f);
+                Invoke("ResetSpeed", 5.0f);
+
             }
             else
             {
                 print("디버프 ㅋㅋ");
                 debuff.SetActive(true);
                 debuffyicon.SetActive(true);
+                Randombuff.SetActive(false);
                 playerMovement.Debuffspeed();
-                //playerMovement.SetSpeed(playerMovement.speed - 1.5f);
-                StartCoroutine(OnDebuff());
+
+                Invoke("DeBuffBlinkoff", 3.0f);
+                Invoke("DeBuffBlinkon", 3.5f);
+                Invoke("DeBuffBlinkoff", 4.0f);
+                Invoke("DeBuffBlinkon", 4.5f);
+                Invoke("DeBuffBlinkoff", 5.0f);
+                Invoke("ResetSpeed", 5.0f);
+
             }
         }
     }
-    IEnumerator OnBuff()
-    {
-        // 1초 대기
-        yield return new WaitForSeconds(5.0f);
 
-        // 1초 후에 buff를 비활성화
-        buff.SetActive(false);
-        Randombuff.SetActive(false);
+    void ResetSpeed()
+    {
+        playerMovement.speed = 1.0f;
+        playerstats.sprintSpeed = 1.5f;
+    }
+
+    void BuffBlinkoff()
+    {
         buffyicon.SetActive(false);
-        playerMovement.Debuffspeed();
-       // playerMovement.SetSpeed(playerMovement.speed - 1.5f);
-        print("버프 코루틴 작동");
     }
-    IEnumerator OnDebuff()
+    void BuffBlinkon()
     {
-        // 1초 대기
-        yield return new WaitForSeconds(5.0f);
-
-        // 1초 후에 buff를 비활성화
-        debuff.SetActive(false);
-        Randombuff.SetActive(false);
-        debuffyicon.SetActive(false);
-        playerMovement.Buffspeed();
-        //playerMovement.SetSpeed(playerMovement.speed + 1.5f);
-        print("디버프 코루틴 작동");
+        buffyicon.SetActive(true);
     }
+    void DeBuffBlinkoff()
+    {
+        debuffyicon.SetActive(false);
+    }
+    void DeBuffBlinkon()
+    {
+        debuffyicon.SetActive(true);
+    }
+
 }

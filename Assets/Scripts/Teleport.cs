@@ -9,7 +9,7 @@ public class Teleport : MonoBehaviour
     [SerializeField]
     private GameObject outPortal;
     [SerializeField]
-    private GameObject AskSelection;
+    private GameObject TeleportAskSelection;
 
     GameObject obj;
     PlayerInputs playerInputs;
@@ -19,31 +19,48 @@ public class Teleport : MonoBehaviour
         obj = GameObject.Find("Player");
         playerInputs = obj.GetComponent<PlayerInputs>();
 
-        if (AskSelection != null)
+        if (TeleportAskSelection != null)
         {
-            AskSelection.SetActive(false);
+            TeleportAskSelection.SetActive(false);
         }
     }
 
     void Update()
     {
-        if (playerInputs.isGPress && AskSelection.activeSelf)
+        if (playerInputs.isGPress && TeleportAskSelection.activeSelf)
         {
-            AskSelection.SetActive(false);
+            TeleportAskSelection.SetActive(false);
             obj.SetActive(false); // 순간이동 전에 player 비활성화해야됨
             obj.transform.position = outPortal.transform.position;
             obj.SetActive(true);
-            print("G키 입력");
         }
-        else playerInputs.isGPress = false;
+        else
+        {
+
+        }
+
     }
 
     void OnTriggerEnter(Collider other)
     {
+        playerInputs.isGPress = false;
+
         if (other.CompareTag("Player"))
         {
-            print("빨간 포탈 충돌");
-            AskSelection.SetActive(true);
+            TeleportAskSelection.SetActive(true);
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            // 캔버스 비활성화
+            if (TeleportAskSelection != null)
+            {
+                TeleportAskSelection.SetActive(false);
+            }
+            playerInputs.isGPress = false;
         }
     }
 }

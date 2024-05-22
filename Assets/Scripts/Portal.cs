@@ -33,7 +33,6 @@ public class Portal : MonoBehaviour
         {
             floorSelection.SetActive(true);
             AskSelection.SetActive(false);
-
         }
         else playerInputs.isGPress = false;
     }
@@ -41,13 +40,12 @@ public class Portal : MonoBehaviour
     // Player가 포탈에 진입할 때
     void OnTriggerEnter(Collider other)
     {
+        playerInputs.isGPress = false;
+
         if (other.CompareTag("Player"))
         {
             // 캔버스 활성화
-            if (AskSelection != null)
-            {
-                AskSelection.SetActive(true);
-            }
+            AskSelection.SetActive(true);
         }
     }
 
@@ -67,6 +65,7 @@ public class Portal : MonoBehaviour
                 floorSelection.SetActive(false);
             }
         }
+        playerInputs.isGPress = false;
     }
 
     public void OnClick1stFloor()
