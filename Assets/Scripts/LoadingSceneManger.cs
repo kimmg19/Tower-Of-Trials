@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class LoadingSceneManager : MonoBehaviour
 {
-    public static int nextSceneIndex; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public static int nextSceneIndex; // ¾ÀÀÇ ºôµå ÀÎµ¦½º·Î º¯°æ
 
     [SerializeField]
     Image ProgressBar;
@@ -16,26 +16,39 @@ public class LoadingSceneManager : MonoBehaviour
         StartCoroutine(LoadScene());
     }
 
+    // ¾À ·Îµå ÇÔ¼ö º¯°æ: ¾ÀÀÇ ºôµå ÀÎµ¦½º¸¦ ¹Şµµ·Ï ¼öÁ¤
     public static void LoadScene(int sceneIndex)
     {
         nextSceneIndex = sceneIndex;
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(1);//LoadingScene È£Ãâ
     }
 
     IEnumerator LoadScene()
     {
         yield return null;
-        AsyncOperation op = SceneManager.LoadSceneAsync(nextSceneIndex); // ë‹¤ìŒ ì”¬ì„ ë¡œë“œ
+        AsyncOperation op = SceneManager.LoadSceneAsync(nextSceneIndex); // ºôµå ¼¼ÆÃ »ó ¾À ¹øÈ£·Î ·Îµå.
         op.allowSceneActivation = false;
-        float fakeLoadTime = Random.Range(1f, 2f); // 1ì´ˆì—ì„œ 3ì´ˆ ì‚¬ì´ì˜ ëœë¤í•œ ë¡œë”© ì‹œê°„ ìƒì„±
         float timer = 0.0f;
-        while (timer < fakeLoadTime)
+        while (!op.isDone)
         {
-            timer += Time.deltaTime;
-            ProgressBar.fillAmount = timer / fakeLoadTime; // ë¡œë”© ë°”ê°€ ë¡œë”© ì§„í–‰ì— ë”°ë¼ ì±„ì›Œì§
             yield return null;
+            timer += Time.deltaTime;
+            if (op.progress < 0.9f)
+            {
+                ProgressBar.fillAmount = Mathf.Lerp(ProgressBar.fillAmount, op.progress, timer);
+                if (ProgressBar.fillAmount >= op.progress)
+                {
+                    timer = 0f;
+                }
+            } else
+            {
+                ProgressBar.fillAmount = Mathf.Lerp(ProgressBar.fillAmount, 1f, timer);
+                if (ProgressBar.fillAmount == 1.0f)
+                {
+                    op.allowSceneActivation = true;
+                    yield break;
+                }
+            }
         }
-        yield return new WaitForSeconds(0.5f); // ë¡œë”©ì´ ì™„ë£Œë˜ë„ 0.5ì´ˆ ê¸°ë‹¤ë¦¬ê²Œí•¨
-        op.allowSceneActivation = true; // ë¡œë”©ì´ ì™„ë£Œë˜ë©´ ë‹¤ìŒ ì”¬ìœ¼ë¡œ ì´ë™
     }
 }
