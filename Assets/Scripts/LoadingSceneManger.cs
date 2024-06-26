@@ -1,45 +1,54 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LoadingSceneManager : MonoBehaviour
 {
-    public static int nextSceneIndex;
+    public static int nextSceneIndex; // ¾ÀÀÇ ºôµå ÀÎµ¦½º·Î º¯°æ
+
     [SerializeField]
-    private Image ProgressBar;
+    Image ProgressBar;
 
     private void Start()
     {
         StartCoroutine(LoadScene());
     }
 
+    // ¾À ·Îµå ÇÔ¼ö º¯°æ: ¾ÀÀÇ ºôµå ÀÎµ¦½º¸¦ ¹Þµµ·Ï ¼öÁ¤
     public static void LoadScene(int sceneIndex)
     {
         nextSceneIndex = sceneIndex;
-        GlobalStateManager.Instance.isLoading = true; // ë¡œë”© ì‹œìž‘
-        SceneManager.LoadScene(1); 
+        SceneManager.LoadScene(1);//LoadingScene È£Ãâ
     }
 
-    private IEnumerator LoadScene()
+    IEnumerator LoadScene()
     {
         yield return null;
-
-        AsyncOperation op = SceneManager.LoadSceneAsync(nextSceneIndex);
+        AsyncOperation op = SceneManager.LoadSceneAsync(nextSceneIndex); // ºôµå ¼¼ÆÃ »ó ¾À ¹øÈ£·Î ·Îµå.
         op.allowSceneActivation = false;
-
-        float fakeLoadTime = Random.Range(1f, 2f);
         float timer = 0.0f;
-
-        while (timer < fakeLoadTime)
+        while (!op.isDone)
         {
-            timer += Time.deltaTime;
-            ProgressBar.fillAmount = timer / fakeLoadTime;
             yield return null;
+            timer += Time.deltaTime;
+            if (op.progress < 0.9f)
+            {
+                ProgressBar.fillAmount = Mathf.Lerp(ProgressBar.fillAmount, op.progress, timer);
+                if (ProgressBar.fillAmount >= op.progress)
+                {
+                    timer = 0f;
+                }
+            } else
+            {
+                ProgressBar.fillAmount = Mathf.Lerp(ProgressBar.fillAmount, 1f, timer);
+                if (ProgressBar.fillAmount == 1.0f)
+                {
+                    op.allowSceneActivation = true;
+                    yield break;
+                }
+            }
         }
-
-        yield return new WaitForSeconds(0.5f);
-        op.allowSceneActivation = true;
-        GlobalStateManager.Instance.isLoading = false; // ë¡œë”© ì¢…ë£Œ
     }
 }
