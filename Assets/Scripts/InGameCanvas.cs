@@ -11,8 +11,10 @@ public class InGameCanvas : MonoBehaviour
     bool isGamePaused = false;
     [SerializeField]GameObject playerUI;
     public GameObject optionMenu;
+    Portal portal;
     void Start()
     {
+        portal = GetComponent<Portal>();
         playerUI = GameObject.Find("PlayerUI");
         pauseMenu.SetActive(false);
         optionMenu.SetActive(false);
@@ -47,6 +49,7 @@ public class InGameCanvas : MonoBehaviour
     }
     public void ClickToMainButton()
     {
+        
         Time.timeScale = 1;
         SceneManager.LoadScene(0);
     }

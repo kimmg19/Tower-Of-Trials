@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    Transform followCam;
+    [SerializeField] Transform followCam;
     [HideInInspector] public Transform characterBody;
     [HideInInspector] public CharacterController characterController;
     [HideInInspector] public Vector3 dodgeVec;
@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     float gravity = -9.8f;
     float smoothDampTime = 0.1f;
     float speedDampTime = 0.2f;
+
     void Start()
     {
         playerStatus = GetComponent<PlayerStatus>();
@@ -29,22 +30,24 @@ public class PlayerMovement : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         animationEvent = GetComponent<AnimationEvent>();
-        
     }
+
     void Update()
     {
-        if (playerStatus.playerAlive)
+        if (playerStatus.playerAlive && !GlobalStateManager.Instance.isLoading)
         {
             Move(speed);
             ApplyGravity();
         }
     }
+
     public void Buffspeed()
     {
         speed += 0.5f;
         playerStats.sprintSpeed += 0.5f;
         Move(speed);
     }
+
     public void Debuffspeed()
     {
         speed -= 0.5f;
@@ -70,6 +73,7 @@ public class PlayerMovement : MonoBehaviour
             RotateCharacter(moveDirection);
         }
     }
+
     public Vector3 CalculateMoveDirection()
     {
         Vector3 lookForward = new Vector3(followCam.forward.x, 0f, followCam.forward.z).normalized;
@@ -89,10 +93,17 @@ public class PlayerMovement : MonoBehaviour
 
     void ApplyGravity()
     {
-        if (!characterController.isGrounded) velocity.y += gravity * Time.deltaTime;
-        else velocity.y = -0.5f;
+        if (!GlobalStateManager.Instance.isLoading)
+        {
+            if (!characterController.isGrounded)
+            {
+                velocity.y += gravity * Time.deltaTime;
+            } else
+            {
+                velocity.y = -0.5f;
+            }
 
-        characterController.Move(velocity * Time.deltaTime);
+            characterController.Move(velocity * Time.deltaTime);
+        }
     }
 }
-
