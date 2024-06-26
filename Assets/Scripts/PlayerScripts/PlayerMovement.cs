@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (playerStatus.playerAlive && !GlobalStateManager.Instance.isLoading)
+        if (playerStatus.playerAlive)
         {
             Move(speed);
             ApplyGravity();
@@ -93,17 +93,15 @@ public class PlayerMovement : MonoBehaviour
 
     void ApplyGravity()
     {
-        if (!GlobalStateManager.Instance.isLoading)
-        {
-            if (!characterController.isGrounded)
-            {
-                velocity.y += gravity * Time.deltaTime;
-            } else
-            {
-                velocity.y = -0.5f;
-            }
 
-            characterController.Move(velocity * Time.deltaTime);
+        if (!characterController.isGrounded)
+        {
+            velocity.y += gravity * Time.deltaTime;
+        } else
+        {
+            velocity.y = -0.5f;
         }
+        characterController.Move(velocity * Time.deltaTime);
+
     }
 }

@@ -9,12 +9,12 @@ public class Portal : MonoBehaviour
     private GameObject floorSelection;
     [SerializeField]
     private GameObject AskSelection;
-    GameObject player;
+    GameObject obj;
     PlayerInputs playerInputs;
     void Start()
     {
-        player = GameObject.Find("Player");
-        playerInputs = player.GetComponent<PlayerInputs>();
+        obj = GameObject.Find("Player");
+        playerInputs = obj.GetComponent<PlayerInputs>();
         if (floorSelection != null)
         {
             floorSelection.SetActive(false);
@@ -33,8 +33,7 @@ public class Portal : MonoBehaviour
         {
             floorSelection.SetActive(true);
             AskSelection.SetActive(false);
-        }
-        else playerInputs.isGPress = false;
+        } else playerInputs.isGPress = false;
     }
 
     // Player가 포탈에 진입할 때
@@ -70,24 +69,19 @@ public class Portal : MonoBehaviour
 
     public void OnClick1stFloor()
     {
-        MovePlayerToScene(3, new Vector3(-6, 0, 20)); // 1층으로 이동, 원하는 위치 설정
+        LoadingSceneManager.LoadScene(3);
+        Time.timeScale = 1f;
     }
 
     public void OnClick2ndFloor()
     {
-        MovePlayerToScene(4, new Vector3(25, 10, 40)); // 2층으로 이동, 원하는 위치 설정
+        LoadingSceneManager.LoadScene(4);
+        Time.timeScale = 1f;
     }
 
     public void OnClickCloseButton()
     {
         AskSelection.SetActive(true);
         floorSelection.SetActive(false);
-    }
-
-    public void MovePlayerToScene(int sceneIndex, Vector3 newPosition)
-    {
-        LoadingSceneManager.LoadScene(sceneIndex);
-        player.GetComponent<DontDestroyPlayer>().MoveToNewPosition(newPosition);
-        Time.timeScale = 1f;
     }
 }
