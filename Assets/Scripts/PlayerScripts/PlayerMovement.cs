@@ -93,7 +93,6 @@ public class PlayerMovement : MonoBehaviour
 
     void ApplyGravity()
     {
-
         if (!characterController.isGrounded)
         {
             velocity.y += gravity * Time.deltaTime;
@@ -102,6 +101,5 @@ public class PlayerMovement : MonoBehaviour
             velocity.y = -0.5f;
         }
         characterController.Move(velocity * Time.deltaTime);
-
     }
 }
