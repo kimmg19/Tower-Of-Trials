@@ -11,6 +11,9 @@ public class Portal : MonoBehaviour
     private GameObject AskSelection;
     GameObject obj;
     PlayerInputs playerInputs;
+    [SerializeField]GameObject playerUI;
+
+
     void Start()
     {
         obj = GameObject.Find("Player");
@@ -26,20 +29,19 @@ public class Portal : MonoBehaviour
         }
     }
 
-
     void Update()
     {
         if (playerInputs.isGPress && AskSelection.activeSelf)
         {
             floorSelection.SetActive(true);
             AskSelection.SetActive(false);
-        } else playerInputs.isGPress = false;
+            playerUI.SetActive(false);
+        }
     }
 
     // Player가 포탈에 진입할 때
     void OnTriggerEnter(Collider other)
     {
-        playerInputs.isGPress = false;
 
         if (other.CompareTag("Player"))
         {
@@ -64,7 +66,6 @@ public class Portal : MonoBehaviour
                 floorSelection.SetActive(false);
             }
         }
-        playerInputs.isGPress = false;
     }
 
     public void OnClick1stFloor()

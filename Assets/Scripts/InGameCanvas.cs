@@ -20,7 +20,7 @@ public class InGameCanvas : MonoBehaviour
         optionMenu.SetActive(false);
         dieImage.SetActive(false);
     }
-    public void ClickPuaseButton()
+    public void ClickPauseButton()
     {
         if (!isGamePaused)
         {

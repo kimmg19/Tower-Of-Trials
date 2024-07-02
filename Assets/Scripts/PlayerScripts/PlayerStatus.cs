@@ -42,6 +42,14 @@ public class PlayerStatus : MonoBehaviour
             playerStats.currentStamina = 0;
         }
     }
+    public void UseMp(int amount)
+    {
+        playerStats.currentMp -= amount;
+        if (playerStats.currentMp < 0)
+        {
+            playerStats.currentMp = 0;
+        }
+    }
 
     private void Die()
     {

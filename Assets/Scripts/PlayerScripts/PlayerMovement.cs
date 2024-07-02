@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (playerStatus.playerAlive)
+        if (playerStatus.playerAlive && !playerInputs.isInteracting)
         {
             Move(speed);
             ApplyGravity();
@@ -66,7 +66,8 @@ public class PlayerMovement : MonoBehaviour
         {
             speed = playerStats.sprintSpeed;
             characterController.Move(dodgeVec * Time.deltaTime * playerStats.playerSpeed * speed);
-        } else
+        }
+        else
         {
             Vector3 moveDirection = CalculateMoveDirection();
             characterController.Move(moveDirection * Time.deltaTime * playerStats.playerSpeed * speed);
@@ -96,7 +97,8 @@ public class PlayerMovement : MonoBehaviour
         if (!characterController.isGrounded)
         {
             velocity.y += gravity * Time.deltaTime;
-        } else
+        }
+        else
         {
             velocity.y = -0.5f;
         }
