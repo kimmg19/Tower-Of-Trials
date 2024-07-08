@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] Transform followCam;
+    Transform followCam;
     [HideInInspector] public Transform characterBody;
     [HideInInspector] public CharacterController characterController;
     [HideInInspector] public Vector3 dodgeVec;
@@ -96,7 +96,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!characterController.isGrounded)
         {
-            velocity.y += gravity * Time.deltaTime;
+            velocity.y += gravity * Time.deltaTime*2;
         }
         else
         {

@@ -9,7 +9,7 @@ public class InGameCanvas : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject pauseButton;
     bool isGamePaused = false;
-    [SerializeField]GameObject playerUI;
+    GameObject playerUI;
     public GameObject optionMenu;
     Portal portal;
     void Start()

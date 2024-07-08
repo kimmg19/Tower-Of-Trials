@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackState : StateMachineBehaviour
+public class AttackState_Slime : StateMachineBehaviour
 {
     Transform player; // 플레이어의 Transform을 저장하기 위한 변수
     PlayerStatus playerStatus;
