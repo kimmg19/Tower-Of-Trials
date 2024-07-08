@@ -3754,6 +3754,8 @@ GameObject:
   - component: {fileID: 680067377407433879}
   - component: {fileID: 6102689345896484835}
   - component: {fileID: 7344283181380685226}
+  - component: {fileID: 502412481151692749}
+  - component: {fileID: 6109210486481837562}
   m_Layer: 0
   m_Name: NPC-MAIN-02
   m_TagString: Untagged
@@ -3769,7 +3771,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6315207356527994799}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.7215564, z: 0, w: -0.69235575}
+  m_LocalRotation: {x: 0, y: -0.72155476, z: 0, w: 0.6923574}
   m_LocalPosition: {x: 21.085999, y: -0.00000017881393, z: -6.1809998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4275,6 +4277,41 @@ MonoBehaviour:
       val: 4980
   umaData: {fileID: 7399689492686864250}
   originalRace: {fileID: 0}
+--- !u!114 &502412481151692749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6315207356527994799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c10ac175270a7a2478e044d3fa431f22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionPrompt: {fileID: 0}
+  myConversation: {fileID: 0}
+--- !u!65 &6109210486481837562
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6315207356527994799}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1.9192427, z: 1.5194865}
+  m_Center: {x: -2.743502e-10, y: 0.8732913, z: 0.25974345}
 --- !u!1 &6342423622391812540
 GameObject:
   m_ObjectHideFlags: 0

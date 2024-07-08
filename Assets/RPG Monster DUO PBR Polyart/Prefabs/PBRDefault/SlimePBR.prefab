@@ -427,6 +427,7 @@ GameObject:
   - component: {fileID: 3803886834979818007}
   - component: {fileID: 1144301346873200478}
   - component: {fileID: 4952139627345113906}
+  - component: {fileID: 5151853122668469765}
   m_Layer: 0
   m_Name: SlimePBR
   m_TagString: Untagged
@@ -539,6 +540,27 @@ MonoBehaviour:
   healthBar: {fileID: 5986197242499829791}
   animator: {fileID: 0}
   enableDamaging: 0
+--- !u!65 &5151853122668469765
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931298151966786}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &410931481818650614
 GameObject:
   m_ObjectHideFlags: 0
