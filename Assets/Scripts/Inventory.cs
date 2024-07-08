@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    #region Singleton
+    #region #region Singleton
     public static Inventory instance;
     private void Awake()
     {
-        if(instance != null)
+        if (instance != null)
         {
             Destroy(gameObject);
             return;
@@ -16,6 +16,7 @@ public class Inventory : MonoBehaviour
         instance = this;
     }
     #endregion
+
 
     public delegate void OnSlotCountChange(int val);
     public OnSlotCountChange onSlotCountChange;
@@ -38,6 +39,7 @@ public class Inventory : MonoBehaviour
     void Start()
     {
         SlotCnt = 4;
+        LoadInventory();
     }
 
     public bool AddItem(Item _item)
@@ -46,10 +48,19 @@ public class Inventory : MonoBehaviour
         {
             items.Add(_item);
             if(onChangeItem != null)
-            onChangeItem.Invoke();
+                onChangeItem.Invoke();
+            SaveInventory();
             return true;
         }
         return false;
+    }
+
+    public void RemoveItem(int _index)
+    {
+        items.RemoveAt(_index);
+        if (onChangeItem != null)
+            onChangeItem.Invoke();
+        SaveInventory();
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -60,5 +71,39 @@ public class Inventory : MonoBehaviour
             if (AddItem(fieldItems.GetItem()))
                 fieldItems.DestroyItem();
         }
+    }
+
+    public void SaveInventory()
+    {
+        for (int i = 0; i < items.Count; i++)
+        {
+            string itemJson = items[i].ToJson();
+            PlayerPrefs.SetString("InventorySlot" + i, itemJson);
+        }
+        PlayerPrefs.SetInt("InventoryItemCount", items.Count);
+        PlayerPrefs.Save();
+        Debug.Log("Inventory saved with " + items.Count + " items.");
+    }
+
+    // 인벤토리 불러오기 메서드
+    public void LoadInventory()
+    {
+        items.Clear();
+        int itemCount = PlayerPrefs.GetInt("InventoryItemCount", 0);
+
+        for (int i = 0; i < itemCount; i++)
+        {
+            string itemJson = PlayerPrefs.GetString("InventorySlot" + i, string.Empty);
+            if (!string.IsNullOrEmpty(itemJson))
+            {
+                Item item = Item.FromJson(itemJson);
+                items.Add(item);
+            }
+        }
+
+        if (onChangeItem != null)
+            onChangeItem.Invoke();
+
+        Debug.Log("Inventory loaded with " + items.Count + " items.");
     }
 }
