@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    Transform followCam;
+    [SerializeField]Transform followCam;
     [HideInInspector] public Transform characterBody;
     [HideInInspector] public CharacterController characterController;
     [HideInInspector] public Vector3 dodgeVec;
