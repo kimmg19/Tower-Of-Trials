@@ -13,7 +13,7 @@ public class Slot : MonoBehaviour, IPointerUpHandler
 
     void Start()
     {
-        // PlayerStats ∞¥√º∏¶ ∞°¡Æø…¥œ¥Ÿ.
+        // PlayerStats Í∞ùÏ≤¥Î•º Ï∞æÏäµÎãàÎã§.
         playerStats = FindObjectOfType<PlayerStats>();
         if (playerStats == null)
         {
@@ -23,10 +23,24 @@ public class Slot : MonoBehaviour, IPointerUpHandler
 
     public void UpdateSlotUI()
     {
+        if (itemIcon == null)
+        {
+            Debug.LogError("ItemIcon is not assigned.");
+            return;
+        }
+
         if (item != null)
         {
-            itemIcon.sprite = item.itemImage;
-            itemIcon.gameObject.SetActive(true);
+            if (item.itemImage != null)
+            {
+                itemIcon.sprite = item.itemImage;
+                itemIcon.gameObject.SetActive(true);
+            }
+            else
+            {
+                Debug.LogWarning("Item's image is not assigned.");
+                itemIcon.gameObject.SetActive(false);
+            }
         }
         else
         {
@@ -37,7 +51,14 @@ public class Slot : MonoBehaviour, IPointerUpHandler
     public void RemoveSlot()
     {
         item = null;
-        itemIcon.gameObject.SetActive(false);
+        if (itemIcon != null)
+        {
+            itemIcon.gameObject.SetActive(false);
+        }
+        else
+        {
+            Debug.LogError("ItemIcon is not assigned.");
+        }
     }
 
     public void OnPointerUp(PointerEventData eventData)
