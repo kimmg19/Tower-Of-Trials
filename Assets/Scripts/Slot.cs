@@ -37,8 +37,17 @@ public class Slot : MonoBehaviour, IPointerUpHandler
         {
             if (item.itemImage != null)
             {
-                itemIcon.sprite = item.itemImage;
-                itemIcon.gameObject.SetActive(true);
+                // 스프라이트가 파괴되지 않았는지 확인
+                if (item.itemImage != null)
+                {
+                    itemIcon.sprite = item.itemImage;
+                    itemIcon.gameObject.SetActive(true);
+                }
+                else
+                {
+                    Debug.LogWarning("Item's image is destroyed.");
+                    itemIcon.gameObject.SetActive(false);
+                }
             }
             else
             {
