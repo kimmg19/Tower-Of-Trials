@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    #region #region Singleton
+    #region Singleton
     public static Inventory instance;
     private void Awake()
     {
@@ -33,12 +33,13 @@ public class Inventory : MonoBehaviour
         set
         {
             slotCnt = value;
-            onSlotCountChange.Invoke(slotCnt);
+            onSlotCountChange?.Invoke(slotCnt);
+            SaveSlotCount();
         }
     }
     void Start()
     {
-        SlotCnt = 4;
+        LoadSlotCount(); // Load the slot count from PlayerPrefs
         LoadInventory();
     }
 
@@ -108,5 +109,15 @@ public class Inventory : MonoBehaviour
             onChangeItem.Invoke();
 
         Debug.Log("Inventory loaded with " + items.Count + " items.");
+    }
+    private void SaveSlotCount()
+    {
+        PlayerPrefs.SetInt("InventorySlotCount", SlotCnt);
+        PlayerPrefs.Save();
+    }
+
+    private void LoadSlotCount()
+    {
+        SlotCnt = PlayerPrefs.GetInt("InventorySlotCount", 4); // Default to 4 if no value is found
     }
 }

@@ -49,6 +49,10 @@ public class InventoryUI : MonoBehaviour
     {
         inven.SlotCnt++;
     }
+    public void RemoveSlot()
+    {
+        inven.SlotCnt--;
+    }
 
     void RedrawSlotUI()
     {
