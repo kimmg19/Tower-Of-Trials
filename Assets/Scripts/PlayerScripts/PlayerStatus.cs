@@ -7,12 +7,16 @@ using UnityEngine.UI;
 public class PlayerStatus : MonoBehaviour
 {
     InGameCanvas inGameCanvas;
+    PlayerInputs playerInputs;
     private Animator animator;
+    AnimationEvent animationEvent;
     [HideInInspector] public bool playerAlive = true;
     PlayerStats playerStats;
 
-    void Start (){
-
+    void Start()
+    {
+        playerInputs = GetComponent<PlayerInputs>();
+        animationEvent = GetComponent<AnimationEvent>();
         inGameCanvas = FindObjectOfType<InGameCanvas>();
         animator = GetComponent<Animator>();
         playerStats = GetComponent<PlayerStats>();
@@ -20,18 +24,22 @@ public class PlayerStatus : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (playerStats.currentHp > 0)
+        if (!playerInputs.isDodging)
         {
-            playerStats.currentHp -= damage;
-            animator.SetTrigger("PlayerHit");
-            AudioManager.instance.Play("PlayerHit");
-            print("플레이어 공격 받음");
-
-            if (playerStats.currentHp <= 0){
-                Die();
+            animationEvent.OnFinishAttack();
+            animationEvent.AtttackEffectOff();
+            if (playerStats.currentHp > 0)
+            {
+                playerStats.currentHp -= damage;
+                /*animator.SetTrigger("PlayerHit");
+                AudioManager.instance.Play("PlayerHit");*/
+                print("플레이어 공격 받음");
+                if (playerStats.currentHp <= 0)
+                {
+                    Die();
+                }
             }
-        } 
- 
+        }
     }
 
     public void UseStamina(int amount)

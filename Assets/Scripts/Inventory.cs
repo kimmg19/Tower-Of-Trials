@@ -65,15 +65,18 @@ public class Inventory : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if(collision.CompareTag("FieldItem"))
+        if (collision.CompareTag("FieldItem"))
         {
             FieldItems fieldItems = collision.GetComponent<FieldItems>();
             if (AddItem(fieldItems.GetItem()))
                 fieldItems.DestroyItem();
+        } else
+        {
+            print(collision.name);
         }
     }
 
-    public void SaveInventory()
+        public void SaveInventory()
     {
         for (int i = 0; i < items.Count; i++)
         {

@@ -34,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        
         if (playerStatus.playerAlive && !playerInputs.isInteracting)
         {
             Move(speed);
