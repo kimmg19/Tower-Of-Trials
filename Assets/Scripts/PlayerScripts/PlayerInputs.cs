@@ -52,8 +52,7 @@ public class PlayerInputs : MonoBehaviour
         {
             isRunning = true;
             StartCoroutine(SprintCoroutine());
-        }
-        else
+        } else
         {
             isRunning = false;
             StopCoroutine(SprintCoroutine());
@@ -73,10 +72,13 @@ public class PlayerInputs : MonoBehaviour
     void OnRoll()
     {
         if (isInteracting) return;  // 상호작용 중일 때는 입력 무시
-        if (moveInput.magnitude != 0 && !isDodging && playerMovement.characterController.isGrounded)
+        if (moveInput.magnitude != 0 && !isDodging && playerMovement.characterController.isGrounded)//이동 중일 때, 구르지 않을 때, 땅에 있을 떄
         {
+
             if (playerStats.currentStamina >= 15) // 스태미나가 충분한지 확인
             {
+                animationEvent.OnFinishAttack();
+                animationEvent.AtttackEffectOff();
                 playerStatus.UseStamina(15);  // 스태미나 감소
                 isDodging = true;
                 AudioManager.instance.Play("PlayerRoll");
@@ -91,8 +93,14 @@ public class PlayerInputs : MonoBehaviour
 
     void OnInteraction()
     {
-        isGPress = true;
+        StartCoroutine("Interactting");
         Debug.Log("G key pressed in PlayerInputs.");
+    }
+    IEnumerator Interactting()
+    {
+        isGPress = true;
+        yield return new WaitForSeconds(1f);
+        isGPress = false;
     }
 
     void OnPause()
