@@ -33,9 +33,11 @@ public class Portal : MonoBehaviour
     {
         if (playerInputs.isGPress && AskSelection.activeSelf)
         {
+            playerInputs.isInteracting = true;
             floorSelection.SetActive(true);
             AskSelection.SetActive(false);
             playerUI.SetActive(false);
+            playerInputs.isInteracting = true;
         }
     }
 
@@ -65,6 +67,8 @@ public class Portal : MonoBehaviour
             {
                 floorSelection.SetActive(false);
             }
+            playerInputs.isInteracting = false;
+
         }
     }
 
@@ -84,5 +88,7 @@ public class Portal : MonoBehaviour
     {
         AskSelection.SetActive(true);
         floorSelection.SetActive(false);
+        playerInputs.isInteracting = false;
+
     }
 }
