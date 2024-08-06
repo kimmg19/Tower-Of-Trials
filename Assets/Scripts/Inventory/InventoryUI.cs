@@ -40,9 +40,14 @@ public class InventoryUI : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
-            activeInventory = !activeInventory;
-            inventoryPanel.SetActive(activeInventory);
+            ToggleInventory();
         }
+    }
+
+    public void ToggleInventory()
+    {
+        activeInventory = !activeInventory;
+        inventoryPanel.SetActive(activeInventory);
     }
 
     public void AddSlot()

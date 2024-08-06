@@ -120,4 +120,12 @@ public class Inventory : MonoBehaviour
     {
         SlotCnt = PlayerPrefs.GetInt("InventorySlotCount", 4); // Default to 4 if no value is found
     }
+
+    public void ResetSlot()
+    {
+        items.Clear(); // 아이템 리스트 초기화
+        onChangeItem?.Invoke(); // UI 갱신을 위해 델리게이트 호출
+        SaveInventory(); // 변경된 인벤토리 상태 저장
+        Debug.Log("Inventory has been reset. Current item count: " + items.Count);
+    }
 }
