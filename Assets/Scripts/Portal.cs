@@ -87,8 +87,17 @@ public class Portal : MonoBehaviour
     public void OnClickCloseButton()
     {
         print("눌렀음");
-        AskSelection.SetActive(true);
-        floorSelection.SetActive(false);
+        if (floorSelection != null)
+        {
+            floorSelection.SetActive(false);
+        }
+        else
+        {
+            Debug.LogWarning("floorSelection is null!");
+        }
+        playerUI.SetActive(true);
+        playerInputs.isGPress = false;
+        //AskSelection.SetActive(true);
         playerInputs.isInteracting = false;
 
     }

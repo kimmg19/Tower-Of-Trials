@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class InventoryUI : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class InventoryUI : MonoBehaviour
         inventoryPanel.SetActive(activeInventory);
     }
 
-    private void SlotChange(int val)
+    public void SlotChange(int val)
     {
         for(int i = 0; i < slots.Length; i++)
         {
@@ -36,9 +37,9 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
-    private void Update()
+    public void OnToggleInventory(InputAction.CallbackContext context)
     {
-        if (Input.GetKeyDown(KeyCode.I))
+        if (context.performed)
         {
             ToggleInventory();
         }
@@ -59,7 +60,7 @@ public class InventoryUI : MonoBehaviour
         inven.SlotCnt--;
     }
 
-    void RedrawSlotUI()
+    public void RedrawSlotUI()
     {
         for(int i = 0; i< slots.Length; i++)
         {

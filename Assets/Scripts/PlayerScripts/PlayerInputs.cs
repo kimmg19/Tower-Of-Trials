@@ -11,6 +11,7 @@ public class PlayerInputs : MonoBehaviour
     PlayerMovement playerMovement;
     PlayerStats playerStats;
     PlayerUI playerUI;
+    InventoryUI inventoryUI;
     PlayerStatus playerStatus;
     [HideInInspector] public Vector2 moveInput;
     [HideInInspector] public bool isRunning = false;

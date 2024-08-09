@@ -94,8 +94,6 @@ GameObject:
   - component: {fileID: 4083679350173494}
   - component: {fileID: 2285849300165204092}
   - component: {fileID: 5931747176906075144}
-  - component: {fileID: 1474513050725979836}
-  - component: {fileID: 2594279537262787905}
   m_Layer: 0
   m_Name: GPVFX_POTION D
   m_TagString: FieldItem
@@ -143,46 +141,6 @@ BoxCollider:
   m_Size: {x: 0.51566315, y: 1.8909773, z: 0.53064156}
   m_Center: {x: 0.0032639503, y: 0.04341954, z: -0.008662224}
 --- !u!114 &5931747176906075144
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1305883699301654}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c3fff3800bcbb144907b624de19e96a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  item:
-    itemType: 1
-    itemName: ManaPotion
-    itemImage: {fileID: 21300000, guid: c2088cab6346ca244be1ed807d2f1ada, type: 3}
-    efts:
-    - {fileID: 11400000, guid: 37c98d536e0642b4984960b935ac2e81, type: 2}
-  image: {fileID: 0}
---- !u!65 &1474513050725979836
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1305883699301654}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.51566315, y: 1.8909773, z: 0.53064156}
-  m_Center: {x: 0.0032639503, y: 0.04341954, z: -0.008662224}
---- !u!114 &2594279537262787905
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
