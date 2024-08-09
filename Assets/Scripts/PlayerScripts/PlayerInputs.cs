@@ -12,6 +12,7 @@ public class PlayerInputs : MonoBehaviour
     PlayerStats playerStats;
     PlayerUI playerUI;
     PlayerStatus playerStatus;
+    LockOnSystem lockOnSystem;  // LockOnSystem 스크립트 참조 추가
     [HideInInspector] public Vector2 moveInput;
     [HideInInspector] public bool isRunning = false;
     [HideInInspector] public bool isDodging;
@@ -28,6 +29,7 @@ public class PlayerInputs : MonoBehaviour
         inGameCanvas = GameObject.Find("InGameCanvas");
         animationEvent = GetComponent<AnimationEvent>();
         animator = GetComponent<Animator>();
+        lockOnSystem = GetComponent<LockOnSystem>();  // LockOnSystem 스크립트 초기화
     }
 
     void OnMove(InputValue value)
@@ -52,7 +54,8 @@ public class PlayerInputs : MonoBehaviour
         {
             isRunning = true;
             StartCoroutine(SprintCoroutine());
-        } else
+        } 
+        else
         {
             isRunning = false;
             StopCoroutine(SprintCoroutine());
@@ -72,9 +75,8 @@ public class PlayerInputs : MonoBehaviour
     void OnRoll()
     {
         if (isInteracting) return;  // 상호작용 중일 때는 입력 무시
-        if (moveInput.magnitude != 0 && !isDodging && playerMovement.characterController.isGrounded)//이동 중일 때, 구르지 않을 때, 땅에 있을 떄
+        if (moveInput.magnitude != 0 && !isDodging && playerMovement.characterController.isGrounded)
         {
-
             if (playerStats.currentStamina >= 15) // 스태미나가 충분한지 확인
             {
                 animationEvent.OnFinishAttack();
@@ -96,6 +98,7 @@ public class PlayerInputs : MonoBehaviour
         StartCoroutine("Interactting");
         Debug.Log("G key pressed in PlayerInputs.");
     }
+
     IEnumerator Interactting()
     {
         isGPress = true;
@@ -107,5 +110,19 @@ public class PlayerInputs : MonoBehaviour
     {
         if (isInteracting) return;  // 상호작용 중일 때는 입력 무시
         inGameCanvas.GetComponent<InGameCanvas>().ClickPauseButton();
+    }
+
+    // Q 키 입력에 대한 LockOn 기능 호출
+    void OnLockOn()
+    {
+        if (isInteracting) return;  // 상호작용 중일 때는 입력 무시
+        lockOnSystem.ToggleLockOn();  // LockOnSystem의 ToggleLockOn 메서드 호출
+    }
+
+    // E 키 입력에 대한 타겟 전환 기능 추가
+    void OnSwitchTarget()
+    {
+        if (isInteracting) return;  // 상호작용 중일 때는 입력 무시
+        lockOnSystem.SwitchTarget();  // LockOnSystem의 SwitchTarget 메서드 호출
     }
 }

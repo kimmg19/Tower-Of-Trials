@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
     public Slider healthBar;
     public Animator animator;
     public bool enableDamaging=false;
+
     PlayerStats playerStats;
     PlayerStatus playerStatus;
     void Start()
