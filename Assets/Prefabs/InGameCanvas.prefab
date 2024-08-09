@@ -399,6 +399,18 @@ MonoBehaviour:
     m_ActionId: 1b8a3f16-3d42-4622-a4b6-bdbeb8429998
     m_ActionName: Player/Pause[/Keyboard/escape]
   - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: bdf4c00c-6482-4f08-9d7b-8135b38c1dbf
+    m_ActionName: Player/Block[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ba1ecb04-77ab-4cf1-8a2f-e626aa50785f
+    m_ActionName: Player/Jump[/Keyboard/alt]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 123b97be-2aec-4384-b870-9e0f2883ee11
+    m_ActionName: Player/Walk[/Keyboard/leftCtrl]
+  - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1797204776517098529}
         m_TargetAssemblyTypeName: InventoryUI, Assembly-CSharp
@@ -412,14 +424,14 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: aedc41b6-df81-4a87-a203-36a77d291522
-    m_ActionName: Inventory/Inventory[/Keyboard/i]
+    m_ActionId: 24a1ce1f-e405-4cc8-8d00-45b0c5fd033e
+    m_ActionName: UI/Inventory[/Keyboard/i]
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1158399467056193315}
         m_TargetAssemblyTypeName: ShopUI, Assembly-CSharp
-        m_MethodName: OnToggleShop
-        m_Mode: 0
+        m_MethodName: ToggleShop
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -428,8 +440,16 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 3432b07e-3bcc-4d20-83c0-761c7623c329
-    m_ActionName: UI/Store[/Keyboard/i]
+    m_ActionId: 764ec224-a3da-401a-90e8-64412bced0e1
+    m_ActionName: UI/Shop[/Keyboard/p]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6e08d9a8-84e9-4d6f-900b-67579d4457e7
+    m_ActionName: Player/LockOn[/Keyboard/q]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 40c067d5-90d8-4c96-ad20-f2dc6ea620ed
+    m_ActionName: Player/SwitchTarget[/Keyboard/tab]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: UI

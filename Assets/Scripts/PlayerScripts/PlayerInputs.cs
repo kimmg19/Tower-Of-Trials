@@ -7,7 +7,7 @@ public class PlayerInputs : MonoBehaviour
 {
     GameObject inGameCanvas;
     AnimationEvent animationEvent;
-
+    LockOnSystem lockOnSystem;  // LockOnSystem 스크립트 참조 추가
     PlayerMovement playerMovement;
     PlayerStats playerStats;
     PlayerUI playerUI;
@@ -24,6 +24,7 @@ public class PlayerInputs : MonoBehaviour
 
     void Start()
     {
+        lockOnSystem = GetComponent<LockOnSystem>();  // LockOnSystem 스크립트 초기화
         playerStats = GetComponent<PlayerStats>();
         playerUI = GetComponent<PlayerUI>();
         playerMovement = GetComponent<PlayerMovement>();
@@ -147,5 +148,16 @@ public class PlayerInputs : MonoBehaviour
             playerMovement.Jump(); // 점프 메서드 호출
         }
     }
+    void OnLockOn()
+    {
+        if (isInteracting) return;  // 상호작용 중일 때는 입력 무시
+        lockOnSystem.ToggleLockOn();  // LockOnSystem의 ToggleLockOn 메서드 호출
+    }
 
+    // E 키 입력에 대한 타겟 전환 기능 추가
+    void OnSwitchTarget()
+    {
+        if (isInteracting) return;  // 상호작용 중일 때는 입력 무시
+        lockOnSystem.SwitchTarget();  // LockOnSystem의 SwitchTarget 메서드 호출
+    }
 }
