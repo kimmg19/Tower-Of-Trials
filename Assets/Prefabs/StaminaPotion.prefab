@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 7038016774405914018}
   - component: {fileID: 76900484530369367}
   - component: {fileID: 5631355483206826738}
-  - component: {fileID: 4918083027869773792}
-  - component: {fileID: 1616216977769395922}
   m_Layer: 0
   m_Name: StaminaPotion
   m_TagString: FieldItem
@@ -28,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2055770468186833924}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.0606537, y: 1.07, z: -3.607966}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -60,46 +58,6 @@ BoxCollider:
   m_Size: {x: 0.51566315, y: 1.8909773, z: 0.53064156}
   m_Center: {x: 0.0032639503, y: 0.04341954, z: -0.008662224}
 --- !u!114 &5631355483206826738
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2055770468186833924}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c3fff3800bcbb144907b624de19e96a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  item:
-    itemType: 1
-    itemName: ManaPotion
-    itemImage: {fileID: 21300000, guid: c2088cab6346ca244be1ed807d2f1ada, type: 3}
-    efts:
-    - {fileID: 11400000, guid: 37c98d536e0642b4984960b935ac2e81, type: 2}
-  image: {fileID: 0}
---- !u!65 &4918083027869773792
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2055770468186833924}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.51566315, y: 1.8909773, z: 0.53064156}
-  m_Center: {x: 0.0032639503, y: 0.04341954, z: -0.008662224}
---- !u!114 &1616216977769395922
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
