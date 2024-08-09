@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -64,7 +65,11 @@ public class PlayerMovement : MonoBehaviour
     {
         // 공격 중이고 회피 중이 아니라면 이동하지 않음
         if (animationEvent.IsAttacking() && !playerInputs.isDodging) return;
+        if (playerInputs.isWalking)
+        {
+            newSpeed = playerStats.walkSpeed;
 
+        }
         // 이동 속도를 설정하고 애니메이터에 속도 값 전달
         float speed = playerInputs.isRunning ? playerStats.sprintSpeed : newSpeed;
         animator.SetFloat("speed", playerInputs.moveInput.magnitude * speed, speedDampTime, Time.deltaTime);
@@ -114,4 +119,9 @@ public class PlayerMovement : MonoBehaviour
         }
         characterController.Move(velocity * Time.deltaTime);
     }
+    public void Jump()
+    {
+        animator.SetTrigger("Jump");
+    }
+
 }

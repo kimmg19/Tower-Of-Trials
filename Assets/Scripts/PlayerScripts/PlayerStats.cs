@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {   
-    public float playerSpeed = 5f;
+    public float playerSpeed = 4f;
     public float sprintSpeed = 1.5f;
+    public float walkSpeed = 0.5f;//천천ㅎ ㅣ 걷기 속도
     public int maxHp = 100;
     public int maxMp = 100;
     public int maxStamina = 50;

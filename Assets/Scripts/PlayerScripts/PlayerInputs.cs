@@ -17,6 +17,9 @@ public class PlayerInputs : MonoBehaviour
     [HideInInspector] public bool isDodging;
     [HideInInspector] public bool isGPress;
     [HideInInspector] public bool isInteracting = false;
+    [HideInInspector] public bool isBlocking = false;
+    [HideInInspector] public bool isWalking = false;
+
     Animator animator;
 
     void Start()
@@ -32,7 +35,7 @@ public class PlayerInputs : MonoBehaviour
 
     void OnMove(InputValue value)
     {
-        if (isInteracting) return;  // 상호작용 중일 때는 입력 무시
+        if (isInteracting) return;  // 상호작용 중일 때, 방어 중일 때 입력 무시
         moveInput = value.Get<Vector2>();
     }
 
@@ -45,18 +48,26 @@ public class PlayerInputs : MonoBehaviour
         }
     }
 
-    void OnSprint()
+    void OnSprint(InputValue value)
     {
         if (isInteracting) return;  // 상호작용 중일 때는 입력 무시
-        if (!isRunning && playerStats.currentStamina > 0)
+
+        isRunning = value.isPressed;
+
+        if (isRunning && playerStats.currentStamina > 0)
         {
-            isRunning = true;
             StartCoroutine(SprintCoroutine());
         } else
         {
-            isRunning = false;
             StopCoroutine(SprintCoroutine());
         }
+    }
+
+    void OnWalk(InputValue value)
+    {
+        if (isInteracting) return;
+        isWalking = value.isPressed;
+
     }
 
     void OnAttack()
@@ -74,7 +85,6 @@ public class PlayerInputs : MonoBehaviour
         if (isInteracting) return;  // 상호작용 중일 때는 입력 무시
         if (moveInput.magnitude != 0 && !isDodging && playerMovement.characterController.isGrounded)//이동 중일 때, 구르지 않을 때, 땅에 있을 떄
         {
-
             if (playerStats.currentStamina >= 15) // 스태미나가 충분한지 확인
             {
                 animationEvent.OnFinishAttack();
@@ -101,6 +111,7 @@ public class PlayerInputs : MonoBehaviour
         isGPress = true;
         yield return new WaitForSeconds(1f);
         isGPress = false;
+
     }
 
     void OnPause()
@@ -108,4 +119,33 @@ public class PlayerInputs : MonoBehaviour
         if (isInteracting) return;  // 상호작용 중일 때는 입력 무시
         inGameCanvas.GetComponent<InGameCanvas>().ClickPauseButton();
     }
+    //방어
+    void OnBlock(InputValue value)
+    {
+        if (isInteracting) return;  // 상호작용 중일 때는 입력 무시
+
+        animationEvent.OnFinishAttack();
+        animationEvent.AtttackEffectOff();
+        bool shouldBlock = value.isPressed;
+
+        if (shouldBlock != isBlocking)
+        {
+            // 상태가 변경될 때만 애니메이션 상태를 업데이트
+            isBlocking = shouldBlock;
+            animator.SetBool("Block", isBlocking);
+        }
+    }
+    //패링
+    void OnParry()
+    {
+
+    }
+    void OnJump()
+    {
+        if (!isInteracting && playerMovement.characterController.isGrounded)
+        {
+            playerMovement.Jump(); // 점프 메서드 호출
+        }
+    }
+
 }

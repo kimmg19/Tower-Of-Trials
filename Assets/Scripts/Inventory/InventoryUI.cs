@@ -7,7 +7,8 @@ using UnityEngine.UI;
 public class InventoryUI : MonoBehaviour
 {
     Inventory inven;
-
+    GameObject player;
+    PlayerInputs playerInputs;
     public GameObject inventoryPanel;
     bool activeInventory = false;
 
@@ -16,6 +17,8 @@ public class InventoryUI : MonoBehaviour
 
     private void Start()
     {
+        player = GameObject.FindWithTag("Player");
+        playerInputs = player.GetComponent<PlayerInputs>();
         inven = Inventory.instance;
         slots = slotHolder.GetComponentsInChildren<Slot>();
         inven.onSlotCountChange += SlotChange;
@@ -46,6 +49,7 @@ public class InventoryUI : MonoBehaviour
 
     public void ToggleInventory()
     {
+        playerInputs.isInteracting = !playerInputs.isInteracting;
         activeInventory = !activeInventory;
         inventoryPanel.SetActive(activeInventory);
     }

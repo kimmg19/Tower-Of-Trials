@@ -56,6 +56,7 @@ public class AnimationEvent : MonoBehaviour
                     animator.GetCurrentAnimatorStateInfo(0).IsName("Attack2") ||
                     animator.GetCurrentAnimatorStateInfo(0).IsName("Attack3") || isAttacking);
     }
+
 }
 
 
