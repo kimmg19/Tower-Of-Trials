@@ -9,7 +9,6 @@ public class AnimationEvent : MonoBehaviour
     PlayerInputs playerInputs;
     [SerializeField] TrailRenderer trailRenderer;
     [HideInInspector] public bool enableDamaging;
-    [HideInInspector] public bool isAttacking = false;
     Animator animator;
 
     void Start()
@@ -41,7 +40,7 @@ public class AnimationEvent : MonoBehaviour
     }
     public void OnFinishAttack()
     {
-        isAttacking = false;
+        playerInputs.isAttacking = false;
     }
     void EndDodge()
     {
@@ -54,7 +53,7 @@ public class AnimationEvent : MonoBehaviour
     {
         return (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack1") ||
                     animator.GetCurrentAnimatorStateInfo(0).IsName("Attack2") ||
-                    animator.GetCurrentAnimatorStateInfo(0).IsName("Attack3") || isAttacking);
+                    animator.GetCurrentAnimatorStateInfo(0).IsName("Attack3") || playerInputs.isAttacking);
     }
 
 }
