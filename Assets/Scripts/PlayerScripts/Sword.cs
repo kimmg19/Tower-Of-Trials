@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class Sword : MonoBehaviour
 {
+    
     Enemy enemy;
     Dummy dummy;
     AnimationEvent animationEvent;
     public int damageAmount = 20;
+    private void Awake()
+    {
+        Debug.Log("°ø°Ý·Â: " + damageAmount);
+    }
 
     private void Start()
     {

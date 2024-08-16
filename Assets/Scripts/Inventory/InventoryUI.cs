@@ -12,7 +12,6 @@ public class InventoryUI : MonoBehaviour
     PlayerInputs playerInputs;
     public GameObject inventoryPanel;
     bool activeInventory = false;
-
     public Slot[] slots;
     public Transform slotHolder;
 

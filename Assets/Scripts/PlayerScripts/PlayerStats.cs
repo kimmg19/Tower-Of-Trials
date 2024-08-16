@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
-{   
+{
+    public Sword sword;
+    public float weaponATK;
     public float playerSpeed = 4f;
     public float sprintSpeed = 1.5f;
     public float walkSpeed = 0.5f;//천천ㅎ ㅣ 걷기 속도
@@ -35,5 +37,18 @@ public class PlayerStats : MonoBehaviour
         currentHp = maxHp;
         currentMp = maxMp;
         currentStamina = maxStamina;
-    }    
+    }
+    public void IncreaseSwordDamage(int amount)
+    {
+        if (sword != null)
+        {
+            sword.damageAmount += amount;
+            Debug.Log("Sword damageAmount is now: " + sword.damageAmount);
+        }
+        else
+        {
+            Debug.LogWarning("playerSword is null.");
+        }
+        weaponATK = sword.damageAmount;
+    }
 }
