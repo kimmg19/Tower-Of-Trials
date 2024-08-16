@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Sword : MonoBehaviour
 {
-    Enemy enemy;
+    BaseEnemy enemy;
     Dummy dummy;
     AnimationEvent animationEvent;
     public int damageAmount = 20;
@@ -12,7 +12,7 @@ public class Sword : MonoBehaviour
     private void Start()
     {
         animationEvent =GetComponentInParent<AnimationEvent>();
-        enemy = FindObjectOfType<Enemy>();
+        enemy = FindObjectOfType<BaseEnemy>();
         dummy = FindObjectOfType<Dummy>();
     }
     void Update()
