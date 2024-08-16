@@ -19,7 +19,8 @@ public class PlayerInputs : MonoBehaviour
     [HideInInspector] public bool isInteracting = false;
     [HideInInspector] public bool isBlocking = false;
     [HideInInspector] public bool isWalking = false;
-
+    [HideInInspector] public bool isAttacking = false;
+    [HideInInspector] public bool isJumping = false;
     Animator animator;
 
     void Start()
@@ -36,7 +37,7 @@ public class PlayerInputs : MonoBehaviour
 
     void OnMove(InputValue value)
     {
-        if (isInteracting) return;  // 상호작용 중일 때, 방어 중일 때 입력 무시
+        if (isInteracting) return;  // 상호작용 중일 때 입력 무시
         moveInput = value.Get<Vector2>();
     }
 
@@ -68,38 +69,23 @@ public class PlayerInputs : MonoBehaviour
     {
         if (isInteracting) return;
         isWalking = value.isPressed;
-
     }
 
     void OnAttack()
     {
-        if (isInteracting) return;  // 상호작용 중일 때는 입력 무시
+        if (isInteracting || isBlocking) return;  // 상호작용 중일 때는 입력 무시
         if (playerMovement.characterController.isGrounded && !isDodging)
         {
-            animationEvent.isAttacking = true;
+            isAttacking = true;
             animator.SetTrigger("Attack");
         }
     }
 
     void OnRoll()
     {
-        if (isInteracting) return;  // 상호작용 중일 때는 입력 무시
-        if (moveInput.magnitude != 0 && !isDodging && playerMovement.characterController.isGrounded)//이동 중일 때, 구르지 않을 때, 땅에 있을 떄
-        {
-            if (playerStats.currentStamina >= 15) // 스태미나가 충분한지 확인
-            {
-                animationEvent.OnFinishAttack();
-                animationEvent.AtttackEffectOff();
-                playerStatus.UseStamina(15);  // 스태미나 감소
-                isDodging = true;
-                AudioManager.instance.Play("PlayerRoll");
-                playerMovement.dodgeVec = playerMovement.CalculateMoveDirection().normalized;
-                animator.SetTrigger("Dodge");
-                playerMovement.characterController.center = new Vector3(0, 0.5f, 0);
-                playerMovement.characterController.height = 1f;
-                playerMovement.characterBody.rotation = Quaternion.LookRotation(playerMovement.dodgeVec);
-            }
-        }
+        if (isInteracting|| moveInput.magnitude == 0|| isDodging|| playerStats.currentStamina < 15) return;  // 상호작용 중일 때는 입력 무시
+        playerMovement.Roll();
+        isDodging = true;
     }
 
     void OnInteraction()
@@ -107,12 +93,12 @@ public class PlayerInputs : MonoBehaviour
         StartCoroutine("Interactting");
         Debug.Log("G key pressed in PlayerInputs.");
     }
+
     IEnumerator Interactting()
     {
         isGPress = true;
         yield return new WaitForSeconds(1f);
         isGPress = false;
-
     }
 
     void OnPause()
@@ -120,34 +106,40 @@ public class PlayerInputs : MonoBehaviour
         if (isInteracting) return;  // 상호작용 중일 때는 입력 무시
         inGameCanvas.GetComponent<InGameCanvas>().ClickPauseButton();
     }
-    //방어
+
+    // 방어
     void OnBlock(InputValue value)
     {
-        if (isInteracting) return;  // 상호작용 중일 때는 입력 무시
-
+        if (isInteracting || animationEvent.IsAttacking()) return;  // 상호작용 중일 때는 입력 무시
         animationEvent.OnFinishAttack();
         animationEvent.AtttackEffectOff();
-        bool shouldBlock = value.isPressed;
-
-        if (shouldBlock != isBlocking)
-        {
-            // 상태가 변경될 때만 애니메이션 상태를 업데이트
-            isBlocking = shouldBlock;
-            animator.SetBool("Block", isBlocking);
-        }
+        isBlocking = value.isPressed;
+        animator.SetBool("Block", isBlocking);
     }
-    //패링
+
+    // 패링
     void OnParry()
     {
-
+        // 패링 로직 추가 (미구현 상태)
     }
+
     void OnJump()
     {
-        if (!isInteracting && playerMovement.characterController.isGrounded)
+        if (!isInteracting && playerMovement.characterController.isGrounded && !isJumping && !animationEvent.IsAttacking())
         {
+            // 점프 시작
+            StartCoroutine(JumpCoroutine());
             playerMovement.Jump(); // 점프 메서드 호출
         }
     }
+
+    IEnumerator JumpCoroutine()
+    {
+        isJumping = true;
+        yield return new WaitForSeconds(2f);
+        isJumping = false;
+    }
+
     void OnLockOn()
     {
         if (isInteracting) return;  // 상호작용 중일 때는 입력 무시

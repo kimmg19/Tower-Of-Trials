@@ -10,10 +10,12 @@ public class PlayerStatsUI : MonoBehaviour
     public Text staminaText;
     public Text speedText;
     public Text attackText;
+    public Text weaponATK;
 
     public PlayerStats playerStats;
     public PlayerMovement playerMovement;
     public Sword sword;
+    public SwordEft swordEft;
 
     void Update()
     {
@@ -23,5 +25,6 @@ public class PlayerStatsUI : MonoBehaviour
         staminaText.text = "Stamina: " + playerStats.currentStamina.ToString();
         speedText.text = "Speed: " + playerMovement.speed.ToString();
         attackText.text = "Attack: " + sword.damageAmount.ToString();
+        weaponATK.text = "+" + swordEft.SwordAttackPoint.ToString();
     }
 }

@@ -10,16 +10,19 @@ public class LockOnSystem : MonoBehaviour
     public bool isLockOn = false;  // Lock On 상태를 나타내는 플래그
     public float lockOnRadius = 10f;  // Lock On 범위
     public LayerMask lockOnLayerMask;  // Lock On 가능한 레이어
-
+    Animator animator;
     private List<Transform> availableTargets;  // Lock On 가능한 모든 타겟 리스트
     private int currentTargetIndex = 0;  // 현재 타겟의 인덱스
     private Transform playerTransform;
+    public RuntimeAnimatorController playerAnimator;
+    public RuntimeAnimatorController playerAnimator_LockOn;
 
     void Start()
     {
         availableTargets = new List<Transform>();
         playerTransform = this.transform;  // 플레이어의 Transform 참조
-
+        animator = GetComponent<Animator>();
+        
         // 초기에는 LockonCamera를 비활성화
         if (lockonCamera != null)
         {
@@ -64,12 +67,15 @@ public class LockOnSystem : MonoBehaviour
 
                 // LockonCamera 활성화
                 lockonCamera.gameObject.SetActive(true);
+                ChangeAnimatorController(playerAnimator_LockOn);
             }
             else
             {
                 // 타겟이 없을 경우 Lock On 해제
                 isLockOn = false;
                 lockonCamera.gameObject.SetActive(false);
+                ChangeAnimatorController(playerAnimator);
+
             }
         }
         else
@@ -80,9 +86,16 @@ public class LockOnSystem : MonoBehaviour
 
             // LockonCamera 비활성화
             lockonCamera.gameObject.SetActive(false);
+            ChangeAnimatorController(playerAnimator);
+
         }
 
         Debug.Log($"LockOn state: {isLockOn}");
+    }
+
+    void ChangeAnimatorController(RuntimeAnimatorController newController)//락온 on/off때마다 애니메이터 바꾸기
+    {                
+        animator.runtimeAnimatorController = newController;
     }
 
     void FindTargets()
