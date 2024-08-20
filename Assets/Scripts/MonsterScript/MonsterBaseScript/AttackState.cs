@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class AttackState : BaseState
 {
-    private float attackRange = 1.3f;
+    protected float attackRange = 1.3f;
 
     protected override void OnStateEnterCustom(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {

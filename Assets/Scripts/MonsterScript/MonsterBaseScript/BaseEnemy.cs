@@ -22,11 +22,27 @@ public abstract class BaseEnemy : MonoBehaviour
         }
 
         InitializeStats(); // 하위 클래스에서 고유의 값 설정
+
+        // 슬라임의 자식 오브젝트에서 슬라이더 컴포넌트를 찾아 할당
+        healthBar = GetComponentInChildren<Slider>();
+
+        if (healthBar == null)
+        {
+            Debug.LogWarning($"{gameObject.name} is missing a health bar!");
+        }
+        else
+        {
+            Debug.Log($"{gameObject.name} has a health bar assigned: {healthBar.name}");
+        }
     }
 
     protected virtual void Update()
     {
-        healthBar.value = HP;
+        // 각 슬라임의 헬스바를 개별적으로 업데이트
+        if (healthBar != null)
+        {
+            healthBar.value = HP;
+        }
     }
 
     protected abstract void InitializeStats(); // 파생 클래스에서 값을 초기화하도록 강제
@@ -41,7 +57,7 @@ public abstract class BaseEnemy : MonoBehaviour
         else
         {
             animator.SetTrigger("damage");
-            Debug.Log($"{gameObject.name} got damage");
+            Debug.Log($"{gameObject.name} took damage. Current HP: {HP}");
         }
     }
 

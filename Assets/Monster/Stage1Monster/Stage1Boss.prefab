@@ -1100,7 +1100,7 @@ GameObject:
   - component: {fileID: 2854467162015657975}
   - component: {fileID: 5268789780949299401}
   m_Layer: 0
-  m_Name: BossHp
+  m_Name: 1stBossHp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1772,7 +1772,7 @@ GameObject:
   - component: {fileID: 4310453393625707504}
   - component: {fileID: 1150127998276164035}
   m_Layer: 0
-  m_Name: BossName
+  m_Name: 1stBossName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2013,10 +2013,10 @@ GameObject:
   - component: {fileID: 8042073445050996160}
   - component: {fileID: 6818090260590199927}
   - component: {fileID: 7769784990984530215}
-  - component: {fileID: 3150585463232540149}
+  - component: {fileID: 9090638394485478610}
   m_Layer: 3
   m_Name: Stage1Boss
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2085,7 +2085,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!65 &6818090260590199927
 BoxCollider:
@@ -2106,8 +2106,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.3, y: 6, z: 0}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.9818497, y: 2.9724243, z: 1.2173462}
+  m_Center: {x: -0.023891449, y: 1.5137879, z: 0.12937927}
 --- !u!195 &7769784990984530215
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2130,7 +2130,7 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &3150585463232540149
+--- !u!114 &9090638394485478610
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2139,11 +2139,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6743654984216213327}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2e9858e135fad64e8d17f7e00534e8c, type: 3}
+  m_Script: {fileID: 11500000, guid: f9d2009825f5eba4da4fed2a475c3324, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 500
-  damageAmount: 50
   healthBar: {fileID: 5268789780949299401}
   animator: {fileID: 8970640263576406149}
   enableDamaging: 1
@@ -2319,7 +2317,7 @@ GameObject:
   - component: {fileID: 4220360795884972085}
   - component: {fileID: 312279796183148095}
   m_Layer: 0
-  m_Name: BossCanvas
+  m_Name: 1stBossCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

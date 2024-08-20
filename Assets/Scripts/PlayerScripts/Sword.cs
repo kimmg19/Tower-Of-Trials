@@ -4,39 +4,43 @@ using UnityEngine;
 
 public class Sword : MonoBehaviour
 {
-    BaseEnemy enemy;
     Dummy dummy;
     AnimationEvent animationEvent;
     public int damageAmount = 20;
 
     private void Start()
     {
-        animationEvent =GetComponentInParent<AnimationEvent>();
-        enemy = FindObjectOfType<BaseEnemy>();
+        animationEvent = GetComponentInParent<AnimationEvent>();
         dummy = FindObjectOfType<Dummy>();
     }
+
     void Update()
     {
+        // 애니메이션 이벤트에 따라 박스 콜라이더를 활성화하거나 비활성화
         if (animationEvent.enableDamaging)
         {
             gameObject.GetComponent<BoxCollider>().enabled = true;
-        } else
+        } 
+        else
         {
             gameObject.GetComponent<BoxCollider>().enabled = false;
         }
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (animationEvent.enableDamaging)
         {
-            if (other.CompareTag("Monster"))
+            // 충돌한 오브젝트에서 BaseEnemy 컴포넌트를 찾는다.
+            BaseEnemy enemy = other.GetComponent<BaseEnemy>();
+            if (enemy != null)
             {
-                enemy.TakeDamage(damageAmount);
-            } else if (other.CompareTag("Dummy"))
+                enemy.TakeDamage(damageAmount); // 찾은 BaseEnemy에 데미지를 준다.
+            }
+            else if (other.CompareTag("Dummy"))
             {
-                dummy.TakeDamage();
-            } else return;
+                dummy.TakeDamage(); // Dummy에 데미지를 준다.
+            }
         }
     }
-    
 }
