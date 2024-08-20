@@ -16,6 +16,7 @@ public class PlayerStatsUI : MonoBehaviour
     public PlayerMovement playerMovement;
     public Sword sword;
     public SwordEft swordEft;
+    public Upgrade upgrade;
 
     void Update()
     {
@@ -24,7 +25,7 @@ public class PlayerStatsUI : MonoBehaviour
         mpText.text = "MP: " + playerStats.currentMp.ToString();
         staminaText.text = "Stamina: " + playerStats.currentStamina.ToString();
         speedText.text = "Speed: " + playerMovement.speed.ToString();
-        attackText.text = "Attack: " + sword.damageAmount.ToString();
-        weaponATK.text = "+" + swordEft.SwordAttackPoint.ToString();
+        attackText.text = "Attack: " + upgrade.Attack.ToString();
+        weaponATK.text = "+" + upgrade.WeaponATK.ToString();
     }
 }

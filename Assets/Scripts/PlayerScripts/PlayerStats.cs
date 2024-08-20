@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
+    public Upgrade upgrade;
     public Sword sword;
     public float weaponATK;
+    public int Attack;
     public float playerSpeed = 4f;
     public float sprintSpeed = 1.5f;
     public float walkSpeed = 0.5f;//천천ㅎ ㅣ 걷기 속도
@@ -50,5 +52,11 @@ public class PlayerStats : MonoBehaviour
             Debug.LogWarning("playerSword is null.");
         }
         weaponATK = sword.damageAmount;
+    }
+
+    private void Update()
+    {
+        Attack = upgrade.Attack;
+        weaponATK = upgrade.WeaponATK;
     }
 }
