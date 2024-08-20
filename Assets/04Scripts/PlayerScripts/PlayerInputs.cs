@@ -1,17 +1,21 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerInputs : MonoBehaviour
 {
+    // 외부 컴포넌트 참조
     GameObject inGameCanvas;
     AnimationEvent animationEvent;
-    LockOnSystem lockOnSystem;  // LockOnSystem 스크립트 참조 추가
+    LockOnSystem lockOnSystem;
     PlayerMovement playerMovement;
     PlayerStats playerStats;
     PlayerUI playerUI;
     PlayerStatus playerStatus;
+
+    // 플레이어 상태 변수
     [HideInInspector] public Vector2 moveInput;
     [HideInInspector] public bool isRunning = false;
     [HideInInspector] public bool isDodging;
@@ -21,11 +25,28 @@ public class PlayerInputs : MonoBehaviour
     [HideInInspector] public bool isWalking = false;
     [HideInInspector] public bool isAttacking = false;
     [HideInInspector] public bool isJumping = false;
+
+    // 스태미나 및 쿨타임 변수
+    [SerializeField] int strintStanima = 1;
+    [SerializeField] int blockStanima = 1;
+    [SerializeField] int jumpStamina = 5;
+    [SerializeField] int rollStamina = 15;
+    [SerializeField] float jumpCooldownDuration = 1.5f;
+    [SerializeField] float rollCooldownDuration = 1f;
+
+    // UI 이미지 참조 (점프와 롤 쿨타임)
+    [SerializeField] Image jumpCooldownImage;
+    [SerializeField] Image rollCooldownImage;
+
+    // 애니메이터 및 쿨타임 상태 변수
     Animator animator;
+    private bool isJumpCooldown = false;
+    private bool isRollCooldown = false;
 
     void Start()
     {
-        lockOnSystem = GetComponent<LockOnSystem>();  // LockOnSystem 스크립트 초기화
+        // 컴포넌트 초기화
+        lockOnSystem = GetComponent<LockOnSystem>();
         playerStats = GetComponent<PlayerStats>();
         playerUI = GetComponent<PlayerUI>();
         playerMovement = GetComponent<PlayerMovement>();
@@ -33,47 +54,53 @@ public class PlayerInputs : MonoBehaviour
         inGameCanvas = GameObject.Find("InGameCanvas");
         animationEvent = GetComponent<AnimationEvent>();
         animator = GetComponent<Animator>();
+
+        // 쿨타임 이미지 초기화
+        if (jumpCooldownImage != null) jumpCooldownImage.fillAmount = 0;
+        if (rollCooldownImage != null) rollCooldownImage.fillAmount = 0;
     }
 
     void OnMove(InputValue value)
     {
-        if (isInteracting) return;  // 상호작용 중일 때 입력 무시
+        if (isInteracting) return;
         moveInput = value.Get<Vector2>();
     }
 
-    IEnumerator SprintCoroutine()
+    IEnumerator StanimaCoroutine(int num)
     {
-        while (isRunning && playerStats.currentStamina > 0)
+        while ((isRunning || isBlocking) && playerStats.currentStamina > 0)
         {
-            playerStatus.UseStamina(1);  // 매 프레임마다 스태미너 1씩 감소
-            yield return new WaitForSeconds(1.0f);  // 1초 간격으로 처리
+            playerStatus.UseStamina(num);
+            yield return new WaitForSeconds(1.0f);
         }
     }
 
     void OnSprint(InputValue value)
     {
-        if (isInteracting) return;  // 상호작용 중일 때는 입력 무시
+        if (isInteracting || moveInput.magnitude == 0) return;
 
         isRunning = value.isPressed;
 
         if (isRunning && playerStats.currentStamina > 0)
         {
-            StartCoroutine(SprintCoroutine());
-        } else
+            StartCoroutine(StanimaCoroutine(strintStanima));
+        }
+        else
         {
-            StopCoroutine(SprintCoroutine());
+            StopCoroutine(StanimaCoroutine(strintStanima));
         }
     }
 
     void OnWalk(InputValue value)
     {
-        if (isInteracting) return;
+        if (isInteracting || moveInput.magnitude == 0) return;
         isWalking = value.isPressed;
     }
 
     void OnAttack()
     {
-        if (isInteracting || isBlocking) return;  // 상호작용 중일 때는 입력 무시
+        if (isInteracting || isBlocking) return;
+
         if (playerMovement.characterController.isGrounded && !isDodging)
         {
             isAttacking = true;
@@ -83,73 +110,123 @@ public class PlayerInputs : MonoBehaviour
 
     void OnRoll()
     {
-        if (isInteracting|| moveInput.magnitude == 0|| isDodging|| playerStats.currentStamina < 15) return;  // 상호작용 중일 때는 입력 무시
+        // 롤(구르기) 동작 처리 및 쿨타임 관리
+        if (isInteracting || moveInput.magnitude == 0 || isDodging || isJumping || isRollCooldown) return;
+        if (playerStats.currentStamina < rollStamina) return;
+
         playerMovement.Roll();
+        playerStatus.UseStamina(rollStamina);
+
+        StartCoroutine(RollCooldownCoroutine()); // 롤 쿨타임 시작
         isDodging = true;
     }
 
     void OnInteraction()
     {
-        StartCoroutine("Interactting");
+        StartCoroutine(Interactting(() => isGPress = false));
         Debug.Log("G key pressed in PlayerInputs.");
     }
 
-    IEnumerator Interactting()
+    IEnumerator Interactting(Action onComplete)
     {
         isGPress = true;
         yield return new WaitForSeconds(1f);
-        isGPress = false;
+        onComplete?.Invoke();
+
     }
 
     void OnPause()
     {
-        if (isInteracting) return;  // 상호작용 중일 때는 입력 무시
+        if (isInteracting) return;
         inGameCanvas.GetComponent<InGameCanvas>().ClickPauseButton();
     }
 
-    // 방어
     void OnBlock(InputValue value)
     {
-        if (isInteracting || animationEvent.IsAttacking()) return;  // 상호작용 중일 때는 입력 무시
+        // 방어 동작 처리 및 스태미나 관리
+        if (isInteracting || animationEvent.IsAttacking()) return;
         animationEvent.OnFinishAttack();
         animationEvent.AtttackEffectOff();
         isBlocking = value.isPressed;
+
+        if (isBlocking && playerStats.currentStamina > 0)
+        {
+            StartCoroutine(StanimaCoroutine(blockStanima));
+        }
+        else
+        {
+            StopCoroutine(StanimaCoroutine(blockStanima));
+        }
         animator.SetBool("Block", isBlocking);
     }
 
-    // 패링
     void OnParry()
     {
-        // 패링 로직 추가 (미구현 상태)
+        // 패링 로직 (미구현 상태)
     }
 
     void OnJump()
     {
-        if (!isInteracting && playerMovement.characterController.isGrounded && !isJumping && !animationEvent.IsAttacking())
+        // 점프 동작 처리 및 쿨타임 관리
+        if (!isInteracting && playerMovement.characterController.isGrounded && !isJumping && !animationEvent.IsAttacking() && !isDodging && !isJumpCooldown)
         {
-            // 점프 시작
-            StartCoroutine(JumpCoroutine());
-            playerMovement.Jump(); // 점프 메서드 호출
+            if (playerStats.currentStamina < jumpStamina) return;
+
+            StartCoroutine(JumpCoroutine()); // 점프 중 스태미나 관리
+            StartCoroutine(JumpCooldownCoroutine()); // 점프 쿨타임 시작
+            playerMovement.Jump();
         }
     }
 
     IEnumerator JumpCoroutine()
     {
+        // 점프 상태 관리
         isJumping = true;
-        yield return new WaitForSeconds(2f);
+        playerStatus.UseStamina(jumpStamina);
+        yield return new WaitForSeconds(0.2f); // 점프 중 스태미나 사용 대기 시간
         isJumping = false;
+    }
+
+    IEnumerator JumpCooldownCoroutine()
+    {
+        // 점프 쿨타임 관리
+        isJumpCooldown = true;
+        yield return CooldownCoroutine(jumpCooldownDuration, jumpCooldownImage, () => isJumpCooldown = false);
+    }
+
+    IEnumerator RollCooldownCoroutine()
+    {
+        // 구르기ㅣ 쿨타임 관리
+        isRollCooldown = true;
+        yield return CooldownCoroutine(rollCooldownDuration, rollCooldownImage, () => isRollCooldown = false);
+    }
+
+    IEnumerator CooldownCoroutine(float duration, Image cooldownImage, Action onComplete)
+    {
+        // 쿨타임 진행 및 이미지 업데이트
+        float timer = 0f;
+        cooldownImage.fillAmount = 1;
+
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            cooldownImage.fillAmount = 1 - (timer / duration);
+            yield return null;
+        }
+
+        cooldownImage.fillAmount = 0;
+        onComplete?.Invoke();
     }
 
     void OnLockOn()
     {
-        if (isInteracting) return;  // 상호작용 중일 때는 입력 무시
-        lockOnSystem.ToggleLockOn();  // LockOnSystem의 ToggleLockOn 메서드 호출
+        if (isInteracting) return;
+        lockOnSystem.ToggleLockOn();
     }
 
-    // E 키 입력에 대한 타겟 전환 기능 추가
     void OnSwitchTarget()
     {
-        if (isInteracting) return;  // 상호작용 중일 때는 입력 무시
-        lockOnSystem.SwitchTarget();  // LockOnSystem의 SwitchTarget 메서드 호출
+        if (isInteracting) return;
+        lockOnSystem.SwitchTarget();
     }
 }

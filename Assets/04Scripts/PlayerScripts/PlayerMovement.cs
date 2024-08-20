@@ -74,13 +74,14 @@ public class PlayerMovement : MonoBehaviour
             newSpeed = playerStats.walkSpeed;
         }
 
-        float speed = playerInputs.isRunning ? playerStats.sprintSpeed : newSpeed;
+        float speed = (playerInputs.isRunning) ? playerStats.sprintSpeed : newSpeed;
         Vector3 moveDirection = CalculateMoveDirection();
 
         if (!lockOnSystem.isLockOn)
         {
             animator.SetFloat("speed", playerInputs.moveInput.magnitude * speed, speedDampTime, Time.deltaTime);
-        } else if (lockOnSystem.isLockOn)
+        }
+        else if (lockOnSystem.isLockOn)
         {
             // 캐릭터의 로컬 방향에서의 입력 방향을 계산
             Vector3 localMove = characterBody.InverseTransformDirection(moveDirection);
@@ -93,7 +94,8 @@ public class PlayerMovement : MonoBehaviour
         if (playerInputs.isDodging)
         {
             MoveCharacter(dodgeVec, playerStats.sprintSpeed);
-        } else
+        }
+        else
         {
             MoveCharacter(moveDirection, speed);
             if (!lockOnSystem.isLockOn)
@@ -135,7 +137,8 @@ public class PlayerMovement : MonoBehaviour
         {
             // 공중에 있을 때만 중력 적용
             velocity.y += gravity * Time.deltaTime * 2;
-        } else if (velocity.y < 0)
+        }
+        else if (velocity.y < 0)
         {
             // 지면에 있을 때는 수직 속도를 최소값으로 고정
             velocity.y = -0.5f;
@@ -158,7 +161,6 @@ public class PlayerMovement : MonoBehaviour
         {
             animationEvent.OnFinishAttack();
             animationEvent.AtttackEffectOff();
-            playerStatus.UseStamina(15);  // 스태미나 감소
             AudioManager.instance.Play("PlayerRoll");
             dodgeVec = CalculateMoveDirection().normalized;
             animator.SetTrigger("Dodge");
