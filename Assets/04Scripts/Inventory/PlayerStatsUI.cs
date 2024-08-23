@@ -11,6 +11,7 @@ public class PlayerStatsUI : MonoBehaviour
     public Text speedText;
     public Text attackText;
     public Text weaponATK;
+    public Text GoldText;
 
     public PlayerStats playerStats;
     public PlayerMovement playerMovement;
@@ -27,5 +28,6 @@ public class PlayerStatsUI : MonoBehaviour
         speedText.text = "Speed: " + playerMovement.speed.ToString();
         attackText.text = "Attack: " + upgrade.Attack.ToString();
         weaponATK.text = "+" + upgrade.WeaponATK.ToString();
+        GoldText.text = playerStats.Gold.ToString() + "G";
     }
 }

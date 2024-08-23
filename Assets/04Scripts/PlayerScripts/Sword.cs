@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class Sword : MonoBehaviour
 {
+    PlayerStats playerstatsss;
     Dummy dummy;
     AnimationEvent animationEvent;
-    public int damageAmount = 20;
+    public int damageAmount;
 
     private void Start()
     {
+        playerstatsss = GetComponent<PlayerStats>();
         animationEvent = GetComponentInParent<AnimationEvent>();
         dummy = FindObjectOfType<Dummy>();
+        damageAmount = playerstatsss.Attack;
     }
 
     void Update()
