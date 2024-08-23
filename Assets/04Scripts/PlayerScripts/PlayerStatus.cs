@@ -31,8 +31,8 @@ public class PlayerStatus : MonoBehaviour
             if (playerStats.currentHp > 0)
             {
                 playerStats.currentHp -= damage;
-                /*animator.SetTrigger("PlayerHit");
-                AudioManager.instance.Play("PlayerHit");*/
+                //animator.SetTrigger("PlayerHit");
+                AudioManager.instance.Play("PlayerHit");
                 print("플레이어 공격 받음");
                 if (playerStats.currentHp <= 0)
                 {

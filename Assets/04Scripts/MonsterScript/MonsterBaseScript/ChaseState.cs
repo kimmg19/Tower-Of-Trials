@@ -3,8 +3,8 @@ using UnityEngine.AI;
 
 public class ChaseState : BaseState
 {
-    private float chaseRange = 10f;
-
+    public float chaseRange = 100f;
+    public float distance;
     protected override void OnStateEnterCustom(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         agent.speed = 3.0f; // 추격 속도 설정
@@ -15,7 +15,7 @@ public class ChaseState : BaseState
         animator.transform.LookAt(player); // 플레이어를 바라보도록 회전
         agent.SetDestination(player.position); // 플레이어의 위치로 이동
 
-        float distance = Vector3.Distance(player.position, animator.transform.position);
+         distance = Vector3.Distance(player.position, animator.transform.position);
 
         // 거리가 멀어지면 추격 상태 종료
         if (distance > chaseRange || !playerStatus.playerAlive)

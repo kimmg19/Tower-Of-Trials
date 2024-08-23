@@ -15,7 +15,7 @@ public class GolemAttackState : AttackState
     protected override void OnStateUpdateCustom(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateUpdateCustom(animator, stateInfo, layerIndex);
-
+        
         if (!playerStatus.playerAlive)
         {
             return; // 플레이어가 죽으면 추가 공격하지 않음
@@ -25,6 +25,7 @@ public class GolemAttackState : AttackState
 
         if (stompTimer >= stompCooldown)
         {
+            
             PerformStompAttack(animator);
             stompTimer = 0.0f; // 쿨다운 타이머 초기화
         }

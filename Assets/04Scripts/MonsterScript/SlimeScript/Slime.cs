@@ -6,7 +6,7 @@ using UnityEngine;
 public class Slime : BaseEnemy
 {
     private FirstFloorManager firstFloorManager;
-
+    
     // 슬라임의 고유 스탯을 초기화
     protected override void InitializeStats()
     {
