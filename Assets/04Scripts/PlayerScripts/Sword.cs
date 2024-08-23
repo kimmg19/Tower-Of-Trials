@@ -4,42 +4,59 @@ using UnityEngine;
 
 public class Sword : MonoBehaviour
 {
-    Dummy dummy;
-    AnimationEvent animationEvent;
     public int damageAmount = 20;
+    private MeshCollider swordCollider;
 
     private void Start()
     {
-        animationEvent = GetComponentInParent<AnimationEvent>();
-        dummy = FindObjectOfType<Dummy>();
-    }
-
-    void Update()
-    {
-        // 애니메이션 이벤트에 따라 박스 콜라이더를 활성화하거나 비활성화
-        if (animationEvent.enableDamaging)
+        swordCollider = GetComponent<MeshCollider>();
+        if (swordCollider != null)
         {
-            gameObject.GetComponent<BoxCollider>().enabled = true;
-        } 
+            swordCollider.enabled = false; // 기본적으로 콜라이더 비활성화
+            swordCollider.convex = true; // 물리 연산에 사용할 수 있도록 Convex로 설정
+        }
         else
         {
-            gameObject.GetComponent<BoxCollider>().enabled = false;
+            Debug.LogError("Sword object does not have a MeshCollider component.");
+        }
+    }
+
+    // 애니메이션 이벤트에서 호출할 메서드
+    public void EnableCollider()
+    {
+        Debug.Log("Collider Enabled");
+        if (swordCollider != null)
+        {
+            swordCollider.enabled = true;
+        }
+    }
+
+    // 애니메이션 이벤트에서 호출할 메서드
+    public void DisableCollider()
+    {
+        Debug.Log("Collider Disabled");
+        if (swordCollider != null)
+        {
+            swordCollider.enabled = false;
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (animationEvent.enableDamaging)
+        if (swordCollider.enabled) // 콜라이더가 활성화된 상태에서만 충돌 처리
         {
-            // 충돌한 오브젝트에서 BaseEnemy 컴포넌트를 찾는다.
             BaseEnemy enemy = other.GetComponent<BaseEnemy>();
             if (enemy != null)
             {
-                enemy.TakeDamage(damageAmount); // 찾은 BaseEnemy에 데미지를 준다.
+                enemy.TakeDamage(damageAmount); // BaseEnemy에 데미지를 준다.
             }
             else if (other.CompareTag("Dummy"))
             {
-                dummy.TakeDamage(); // Dummy에 데미지를 준다.
+                Dummy dummy = other.GetComponent<Dummy>();
+                if (dummy != null)
+                {
+                    dummy.TakeDamage(); // Dummy에 데미지를 준다.
+                }
             }
         }
     }

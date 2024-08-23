@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class GolemChaseState : ChaseState
 {
+    
     protected override void OnStateEnterCustom(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnterCustom(animator, stateInfo, layerIndex);

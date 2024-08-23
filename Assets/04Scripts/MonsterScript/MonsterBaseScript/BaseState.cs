@@ -20,7 +20,7 @@ public abstract class BaseState : StateMachineBehaviour
         }
 
         if (agent == null)
-        {
+        {            
             agent = animator.GetComponentInParent<NavMeshAgent>();
             if (agent == null)
             {

@@ -5,7 +5,7 @@ using Cinemachine;
 
 public class LockOnSystem : MonoBehaviour
 {
-    public CinemachineFreeLook lockonCamera;  // FreeLook 카메라
+    public CinemachineTargetGroup targetGroup;  // Target Group
     public Transform target;  // 현재 Lock On 중인 타겟
     public bool isLockOn = false;  // Lock On 상태를 나타내는 플래그
     public float lockOnRadius = 10f;  // Lock On 범위
@@ -23,11 +23,8 @@ public class LockOnSystem : MonoBehaviour
         playerTransform = this.transform;  // 플레이어의 Transform 참조
         animator = GetComponent<Animator>();
         
-        // 초기에는 LockonCamera를 비활성화
-        if (lockonCamera != null)
-        {
-            lockonCamera.gameObject.SetActive(false);
-        }
+        // 초기에는 플레이어만 Target Group에 추가
+        targetGroup.AddMember(playerTransform, 1f, 0f);
     }
 
     void Update()
@@ -46,9 +43,11 @@ public class LockOnSystem : MonoBehaviour
         Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
         playerTransform.rotation = Quaternion.Slerp(playerTransform.rotation, targetRotation, Time.deltaTime * 5.0f);
 
-        // FreeLook 카메라 설정: 타겟을 바라보도록 설정
-        lockonCamera.LookAt = target;
-        lockonCamera.Follow = playerTransform;
+        // Target Group에 타겟을 추가 (중복 추가 방지)
+        if (targetGroup.FindMember(target) < 0)  
+        {
+            targetGroup.AddMember(target, 1f, 0f);
+        }
     }
 
     public void ToggleLockOn()
@@ -57,43 +56,48 @@ public class LockOnSystem : MonoBehaviour
 
         if (isLockOn)
         {
-            // Lock On 상태라면 타겟을 찾습니다.
+            // Lock On 상태라면 타겟을 찾고 설정
             FindTargets();
             if (availableTargets.Count > 0)
             {
-                currentTargetIndex = 0;  // 가장 첫 번째 타겟으로 설정
+                currentTargetIndex = 0;  // 첫 번째 타겟으로 설정
                 target = availableTargets[currentTargetIndex];
-                LockOnToTarget();  // 타겟을 설정한 후 카메라 설정
-
-                // LockonCamera 활성화
-                lockonCamera.gameObject.SetActive(true);
+                LockOnToTarget();
                 ChangeAnimatorController(playerAnimator_LockOn);
             }
             else
             {
-                // 타겟이 없을 경우 Lock On 해제
-                isLockOn = false;
-                lockonCamera.gameObject.SetActive(false);
-                ChangeAnimatorController(playerAnimator);
-
+                // 타겟이 없으면 Lock On 해제
+                ResetLockOn();
             }
         }
         else
         {
-            // Lock On 해제 시 타겟을 null로 설정
-            target = null;
-            availableTargets.Clear();
-
-            // LockonCamera 비활성화
-            lockonCamera.gameObject.SetActive(false);
-            ChangeAnimatorController(playerAnimator);
-
+            ResetLockOn();
         }
 
         Debug.Log($"LockOn state: {isLockOn}");
     }
 
-    void ChangeAnimatorController(RuntimeAnimatorController newController)//락온 on/off때마다 애니메이터 바꾸기
+    void ResetLockOn()
+    {
+        // Lock On 해제 시 타겟과 리스트 초기화
+        target = null;
+        availableTargets.Clear();
+
+        // Target Group에서 타겟 제거 (플레이어는 유지)
+        for (int i = targetGroup.m_Targets.Length - 1; i >= 0; i--)
+        {
+            if (targetGroup.m_Targets[i].target != playerTransform)
+            {
+                targetGroup.RemoveMember(targetGroup.m_Targets[i].target);
+            }
+        }
+
+        ChangeAnimatorController(playerAnimator);
+    }
+
+    void ChangeAnimatorController(RuntimeAnimatorController newController)
     {                
         animator.runtimeAnimatorController = newController;
     }
@@ -126,6 +130,9 @@ public class LockOnSystem : MonoBehaviour
         // 다음 타겟으로 순환
         currentTargetIndex = (currentTargetIndex + 1) % availableTargets.Count;
         target = availableTargets[currentTargetIndex];
-        LockOnToTarget();  // 타겟을 변경한 후 카메라 설정
+
+        // Target Group에서 이전 타겟 제거하고 새로운 타겟 추가
+        ResetLockOn();  // 기존 타겟 제거
+        LockOnToTarget();  // 새로운 타겟 설정
     }
 }

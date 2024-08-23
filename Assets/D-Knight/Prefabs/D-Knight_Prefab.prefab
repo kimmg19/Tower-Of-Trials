@@ -202,7 +202,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trailRenderer: {fileID: 0}
   enableDamaging: 0
-  isAttacking: 0
 --- !u!114 &985489472865417813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,6 +214,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a74474d52fbd4245a7153c4c19ff01e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  upgrade: {fileID: 0}
+  sword: {fileID: 0}
+  weaponATK: 0
+  Attack: 0
   playerSpeed: 5
   sprintSpeed: 1.5
   walkSpeed: 0.5
@@ -256,6 +259,16 @@ MonoBehaviour:
   isInteracting: 0
   isBlocking: 0
   isWalking: 0
+  isAttacking: 0
+  isJumping: 0
+  strintStanima: 1
+  blockStanima: 1
+  jumpStamina: 5
+  rollStamina: 15
+  jumpCooldownDuration: 1.5
+  rollCooldownDuration: 1
+  jumpCooldownImage: {fileID: 0}
+  rollCooldownImage: {fileID: 0}
 --- !u!114 &4040468184805825167
 MonoBehaviour:
   m_ObjectHideFlags: 0

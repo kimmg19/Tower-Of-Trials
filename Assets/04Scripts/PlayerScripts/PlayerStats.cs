@@ -15,6 +15,7 @@ public class PlayerStats : MonoBehaviour
     public int maxHp = 100;
     public int maxMp = 100;
     public int maxStamina = 50;
+    public int Gold = 0;
     [SerializeField] private int _currentHp;
     public int currentHp
     {
@@ -39,6 +40,7 @@ public class PlayerStats : MonoBehaviour
         currentHp = maxHp;
         currentMp = maxMp;
         currentStamina = maxStamina;
+        Gold = PlayerPrefs.GetInt("PlayerGold", 0); // 기본값을 0으로 설정
     }
     public void IncreaseSwordDamage(int amount)
     {
@@ -58,5 +60,12 @@ public class PlayerStats : MonoBehaviour
     {
         Attack = upgrade.Attack;
         weaponATK = upgrade.WeaponATK;
+    }
+
+    private void OnApplicationQuit()
+    {
+        // 애플리케이션 종료 시 골드 값을 저장
+        PlayerPrefs.SetInt("PlayerGold", Gold);
+        PlayerPrefs.Save(); // 즉시 저장을 원할 경우 호출
     }
 }
