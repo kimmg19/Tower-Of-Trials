@@ -25,7 +25,11 @@ public class FirstFloorManager : MonoBehaviour
 
     private bool slimesSpawned = false;
     private bool turtlesSpawned = false;
+    public float health = 100f; // 보스의 체력
+    float slowMotionDuration = 3f; // 슬로우 모션 지속 시간
+    float slowMotionScale = 0.1f; // 슬로우 모션 시 시간 배율
 
+    private bool isBossDefeated = false;
     void Start()
     {
         panelCanvasGroup = panel.GetComponent<CanvasGroup>();
@@ -76,9 +80,12 @@ public class FirstFloorManager : MonoBehaviour
     // 골렘이 죽었을 때 호출되는 메서드
     public void OnGolemKilled()
     {
+        StartCoroutine(SlowMotionEffect());
+
         if (rewardChest != null)
         {
             rewardChest.SetActive(true); // 보물상자 활성화
+
             Debug.Log("Reward chest has been activated!");
         }
     }
@@ -106,7 +113,7 @@ public class FirstFloorManager : MonoBehaviour
         if (turtlesKilled >= turtlesToKill)
         {
             CheckFloorCompletion();
-            PlayBossCinematic();
+            StartCoroutine("PlayBossCinematic");
             if (panelCanvasGroup != null)
             {
                 StartCoroutine(HidePanel());  // 패널을 숨기는 코루틴 시작
@@ -224,11 +231,30 @@ public class FirstFloorManager : MonoBehaviour
         }
     }
 
-    private void PlayBossCinematic()
+    IEnumerator PlayBossCinematic()
     {
+        yield return new WaitForSeconds(1f);
         if (bossCinematic != null)
         {
             bossCinematic.Play();
         }
     }
+
+    IEnumerator SlowMotionEffect()
+    {
+        // 슬로우 모션 시작
+        Time.timeScale = slowMotionScale;
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;
+
+        // 지정한 시간 동안 대기
+        yield return new WaitForSecondsRealtime(slowMotionDuration);
+
+        // 원래 속도로 복구
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.02f;
+
+        // 보스 처치 후 처리할 로직
+    }
+
+
 }
