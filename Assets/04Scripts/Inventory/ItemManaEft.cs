@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "ItemEft/Consumable/Mana")]
 public class ItemManaEft : ItemEffect
 {
-    public int manaPoint = 0;
+    public int manaPoint = 0; // 마나 회복수치
 
     public override bool ExecuteRole(PlayerStats playerStats)
     {

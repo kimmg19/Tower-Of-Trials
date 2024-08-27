@@ -1,57 +1,66 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class RewardChest : MonoBehaviour
 {
     Animator animator;
     [SerializeField]
-    private GameObject AskSelection;
-    [SerializeField]
-    private GameObject Rewards;
+    private GameObject AskRewardSelection;
     [SerializeField]
     private GameObject RewardsChest;
+    [SerializeField]
+    private GameObject RewardList;
+
     GameObject obj;
     PlayerInputs playerInputs;
-    // Start is called before the first frame update
+
+    public int RewardGold;
+    public Text RewardGoldText;
+
     void Start()
     {
         animator = GetComponent<Animator>();
         obj = GameObject.Find("Player");
         playerInputs = obj.GetComponent<PlayerInputs>();
-        if (AskSelection != null)
+
+        if (AskRewardSelection != null)
         {
-            AskSelection.SetActive(false);
+            AskRewardSelection.SetActive(false);
         }
 
-        if(Rewards != null)
+        if (RewardList != null)
         {
-            Rewards.SetActive(false);
+            RewardList.SetActive(false);
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (playerInputs.isGPress && AskSelection.activeSelf)
+        if (playerInputs.isGPress && AskRewardSelection.activeSelf)
         {
             animator.SetTrigger("RewardChestOpen");
-            playerInputs.isInteracting = true;
-            AskSelection.SetActive(false);
-            RewardsChest.SetActive(false);
-            Rewards.SetActive(true);
-            playerInputs.isInteracting = false;
         }
+
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("End"))
+        {
+                playerInputs.isInteracting = true;
+                AskRewardSelection.SetActive(false);
+                RewardsChest.SetActive(false);
+                playerInputs.isInteracting = false;
+                RewardList.SetActive(true);
+        }
+
+        RewardGoldText.text = RewardGold.ToString() + " G";
     }
 
     void OnTriggerEnter(Collider other)
     {
-
         if (other.CompareTag("Player"))
         {
             // 캔버스 활성화
-            AskSelection.SetActive(true);
+            AskRewardSelection.SetActive(true);
             Debug.Log("상자 충돌");
         }
     }
@@ -61,12 +70,11 @@ public class RewardChest : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // 캔버스 비활성화
-            if (AskSelection != null)
+            if (AskRewardSelection != null)
             {
-                AskSelection.SetActive(false);
+                AskRewardSelection.SetActive(false);
             }
             playerInputs.isInteracting = false;
-
         }
     }
 }

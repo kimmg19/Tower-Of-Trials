@@ -7,8 +7,8 @@ public class PlayerStats : MonoBehaviour
 {
     public Upgrade upgrade;
     public Sword sword;
-    public float weaponATK;
-    public int Attack;
+    public float weaponATK; // 강화까지 포함된 무기공격력
+    public int Attack; // 몬스터한테 들어가는 총 공격력
     public float playerSpeed = 4f;
     public float sprintSpeed = 1.5f;
     public float walkSpeed = 0.5f;//천천ㅎ ㅣ 걷기 속도
