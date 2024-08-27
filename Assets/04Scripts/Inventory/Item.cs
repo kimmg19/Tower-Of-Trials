@@ -17,6 +17,8 @@ public class Item
     public Sprite itemImage;
     public List<ItemEffect> efts;
 
+    public int StorePrice; // 아이템의 가격
+
     public string ToJson()
     {
         return JsonUtility.ToJson(this);

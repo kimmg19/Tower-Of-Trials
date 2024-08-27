@@ -13,6 +13,7 @@ public class Upgrade : MonoBehaviour
     int UpgradePos = 90;
     int UpgradeGold = 100;
     public SwordEft swordEft;
+    public PlayerStats playerstats;
 
     public Text WeaponEnhanceText;
     public Text InvenWeaponEnhanceText;
@@ -45,7 +46,7 @@ public class Upgrade : MonoBehaviour
         InvenWeaponEnhanceText.text = "+" + WeaponEnhancePoint.ToString();
         WeaponEnhanceText.text = "+" + WeaponEnhancePoint.ToString();
         UpgradePosText.text = UpgradePos.ToString() + "%";
-        UpgradeGoldText.text = UpgradeGold.ToString();
+        UpgradeGoldText.text = UpgradeGold.ToString() + " / " + playerstats.Gold.ToString();
     }
 
     public void ShowUpgradePanel()
@@ -67,11 +68,12 @@ public class Upgrade : MonoBehaviour
 
     public void WeaponUpgrade()
     {
-        if (WeaponEnhancePoint == 0)
+        if (WeaponEnhancePoint == 0 && playerstats.Gold >= UpgradeGoldArray[WeaponEnhancePoint])
         {
 
             if (Random.Range(0, 100) < UpgradaePosibility[WeaponEnhancePoint]) // 90% È®·ü
             {
+                playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
                 Debug.Log(UpgradaePosibility[WeaponEnhancePoint] + "% ÀÇ È®·üÀ» ¶ÕÀ½");
                 WeaponEnhancePoint = 1;
                 WeaponATK = swordEft.SwordAttackPoint + UpgradePerPoint[WeaponEnhancePoint - 1];
@@ -83,15 +85,17 @@ public class Upgrade : MonoBehaviour
             }
             else
             {
+                playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
                 Debug.Log("°­È­ ½ÇÆÐ");
             }
         }
 
-        else if (WeaponEnhancePoint == 1)
+        else if (WeaponEnhancePoint == 1 && playerstats.Gold >= UpgradeGoldArray[WeaponEnhancePoint])
         {
 
             if (Random.Range(0, 100) < UpgradaePosibility[WeaponEnhancePoint]) // 80% È®·ü
             {
+                playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
                 Debug.Log(UpgradaePosibility[WeaponEnhancePoint] + "% ÀÇ È®·üÀ» ¶ÕÀ½");
                 WeaponEnhancePoint = 2;
                 WeaponATK = swordEft.SwordAttackPoint + UpgradePerPoint[WeaponEnhancePoint - 1];
@@ -102,15 +106,16 @@ public class Upgrade : MonoBehaviour
             }
             else
             {
+                playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
                 Debug.Log("°­È­ ½ÇÆÐ");
             }
         }
 
-        else if (WeaponEnhancePoint == 2)
+        else if (WeaponEnhancePoint == 2 && playerstats.Gold >= UpgradeGoldArray[WeaponEnhancePoint])
         {
-            // 90% È®·ü·Î ¾÷±×·¹ÀÌµå
             if (Random.Range(0, 100) < UpgradaePosibility[WeaponEnhancePoint]) // 70% È®·ü
             {
+                playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
                 Debug.Log(UpgradaePosibility[WeaponEnhancePoint] + "% ÀÇ È®·üÀ» ¶ÕÀ½");
                 WeaponEnhancePoint = 3;
                 WeaponATK = swordEft.SwordAttackPoint + UpgradePerPoint[WeaponEnhancePoint - 1];
@@ -121,15 +126,16 @@ public class Upgrade : MonoBehaviour
             }
             else
             {
+                playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
                 Debug.Log("°­È­ ½ÇÆÐ");
             }
         }
 
-        else if (WeaponEnhancePoint == 3)
+        else if (WeaponEnhancePoint == 3 && playerstats.Gold >= UpgradeGoldArray[WeaponEnhancePoint])
         {
-            // 90% È®·ü·Î ¾÷±×·¹ÀÌµå
             if (Random.Range(0, 100) < UpgradaePosibility[WeaponEnhancePoint]) // 50% È®·ü
             {
+                playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
                 Debug.Log(UpgradaePosibility[WeaponEnhancePoint] + "% ÀÇ È®·üÀ» ¶ÕÀ½");
                 WeaponEnhancePoint = 4;
                 WeaponATK = swordEft.SwordAttackPoint + UpgradePerPoint[WeaponEnhancePoint - 1];
@@ -140,15 +146,16 @@ public class Upgrade : MonoBehaviour
             }
             else
             {
+                playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
                 Debug.Log("°­È­ ½ÇÆÐ");
             }
         }
 
-        else if (WeaponEnhancePoint == 4)
+        else if (WeaponEnhancePoint == 4 && playerstats.Gold >= UpgradeGoldArray[WeaponEnhancePoint])
         {
-            // 90% È®·ü·Î ¾÷±×·¹ÀÌµå
             if (Random.Range(0, 100) < UpgradaePosibility[WeaponEnhancePoint]) // 40% È®·ü
             {
+                playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
                 Debug.Log(UpgradaePosibility[WeaponEnhancePoint] + "% ÀÇ È®·üÀ» ¶ÕÀ½");
                 WeaponEnhancePoint = 5;
                 WeaponATK = swordEft.SwordAttackPoint + UpgradePerPoint[WeaponEnhancePoint - 1];
@@ -159,15 +166,16 @@ public class Upgrade : MonoBehaviour
             }
             else
             {
+                playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
                 Debug.Log("°­È­ ½ÇÆÐ");
             }
         }
 
-        else if (WeaponEnhancePoint == 5)
+        else if (WeaponEnhancePoint == 5 && playerstats.Gold >= UpgradeGoldArray[WeaponEnhancePoint])
         {
-            // 90% È®·ü·Î ¾÷±×·¹ÀÌµå
             if (Random.Range(0, 100) < UpgradaePosibility[WeaponEnhancePoint]) // 30% È®·ü
             {
+                playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
                 Debug.Log(UpgradaePosibility[WeaponEnhancePoint] + "% ÀÇ È®·üÀ» ¶ÕÀ½");
                 WeaponEnhancePoint = 6;
                 WeaponATK = swordEft.SwordAttackPoint + UpgradePerPoint[WeaponEnhancePoint - 1];
@@ -178,15 +186,16 @@ public class Upgrade : MonoBehaviour
             }
             else
             {
+                playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
                 Debug.Log("°­È­ ½ÇÆÐ");
             }
         }
 
-        else if (WeaponEnhancePoint == 6)
+        else if (WeaponEnhancePoint == 6 && playerstats.Gold >= UpgradeGoldArray[WeaponEnhancePoint])
         {
-            // 90% È®·ü·Î ¾÷±×·¹ÀÌµå
             if (Random.Range(0, 100) < UpgradaePosibility[WeaponEnhancePoint]) // 20% È®·ü
             {
+                playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
                 Debug.Log(UpgradaePosibility[WeaponEnhancePoint] + "% ÀÇ È®·üÀ» ¶ÕÀ½");
                 WeaponEnhancePoint = 7;
                 WeaponATK = swordEft.SwordAttackPoint + UpgradePerPoint[WeaponEnhancePoint - 1];
@@ -197,15 +206,16 @@ public class Upgrade : MonoBehaviour
             }
             else
             {
+                playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
                 Debug.Log("°­È­ ½ÇÆÐ");
             }
         }
 
-        else if (WeaponEnhancePoint == 7)
+        else if (WeaponEnhancePoint == 7 && playerstats.Gold >= UpgradeGoldArray[WeaponEnhancePoint])
         {
-            // 90% È®·ü·Î ¾÷±×·¹ÀÌµå
             if (Random.Range(0, 100) < UpgradaePosibility[WeaponEnhancePoint]) // 10% È®·ü
             {
+                playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
                 Debug.Log(UpgradaePosibility[WeaponEnhancePoint] + "% ÀÇ È®·üÀ» ¶ÕÀ½");
                 WeaponEnhancePoint = 8;
                 WeaponATK = swordEft.SwordAttackPoint + UpgradePerPoint[WeaponEnhancePoint - 1];
@@ -216,6 +226,7 @@ public class Upgrade : MonoBehaviour
             }
             else
             {
+                playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
                 Debug.Log("°­È­ ½ÇÆÐ");
             }
         }

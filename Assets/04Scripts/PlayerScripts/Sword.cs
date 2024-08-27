@@ -6,6 +6,8 @@ public class Sword : MonoBehaviour
 {
     public int damageAmount = 20;
     private MeshCollider swordCollider;
+    public PlayerStats playerstats;
+
 
     private void Start()
     {
@@ -19,6 +21,11 @@ public class Sword : MonoBehaviour
         {
             Debug.LogError("Sword object does not have a MeshCollider component.");
         }
+    }
+
+    private void Update()
+    {
+        damageAmount = playerstats.Attack;
     }
 
     // 애니메이션 이벤트에서 호출할 메서드

@@ -7,12 +7,14 @@ using UnityEngine.InputSystem;
 public class ShopUI : MonoBehaviour
 {
     Inventory inven;
+    public PlayerStats playerstats;
     public Slot[] slots;
     public GameObject invenShopPanel;
     public Transform slotHolder;
     bool activeShop = false;
 
     private Item selectedItem;
+    public Text GoldText;
 
     void Start()
     {
@@ -21,6 +23,11 @@ public class ShopUI : MonoBehaviour
         inven.onSlotCountChange += SlotChange;
         inven.onChangeItem += RedrawSlotUI;
         invenShopPanel.SetActive(activeShop);
+    }
+
+    private void Update()
+    {
+        GoldText.text = playerstats.Gold + " G";
     }
 
     public void OnToggleShop(InputAction.CallbackContext context)
@@ -75,27 +82,6 @@ public class ShopUI : MonoBehaviour
         Debug.Log("Selected Item: " + selectedItem.itemName);
     }
 
-    // 선택된 아이템을 인벤토리에 추가하는 함수
-    public void OnBuyButtonPressed()
-    {
-        if (selectedItem != null)
-        {
-            bool success = inven.AddItem(selectedItem); // 인벤토리에 아이템 추가 시도
-            if (success)
-            {
-                Debug.Log("Item added to inventory: " + selectedItem.itemName);
-                // 상점에서 아이템 재고 감소 등 추가 로직을 여기에 추가 가능
-            }
-            else
-            {
-                Debug.Log("Inventory is full or failed to add item.");
-            }
-        }
-        else
-        {
-            Debug.Log("No item selected to buy.");
-        }
-    }
 
     public void OnClickCloseButton()
     {

@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "ItemEft/Consumable/Stamina")]
 public class ItemStaminaEft : ItemEffect
 {
-    public int staminaPoint = 0;
+    public int staminaPoint = 0; // 스태미나 회복 수치
 
     public override bool ExecuteRole(PlayerStats playerStats)
     {
