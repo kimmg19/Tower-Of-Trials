@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class AttackState : BaseState
 {
-    protected float attackRange = 1.3f;
+    protected float attackRange = 2f;
 
     protected override void OnStateEnterCustom(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -17,7 +17,7 @@ public class AttackState : BaseState
         }
 
         float distance = Vector3.Distance(player.position, animator.transform.position);
-
+        
         // 거리가 멀어지면 공격 상태 종료
         if (distance > attackRange || !playerStatus.playerAlive)
         {

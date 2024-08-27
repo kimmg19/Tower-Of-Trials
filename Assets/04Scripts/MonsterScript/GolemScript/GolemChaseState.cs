@@ -12,7 +12,8 @@ public class GolemChaseState : ChaseState
     protected override void OnStateUpdateCustom(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateUpdateCustom(animator, stateInfo, layerIndex);
-        // 추격 중에 Golem만의 행동을 추가
+        Debug.Log("자식");
+
     }
 
     protected override void OnStateExitCustom(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

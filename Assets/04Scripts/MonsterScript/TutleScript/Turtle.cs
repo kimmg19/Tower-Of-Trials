@@ -39,7 +39,7 @@ public class Turtle : BaseEnemy
         }
         else
         {
-            Debug.Log($"{gameObject.name} has a health bar assigned: {healthBar.name}");
+            //Debug.Log($"{gameObject.name} has a health bar assigned: {healthBar.name}");
         }
     }
 }

@@ -24,7 +24,6 @@ public class Sword : MonoBehaviour
     // 애니메이션 이벤트에서 호출할 메서드
     public void EnableCollider()
     {
-        Debug.Log("Collider Enabled");
         if (swordCollider != null)
         {
             swordCollider.enabled = true;
@@ -34,7 +33,6 @@ public class Sword : MonoBehaviour
     // 애니메이션 이벤트에서 호출할 메서드
     public void DisableCollider()
     {
-        Debug.Log("Collider Disabled");
         if (swordCollider != null)
         {
             swordCollider.enabled = false;

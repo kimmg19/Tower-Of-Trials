@@ -12,6 +12,7 @@ public abstract class BaseEnemy : MonoBehaviour
     protected PlayerStats playerStats;
     protected PlayerStatus playerStatus;
 
+
     protected virtual void Start()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -29,15 +30,15 @@ public abstract class BaseEnemy : MonoBehaviour
         if (healthBar == null)
         {
             Debug.LogWarning($"{gameObject.name} is missing a health bar!");
-        }
-        else
+        } else
         {
-            Debug.Log($"{gameObject.name} has a health bar assigned: {healthBar.name}");
+            //Debug.Log($"{gameObject.name} has a health bar assigned: {healthBar.name}");
         }
     }
 
     protected virtual void Update()
     {
+
         // 각 슬라임의 헬스바를 개별적으로 업데이트
         if (healthBar != null)
         {
@@ -53,9 +54,14 @@ public abstract class BaseEnemy : MonoBehaviour
         if (HP <= 0)
         {
             Die();
-        }
-        else
+        } else
         {
+            /*if (!animator.GetCurrentAnimatorStateInfo(0).IsName("isAttacking"))
+            {
+                print("피격 패스");
+                return;//isAttacing이 true이면 피격 애니미에션 패스.
+            }*/
+
             animator.SetTrigger("damage");
             Debug.Log($"{gameObject.name} took damage. Current HP: {HP}");
         }
@@ -77,6 +83,7 @@ public abstract class BaseEnemy : MonoBehaviour
     {
         if (enableDamaging && other.CompareTag("Player") && playerStatus.playerAlive)
         {
+            print(other.name+"캐릭터 공격");
             playerStatus.TakeDamage(damageAmount);
         }
     }

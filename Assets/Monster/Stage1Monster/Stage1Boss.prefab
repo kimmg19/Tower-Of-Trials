@@ -2014,6 +2014,7 @@ GameObject:
   - component: {fileID: 6818090260590199927}
   - component: {fileID: 7769784990984530215}
   - component: {fileID: 9090638394485478610}
+  - component: {fileID: 7861370634940307834}
   m_Layer: 3
   m_Name: Stage1Boss
   m_TagString: Monster
@@ -2052,7 +2053,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 02434797ac70e4d42ae83a9e684a5fa5, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -2106,8 +2107,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.9818497, y: 2.9724243, z: 1.2173462}
-  m_Center: {x: -0.023891449, y: 1.5137879, z: 0.12937927}
+  m_Size: {x: 1, y: 3, z: 1}
+  m_Center: {x: 0, y: 1.4, z: 0}
 --- !u!195 &7769784990984530215
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2118,7 +2119,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 20
+  m_Speed: 3
   m_Acceleration: 50
   avoidancePriority: 50
   m_AngularSpeed: 0
@@ -2145,6 +2146,19 @@ MonoBehaviour:
   healthBar: {fileID: 5268789780949299401}
   animator: {fileID: 8970640263576406149}
   enableDamaging: 0
+--- !u!114 &7861370634940307834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6743654984216213327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c06f155767787e449f795fbe3338f36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackRange: 3
 --- !u!1 &6799372113804877923
 GameObject:
   m_ObjectHideFlags: 0
@@ -2330,7 +2344,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7461116616557085908}
-  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_ConstrainProportionsScale: 0

@@ -16,8 +16,8 @@ public class PlayerInputs : MonoBehaviour
     PlayerStatus playerStatus;
 
     // 플레이어 상태 변수
-    [HideInInspector] public Vector2 moveInput;
-    [HideInInspector] public bool isRunning = false;
+    public Vector2 moveInput;
+     public bool isRunning = false;
     [HideInInspector] public bool isDodging;
     [HideInInspector] public bool isGPress;
     [HideInInspector] public bool isInteracting = false;
@@ -60,37 +60,62 @@ public class PlayerInputs : MonoBehaviour
         if (rollCooldownImage != null) rollCooldownImage.fillAmount = 0;
     }
 
+
+    private Coroutine staminaCoroutine;
+
     void OnMove(InputValue value)
     {
         if (isInteracting) return;
+
         moveInput = value.Get<Vector2>();
+
+        // 이동 입력이 0이 되면 스프린트 중지
+        if (moveInput.magnitude == 0 && isRunning)
+        {
+            StopSprinting();
+        }
     }
 
-    IEnumerator StanimaCoroutine(int num)
+    IEnumerator StanimaCoroutine(int staminaUsage)
     {
-        while ((isRunning || isBlocking) && playerStats.currentStamina > 0)
+        while (playerStats.currentStamina > 0 && isRunning)
         {
-            playerStatus.UseStamina(num);
+            playerStatus.UseStamina(staminaUsage);
             yield return new WaitForSeconds(1.0f);
         }
+
+        staminaCoroutine = null;
     }
 
     void OnSprint(InputValue value)
     {
-        if (isInteracting || moveInput.magnitude == 0) return;
-
         isRunning = value.isPressed;
 
-        if (isRunning && playerStats.currentStamina > 0)
+        if (isRunning && moveInput.magnitude != 0 && !isInteracting)
         {
-            StartCoroutine(StanimaCoroutine(strintStanima));
-        }
-        else
+            StartSprinting();
+        } else
         {
-            StopCoroutine(StanimaCoroutine(strintStanima));
+            StopSprinting();
         }
     }
+    private void StartSprinting()
+    {
+        if (staminaCoroutine == null)
+        {
+            staminaCoroutine = StartCoroutine(StanimaCoroutine(strintStanima));
+        }
+    }
+    private void StopSprinting()
+    {
+        if (staminaCoroutine != null)
+        {
+            StopCoroutine(staminaCoroutine);
+            staminaCoroutine = null;
+        }
 
+        isRunning = false;
+    }
     void OnWalk(InputValue value)
     {
         if (isInteracting || moveInput.magnitude == 0) return;

@@ -22,7 +22,7 @@ public class LockOnSystem : MonoBehaviour
         availableTargets = new List<Transform>();
         playerTransform = this.transform;  // 플레이어의 Transform 참조
         animator = GetComponent<Animator>();
-        
+
         // 초기에는 플레이어만 Target Group에 추가
         targetGroup.AddMember(playerTransform, 1f, 0f);
     }
@@ -44,7 +44,7 @@ public class LockOnSystem : MonoBehaviour
         playerTransform.rotation = Quaternion.Slerp(playerTransform.rotation, targetRotation, Time.deltaTime * 5.0f);
 
         // Target Group에 타겟을 추가 (중복 추가 방지)
-        if (targetGroup.FindMember(target) < 0)  
+        if (targetGroup.FindMember(target) < 0)
         {
             targetGroup.AddMember(target, 1f, 0f);
         }
@@ -64,14 +64,12 @@ public class LockOnSystem : MonoBehaviour
                 target = availableTargets[currentTargetIndex];
                 LockOnToTarget();
                 ChangeAnimatorController(playerAnimator_LockOn);
-            }
-            else
+            } else
             {
                 // 타겟이 없으면 Lock On 해제
                 ResetLockOn();
             }
-        }
-        else
+        } else
         {
             ResetLockOn();
         }
@@ -98,7 +96,7 @@ public class LockOnSystem : MonoBehaviour
     }
 
     void ChangeAnimatorController(RuntimeAnimatorController newController)
-    {                
+    {
         animator.runtimeAnimatorController = newController;
     }
 
@@ -127,12 +125,16 @@ public class LockOnSystem : MonoBehaviour
     {
         if (!isLockOn || availableTargets.Count <= 1) return;
 
+        // 현재 타겟을 Target Group에서 제거
+        targetGroup.RemoveMember(target);
+
         // 다음 타겟으로 순환
         currentTargetIndex = (currentTargetIndex + 1) % availableTargets.Count;
         target = availableTargets[currentTargetIndex];
 
-        // Target Group에서 이전 타겟 제거하고 새로운 타겟 추가
-        ResetLockOn();  // 기존 타겟 제거
-        LockOnToTarget();  // 새로운 타겟 설정
+        // 새로운 타겟을 Target Group에 추가
+        LockOnToTarget();
+
+        Debug.Log($"Switched target to: {target.name}");
     }
 }

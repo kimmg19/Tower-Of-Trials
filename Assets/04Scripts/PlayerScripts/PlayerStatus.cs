@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerStatus : MonoBehaviour
 {
+    PlayerHitEffect playerHitEffect;
     InGameCanvas inGameCanvas;
     PlayerInputs playerInputs;
     private Animator animator;
@@ -15,6 +16,7 @@ public class PlayerStatus : MonoBehaviour
 
     void Start()
     {
+        playerHitEffect = GetComponent<PlayerHitEffect>();
         playerInputs = GetComponent<PlayerInputs>();
         animationEvent = GetComponent<AnimationEvent>();
         inGameCanvas = FindObjectOfType<InGameCanvas>();
@@ -30,6 +32,7 @@ public class PlayerStatus : MonoBehaviour
             animationEvent.AtttackEffectOff();
             if (playerStats.currentHp > 0)
             {
+                playerHitEffect.ShowHitEffect();
                 playerStats.currentHp -= damage;
                 //animator.SetTrigger("PlayerHit");
                 AudioManager.instance.Play("PlayerHit");

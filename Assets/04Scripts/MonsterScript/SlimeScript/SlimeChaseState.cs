@@ -13,6 +13,8 @@ public class SlimeChaseState : ChaseState
     {
         base.OnStateUpdateCustom(animator, stateInfo, layerIndex);
         // 추격 중에 슬라임만의 행동을 추가
+
+        
     }
 
     protected override void OnStateExitCustom(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

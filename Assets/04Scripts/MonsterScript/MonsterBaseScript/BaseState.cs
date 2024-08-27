@@ -37,11 +37,13 @@ public abstract class BaseState : StateMachineBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+
         OnStateUpdateCustom(animator, stateInfo, layerIndex);
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+
         OnStateExitCustom(animator, stateInfo, layerIndex);
     }
 

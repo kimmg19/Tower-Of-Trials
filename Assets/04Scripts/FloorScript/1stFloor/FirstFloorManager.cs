@@ -1,5 +1,5 @@
-using TMPro;
 using UnityEngine;
+using TMPro;
 using System.Collections;
 using UnityEngine.Playables;
 using UnityEngine.UI;
@@ -26,10 +26,12 @@ public class FirstFloorManager : MonoBehaviour
     private bool slimesSpawned = false;
     private bool turtlesSpawned = false;
     public float health = 100f; // 보스의 체력
-    float slowMotionDuration = 3f; // 슬로우 모션 지속 시간
-    float slowMotionScale = 0.1f; // 슬로우 모션 시 시간 배율
+    float slowMotionInitialScale = 0.4f; // 초기 슬로우 모션 배율
+    float slowMotionMidScale = 0.2f; // 중간 슬로우 모션 배율
+    float slowMotionFinalScale = 1f; // 최종 슬로우 모션 배율 (원래 속도)
+    float slowMotionDuration = 2f; // 슬로우 모션 지속 시간
+    float transitionDuration = 1f; // 슬로우 모션의 느려지는 전환 시간
 
-    private bool isBossDefeated = false;
     void Start()
     {
         panelCanvasGroup = panel.GetComponent<CanvasGroup>();
@@ -242,19 +244,37 @@ public class FirstFloorManager : MonoBehaviour
 
     IEnumerator SlowMotionEffect()
     {
-        // 슬로우 모션 시작
-        Time.timeScale = slowMotionScale;
+        // 초기 슬로우 모션 배율로 시작
+        float elapsedTime = 0f;
+        while (elapsedTime < transitionDuration)
+        {
+            float t = elapsedTime / transitionDuration;
+            Time.timeScale = Mathf.Lerp(slowMotionInitialScale, slowMotionMidScale, t);
+            Time.fixedDeltaTime = 0.02f * Time.timeScale;
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // 중간 슬로우 모션 배율로 설정
+        Time.timeScale = slowMotionMidScale;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
 
         // 지정한 시간 동안 대기
         yield return new WaitForSecondsRealtime(slowMotionDuration);
 
-        // 원래 속도로 복구
-        Time.timeScale = 1f;
+        // 다시 원래 속도로 복구
+        elapsedTime = 0f;
+        while (elapsedTime < transitionDuration)
+        {
+            float t = elapsedTime / transitionDuration;
+            Time.timeScale = Mathf.Lerp(slowMotionMidScale, slowMotionFinalScale, t);
+            Time.fixedDeltaTime = 0.02f * Time.timeScale;
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // 원래 속도로 설정
+        Time.timeScale = slowMotionFinalScale;
         Time.fixedDeltaTime = 0.02f;
-
-        // 보스 처치 후 처리할 로직
     }
-
-
 }
