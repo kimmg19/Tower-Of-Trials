@@ -13,7 +13,8 @@ public class ChaseState : BaseState
     protected override void OnStateUpdateCustom(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
 
-        animator.transform.LookAt(player); // 플레이어를 바라보도록 회전
+        LookAtPlayerXZ(animator.transform, player.transform);
+
         agent.SetDestination(player.position); // 플레이어의 위치로 이동
 
         distance = Vector3.Distance(player.position, animator.transform.position);
@@ -35,5 +36,18 @@ public class ChaseState : BaseState
     protected override void OnStateExitCustom(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         agent.SetDestination(agent.transform.position); // 이동 정지
+    }
+    void LookAtPlayerXZ(Transform animator, Transform player)
+    {
+        // 플레이어와의 방향 벡터 계산 (Y축 고정)
+        Vector3 direction = player.position - animator.position;
+        direction.y = 0; // Y축을 0으로 고정하여 수평 방향만 고려
+
+        // 방향 벡터를 기준으로 회전 설정
+        if (direction != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            animator.rotation = targetRotation;
+        }
     }
 }
