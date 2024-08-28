@@ -9,6 +9,7 @@ public class ShopSlot : MonoBehaviour
     public Image itemIcon;
     public Button buyButton;
     private PlayerStats playerStats;
+    public Upgrade upgrade;
 
     // Start is called before the first frame update
     void Start()
@@ -47,6 +48,7 @@ public class ShopSlot : MonoBehaviour
                     Debug.Log("Item added to inventory: " + item.itemName);
                     Debug.Log("Remaining Gold: " + playerStats.Gold + " G");
                     playerStats.OnApplicationQuit();
+                    upgrade.SaveWeaponEnhancePoint();
                     // 추가로 아이템을 슬롯에서 제거하거나 상점 재고에서 줄이는 등의 로직 추가 가능
                 }
                 else
