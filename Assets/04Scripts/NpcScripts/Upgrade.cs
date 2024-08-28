@@ -39,8 +39,16 @@ public class Upgrade : MonoBehaviour
         UpgradeGold = PlayerPrefs.GetInt("UpgradeGold", 100); // 기본값 100
 
         Debug.Log("Game data loaded.");
-    }
 
+        InvenWeaponEnhanceText.text = "+" + WeaponEnhancePoint.ToString();
+        WeaponEnhanceText.text = "+" + WeaponEnhancePoint.ToString();
+        UpgradePosText.text = UpgradePos.ToString() + "%";
+        UpgradeGoldText.text = UpgradeGold.ToString() + " / " + playerstats.Gold.ToString();
+
+        // UI 강제 업데이트
+        Canvas.ForceUpdateCanvases();
+    }
+    /*
     private void Update()
     {
         InvenWeaponEnhanceText.text = "+" + WeaponEnhancePoint.ToString();
@@ -48,7 +56,7 @@ public class Upgrade : MonoBehaviour
         UpgradePosText.text = UpgradePos.ToString() + "%";
         UpgradeGoldText.text = UpgradeGold.ToString() + " / " + playerstats.Gold.ToString();
     }
-
+    */
     public void ShowUpgradePanel()
     {
         if (upgradePanel != null)
@@ -81,12 +89,15 @@ public class Upgrade : MonoBehaviour
                 UpgradePos = UpgradaePosibility[WeaponEnhancePoint];
                 UpgradeGold = UpgradeGoldArray[WeaponEnhancePoint];
                 Debug.Log("무기 1강");
-                
+
+                SaveWeaponEnhancePoint(); // 강화 성공 시 즉시 저장
             }
             else
             {
                 playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
                 Debug.Log("강화 실패");
+
+                SaveWeaponEnhancePoint(); // 강화 성공 시 즉시 저장
             }
         }
 
@@ -103,11 +114,15 @@ public class Upgrade : MonoBehaviour
                 UpgradePos = UpgradaePosibility[WeaponEnhancePoint];
                 UpgradeGold = UpgradeGoldArray[WeaponEnhancePoint];
                 Debug.Log("무기 2강");
+
+                SaveWeaponEnhancePoint(); // 강화 성공 시 즉시 저장
             }
             else
             {
                 playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
                 Debug.Log("강화 실패");
+
+                SaveWeaponEnhancePoint(); // 강화 성공 시 즉시 저장
             }
         }
 
@@ -123,11 +138,15 @@ public class Upgrade : MonoBehaviour
                 UpgradePos = UpgradaePosibility[WeaponEnhancePoint];
                 UpgradeGold = UpgradeGoldArray[WeaponEnhancePoint];
                 Debug.Log("무기 3강");
+
+                SaveWeaponEnhancePoint(); // 강화 성공 시 즉시 저장
             }
             else
             {
                 playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
                 Debug.Log("강화 실패");
+
+                SaveWeaponEnhancePoint(); // 강화 성공 시 즉시 저장
             }
         }
 
@@ -143,11 +162,15 @@ public class Upgrade : MonoBehaviour
                 UpgradePos = UpgradaePosibility[WeaponEnhancePoint];
                 UpgradeGold = UpgradeGoldArray[WeaponEnhancePoint];
                 Debug.Log("무기 4강");
+
+                SaveWeaponEnhancePoint(); // 강화 성공 시 즉시 저장
             }
             else
             {
                 playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
                 Debug.Log("강화 실패");
+
+                SaveWeaponEnhancePoint(); // 강화 성공 시 즉시 저장
             }
         }
 
@@ -163,11 +186,15 @@ public class Upgrade : MonoBehaviour
                 UpgradePos = UpgradaePosibility[WeaponEnhancePoint];
                 UpgradeGold = UpgradeGoldArray[WeaponEnhancePoint];
                 Debug.Log("무기 5강");
+
+                SaveWeaponEnhancePoint(); // 강화 성공 시 즉시 저장
             }
             else
             {
                 playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
                 Debug.Log("강화 실패");
+
+                SaveWeaponEnhancePoint(); // 강화 성공 시 즉시 저장
             }
         }
 
@@ -183,11 +210,14 @@ public class Upgrade : MonoBehaviour
                 UpgradePos = UpgradaePosibility[WeaponEnhancePoint];
                 UpgradeGold = UpgradeGoldArray[WeaponEnhancePoint];
                 Debug.Log("무기 6강");
+
+                SaveWeaponEnhancePoint(); // 강화 성공 시 즉시 저장
             }
             else
             {
                 playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
                 Debug.Log("강화 실패");
+                SaveWeaponEnhancePoint(); // 강화 성공 시 즉시 저장
             }
         }
 
@@ -203,11 +233,14 @@ public class Upgrade : MonoBehaviour
                 UpgradePos = UpgradaePosibility[WeaponEnhancePoint];
                 UpgradeGold = UpgradeGoldArray[WeaponEnhancePoint];
                 Debug.Log("무기 7강");
+
+                SaveWeaponEnhancePoint(); // 강화 성공 시 즉시 저장
             }
             else
             {
                 playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
                 Debug.Log("강화 실패");
+                SaveWeaponEnhancePoint(); // 강화 성공 시 즉시 저장
             }
         }
 
@@ -223,11 +256,14 @@ public class Upgrade : MonoBehaviour
                 UpgradePos = UpgradaePosibility[WeaponEnhancePoint];
                 UpgradeGold = UpgradeGoldArray[WeaponEnhancePoint];
                 Debug.Log("무기 8강");
+
+                SaveWeaponEnhancePoint(); // 강화 성공 시 즉시 저장
             }
             else
             {
                 playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
                 Debug.Log("강화 실패");
+                SaveWeaponEnhancePoint(); // 강화 성공 시 즉시 저장
             }
         }
 
@@ -237,13 +273,23 @@ public class Upgrade : MonoBehaviour
 
     public void SaveWeaponEnhancePoint()
     {
+        playerstats.OnApplicationQuit();
+
         PlayerPrefs.SetInt("WeaponEnhancePoint", WeaponEnhancePoint);
         PlayerPrefs.SetInt("WeaponATK", WeaponATK);
         PlayerPrefs.SetInt("Attack", Attack);
         PlayerPrefs.SetInt("UpgradePos", UpgradePos);
         PlayerPrefs.SetInt("UpgradeGold", UpgradeGold);
         PlayerPrefs.Save(); // 변경사항 저장
-        Debug.Log("Game data saved.");
+        //Debug.Log("Game data saved.");
+
+        InvenWeaponEnhanceText.text = "+" + WeaponEnhancePoint.ToString();
+        WeaponEnhanceText.text = "+" + WeaponEnhancePoint.ToString();
+        UpgradePosText.text = UpgradePos.ToString() + "%";
+        UpgradeGoldText.text = UpgradeGold.ToString() + " / " + playerstats.Gold.ToString();
+
+        // UI 강제 업데이트
+        Canvas.ForceUpdateCanvases();
     }
 
 

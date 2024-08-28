@@ -60,9 +60,10 @@ public class PlayerStats : MonoBehaviour
     {
         Attack = upgrade.Attack;
         weaponATK = upgrade.WeaponATK;
+        //upgrade.SaveWeaponEnhancePoint();
     }
 
-    private void OnApplicationQuit()
+    public void OnApplicationQuit()
     {
         // 애플리케이션 종료 시 골드 값을 저장
         PlayerPrefs.SetInt("PlayerGold", Gold);

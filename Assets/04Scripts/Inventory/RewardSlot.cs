@@ -29,6 +29,7 @@ public class RewardSlot : MonoBehaviour
         {
             playerstats.Gold += rewardchest.RewardGold / 8;
             RewardList.SetActive(false);
+            playerstats.OnApplicationQuit();
             // 아이템이 인벤토리에 성공적으로 추가된 경우
             Debug.Log("Item added to inventory: " + item.itemName);
             // 추가로 아이템을 슬롯에서 제거하거나 상점 재고에서 줄이는 등의 로직 추가 가능

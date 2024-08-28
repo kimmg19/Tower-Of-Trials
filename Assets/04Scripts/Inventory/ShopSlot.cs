@@ -46,7 +46,7 @@ public class ShopSlot : MonoBehaviour
                     playerStats.Gold -= itemPrice; // 플레이어의 골드에서 아이템 가격만큼 차감
                     Debug.Log("Item added to inventory: " + item.itemName);
                     Debug.Log("Remaining Gold: " + playerStats.Gold + " G");
-
+                    playerStats.OnApplicationQuit();
                     // 추가로 아이템을 슬롯에서 제거하거나 상점 재고에서 줄이는 등의 로직 추가 가능
                 }
                 else

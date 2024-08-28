@@ -12,6 +12,8 @@ public class GoldEft : ItemEffect
         if (playerStats != null)
         {
             playerStats.Gold += GoldPoint;
+            playerStats.OnApplicationQuit();
+            playerStats.upgrade.SaveWeaponEnhancePoint();
             return true;
         }
         else
