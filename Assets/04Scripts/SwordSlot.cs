@@ -16,24 +16,24 @@ public class SwordSlot : MonoBehaviour, IPointerClickHandler
 
         if (playerStats == null)
         {
-            Debug.LogError("PlayerStats not found in the scene!");
+            //Debug.LogError("PlayerStats not found in the scene!");
         }
 
         if (item != null && playerStats != null)
         {
             // 무기를 장착하고 효과 적용
-            Debug.Log("Equipping sword...");
+            //Debug.Log("Equipping sword...");
             bool isUse = item.Use(playerStats);
 
             if (isUse)
             {
-                Debug.Log("Sword equipped and effect applied.");
+                //Debug.Log("Sword equipped and effect applied.");
                 // 장착 후 인벤토리에서 제거할 수도 있음
                 // Inventory.instance.RemoveItem(item.slotNum);
             }
             else
             {
-                Debug.LogWarning("Failed to equip sword.");
+                //Debug.LogWarning("Failed to equip sword.");
             }
         }
     }

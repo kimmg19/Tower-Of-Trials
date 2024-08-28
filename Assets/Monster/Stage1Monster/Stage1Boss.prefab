@@ -2014,7 +2014,6 @@ GameObject:
   - component: {fileID: 6818090260590199927}
   - component: {fileID: 7769784990984530215}
   - component: {fileID: 9090638394485478610}
-  - component: {fileID: 7861370634940307834}
   m_Layer: 3
   m_Name: Stage1Boss
   m_TagString: Monster
@@ -2083,7 +2082,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
@@ -2146,18 +2145,6 @@ MonoBehaviour:
   healthBar: {fileID: 5268789780949299401}
   animator: {fileID: 8970640263576406149}
   enableDamaging: 0
---- !u!114 &7861370634940307834
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6743654984216213327}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c06f155767787e449f795fbe3338f36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   attackRange: 3
 --- !u!1 &6799372113804877923
 GameObject:
