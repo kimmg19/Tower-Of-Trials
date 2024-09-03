@@ -67,10 +67,17 @@ public class PlayerStatus : MonoBehaviour
         if (!playerAlive)
             return;
 
-        print("플레이어 사망");
         animator.SetTrigger("PlayerDie");
+
+        // 모든 BGM을 멈춤
+        AudioManager.instance.StopAllBgm();
+
+        // 사망 효과음을 재생
         AudioManager.instance.Play("PlayerDie");
+        AudioManager.instance.Play("PlayerDieSFX");
+
         playerAlive = false;
         inGameCanvas.dieImage.SetActive(true);
     }
+
 }

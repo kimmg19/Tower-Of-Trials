@@ -33,8 +33,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    //�� ��ȯ�� ���� �����ϴ�-Unity�������� �ڵ����� �Ű����� ����.
-    //mode�� �� �ε� ���. Single(����, ���� �� ����),Additive(�� ���� �߰���)
+
     private void LoadsceneEvent(Scene scene, LoadSceneMode mode)
     {
         StopPreviousSceneAudio();
@@ -71,5 +70,18 @@ public class AudioManager : MonoBehaviour
         Sound s = Array.Find(sounds, item => item.name == sound);
         s.source.Stop();
     }
+
+    public void StopAllBgm()
+{
+    foreach (Sound s in sounds)
+    {
+        // BGM 사운드만 정지하도록 분류 (이름에 "Bgm"이 포함된 사운드들)
+        if (s.name.Contains("Bgm") && s.source.isPlaying)
+        {
+            s.source.Stop();
+            Debug.Log($"Stopped BGM: {s.name}");
+        }
+    }
+}
 
 }

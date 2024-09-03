@@ -235,10 +235,17 @@ public class FirstFloorManager : MonoBehaviour
 
     IEnumerator PlayBossCinematic()
     {
+
         yield return new WaitForSeconds(1f);
         if (bossCinematic != null)
         {
             bossCinematic.Play();
+            // 기존 1층 BGM을 멈추고 새로운 보스 BGM 재생
+            if (AudioManager.instance != null)
+            {
+                AudioManager.instance.Stop("1stFloorBgm");  // 기존 1층 BGM 멈추기
+                AudioManager.instance.Play("1stFloorBossBattleBgm");  // 새로운 보스 BGM 재생
+            }
         }
     }
 
