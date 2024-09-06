@@ -29,9 +29,17 @@ public class LockOnSystem : MonoBehaviour
 
     void Update()
     {
-        if (isLockOn && target != null)
+        // 락온 중일 때만 타겟을 찾고 체크합니다.
+        if (isLockOn)
         {
-            LockOnToTarget();
+            // 현재 타겟이 유효하지 않으면 ResetLockOn 호출--lockonRadius거리 이상 넘어가면 자동으로 풀림 
+            if (target == null || !target.gameObject.activeInHierarchy || Vector3.Distance(playerTransform.position, target.position) > lockOnRadius)
+            {
+                ResetLockOn();
+            } else
+            {
+                LockOnToTarget();  // 유효하면 타겟 유지
+            }
         }
     }
 
@@ -52,23 +60,22 @@ public class LockOnSystem : MonoBehaviour
 
     public void ToggleLockOn()
     {
-        isLockOn = !isLockOn;
+        FindTargets();  // 타겟 리스트를 업데이트합니다.
 
-        if (isLockOn)
+        if (availableTargets.Count > 0)
         {
-            // Lock On 상태라면 타겟을 찾고 설정
-            FindTargets();
-            if (availableTargets.Count > 0)
+            if (isLockOn)
             {
-                currentTargetIndex = 0;  // 첫 번째 타겟으로 설정
-                target = availableTargets[currentTargetIndex];
-                LockOnToTarget();
-                ChangeAnimatorController(playerAnimator_LockOn);
-            } else
-            {
-                // 타겟이 없으면 Lock On 해제
                 ResetLockOn();
+                return;
             }
+            isLockOn = true;
+
+            currentTargetIndex = 0;  // 첫 번째 타겟으로 설정
+            target = availableTargets[currentTargetIndex];
+            LockOnToTarget();
+            ChangeAnimatorController(playerAnimator_LockOn);
+
         } else
         {
             ResetLockOn();
@@ -93,6 +100,7 @@ public class LockOnSystem : MonoBehaviour
         }
 
         ChangeAnimatorController(playerAnimator);
+        isLockOn = false;
     }
 
     void ChangeAnimatorController(RuntimeAnimatorController newController)

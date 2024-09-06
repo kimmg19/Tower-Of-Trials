@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.Playables;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -37,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
         animationEvent = GetComponent<AnimationEvent>();
         lockOnSystem = GetComponent<LockOnSystem>();
     }
-
+    
     void Update()
     {
 
@@ -150,7 +151,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void Jump()
     {
-
         velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         animator.SetTrigger("Jump");
 

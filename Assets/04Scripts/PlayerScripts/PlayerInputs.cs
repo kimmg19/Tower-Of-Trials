@@ -83,7 +83,6 @@ public class PlayerInputs : MonoBehaviour
             playerStatus.UseStamina(staminaUsage);
             yield return new WaitForSeconds(1.0f);
         }
-
         staminaCoroutine = null;
     }
 
@@ -245,7 +244,7 @@ public class PlayerInputs : MonoBehaviour
 
     void OnLockOn()
     {
-        if (isInteracting) return;
+        if (isInteracting) return;        
         lockOnSystem.ToggleLockOn();
     }
 

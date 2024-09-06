@@ -3,18 +3,20 @@ using TMPro;
 using System.Collections;
 using UnityEngine.Playables;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class FirstFloorManager : MonoBehaviour
 {
-    public PlayableDirector bossCinematic; // 타임라인 에셋을 재생할 PlayableDirector
-    public GameObject slimeGroup;
-    public GameObject turtleGroup;
-    public GameObject golemDoor;
-    public GameObject rewardChest; // 보물상자 오브젝트
-    public GameObject titlePanel;  // 타이틀 패널
-    public GameObject panel;
-    public TextMeshProUGUI killText;
+    [SerializeField] PlayableDirector bossCinematic; // 타임라인 에셋을 재생할 PlayableDirector
+    [SerializeField] GameObject slimeGroup;
+    [SerializeField] GameObject turtleGroup;
+    [SerializeField] GameObject golemDoor;
+    [SerializeField] GameObject rewardChest; // 보물상자 오브젝트
+    [SerializeField] GameObject titlePanel;  // 타이틀 패널
+    [SerializeField] GameObject panel;
+    [SerializeField] TextMeshProUGUI killText;
 
+    [SerializeField] PlayerMovement playerInputs;
     private CanvasGroup panelCanvasGroup;
     private CanvasGroup titleCanvasGroup;
 
@@ -26,14 +28,15 @@ public class FirstFloorManager : MonoBehaviour
     private bool slimesSpawned = false;
     private bool turtlesSpawned = false;
     public float health = 100f; // 보스의 체력
-    float slowMotionInitialScale = 0.4f; // 초기 슬로우 모션 배율
-    float slowMotionMidScale = 0.2f; // 중간 슬로우 모션 배율
+    float slowMotionInitialScale = 0.5f; // 초기 슬로우 모션 배율
+    float slowMotionMidScale = 0.5f; // 중간 슬로우 모션 배율
     float slowMotionFinalScale = 1f; // 최종 슬로우 모션 배율 (원래 속도)
-    float slowMotionDuration = 2f; // 슬로우 모션 지속 시간
+    float slowMotionDuration = 0.1f; // 슬로우 모션 지속 시간
     float transitionDuration = 1f; // 슬로우 모션의 느려지는 전환 시간
 
     void Start()
     {
+        
         panelCanvasGroup = panel.GetComponent<CanvasGroup>();
         titleCanvasGroup = titlePanel.GetComponent<CanvasGroup>();
 
@@ -114,6 +117,7 @@ public class FirstFloorManager : MonoBehaviour
 
         if (turtlesKilled >= turtlesToKill)
         {
+
             CheckFloorCompletion();
             StartCoroutine("PlayBossCinematic");
             if (panelCanvasGroup != null)
@@ -235,19 +239,25 @@ public class FirstFloorManager : MonoBehaviour
 
     IEnumerator PlayBossCinematic()
     {
-
+        playerInputs.GetComponent<PlayerMovement>().enabled = false;
         yield return new WaitForSeconds(1f);
         if (bossCinematic != null)
         {
             bossCinematic.Play();
+
             // 기존 1층 BGM을 멈추고 새로운 보스 BGM 재생
             if (AudioManager.instance != null)
             {
-                AudioManager.instance.Stop("1stFloorBgm");  // 기존 1층 BGM 멈추기
-                AudioManager.instance.Play("1stFloorBossBattleBgm");  // 새로운 보스 BGM 재생
+                AudioManager.instance.Stop("1stFloorBgm");
+                AudioManager.instance.Play("1stFloorBossBattleBgm");
             }
         }
+        yield return new WaitForSeconds((float)bossCinematic.duration);  //bossCinematic.duration은 시네마틱의 전체 길이를 초 단위로 나타냄
+        playerInputs.GetComponent<PlayerMovement>().enabled = true;
+
     }
+
+
 
     IEnumerator SlowMotionEffect()
     {

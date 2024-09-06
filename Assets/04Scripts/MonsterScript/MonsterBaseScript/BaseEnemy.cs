@@ -71,7 +71,7 @@ public abstract class BaseEnemy : MonoBehaviour
     {
         animator.SetTrigger("die");
         GetComponent<Collider>().enabled = false;
-        Invoke("DestroyEnemy", 5f);
+        Invoke("DestroyEnemy", 3f);
     }
 
     protected virtual void DestroyEnemy()
