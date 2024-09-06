@@ -74,7 +74,7 @@ public class PlayerStatus : MonoBehaviour
 
         // 사망 효과음을 재생
         AudioManager.instance.Play("PlayerDie");
-        AudioManager.instance.Play("PlayerDieSFX");
+        AudioManager.instance.Play("PlayerDieBgm");
 
         playerAlive = false;
         inGameCanvas.dieImage.SetActive(true);

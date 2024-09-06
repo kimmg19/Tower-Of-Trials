@@ -283,5 +283,12 @@ public class FirstFloorManager : MonoBehaviour
         // 원래 속도로 설정
         Time.timeScale = slowMotionFinalScale;
         Time.fixedDeltaTime = 0.02f;
+
+        // 슬로우 모션이 끝난 후 승리 BGM 재생
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.Stop("1stFloorBossBattleBgm"); // 보스 전투 BGM 멈추기
+            AudioManager.instance.Play("VictoryBgm");     // 승리 BGM 재생
+        }
     }
 }
