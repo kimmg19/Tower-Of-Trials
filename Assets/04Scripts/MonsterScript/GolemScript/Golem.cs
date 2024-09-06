@@ -12,6 +12,8 @@ public class Golem : BaseEnemy
     private float stompRangeMultiplier = 1.5f;
     private bool isJumping = false;
 
+    public ParticleSystem rockDebrisEffect;
+
     // 골렘의 고유 스탯을 초기화
     protected override void InitializeStats()
     {
@@ -62,6 +64,10 @@ public class Golem : BaseEnemy
 
     public void OnNormalAttack()
     {
+        if (rockDebrisEffect != null)
+        {
+            rockDebrisEffect.Play();
+        }
         Debug.Log("Golem performs a stomp attack.");
 
         float distance = Vector3.Distance(player.position, agent.transform.position);
@@ -114,6 +120,10 @@ public class Golem : BaseEnemy
         float distance = Vector3.Distance(player.position, agent.transform.position);
         if (distance <= attackRange*2)
         {
+            if (rockDebrisEffect != null)
+            {
+                rockDebrisEffect.Play();
+            }
             playerStatus.TakeDamage(damageAmount*2);
         }
 
