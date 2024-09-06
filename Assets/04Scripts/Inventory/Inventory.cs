@@ -45,23 +45,53 @@ public class Inventory : MonoBehaviour
 
     public bool AddItem(Item _item)
     {
-        if(items.Count < SlotCnt)
+        foreach (var item in items)
         {
-            items.Add(_item);
-            if(onChangeItem != null)
-                onChangeItem.Invoke();
+            if (item.itemName == _item.itemName) // 동일한 아이템인지 확인
+            {
+                item.quantity += _item.quantity; // 동일한 아이템일 경우 수량 증가
+                Debug.Log("Item added. New quantity: " + item.quantity); // 디버깅 로그 추가
+                onChangeItem?.Invoke();
+                SaveInventory();
+                return true;
+            }
+        }
+
+        if (items.Count < SlotCnt)
+        {
+            items.Add(_item); // 수량을 1로 설정하지 않고 그대로 추가
+            Debug.Log("New item added. Quantity: " + _item.quantity); // 디버깅 로그 추가
+            onChangeItem?.Invoke();
             SaveInventory();
             return true;
         }
+
         return false;
     }
 
     public void RemoveItem(int _index)
     {
-        items.RemoveAt(_index);
-        if (onChangeItem != null)
-            onChangeItem.Invoke();
-        SaveInventory();
+        if (_index >= 0 && _index < items.Count)
+        {
+            Item itemToRemove = items[_index];
+            if (itemToRemove.quantity > 1)
+            {
+                itemToRemove.quantity--; // 수량 감소
+                Debug.Log("Item quantity decreased. New quantity: " + itemToRemove.quantity);
+                onChangeItem?.Invoke();
+            }
+            else
+            {
+                items.RemoveAt(_index); // 수량이 0이 되면 아이템 제거
+                Debug.Log("Item removed from inventory.");
+                onChangeItem?.Invoke();
+            }
+            SaveInventory();
+        }
+        else
+        {
+            Debug.LogError("Index out of range.");
+        }
     }
 
     private void OnTriggerEnter(Collider collision)

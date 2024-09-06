@@ -7,4 +7,6 @@ public abstract class ItemEffect : ScriptableObject
     public int StorePrice; // 아이템 가격
 
     public abstract bool ExecuteRole(PlayerStats playerStats);
+
+
 }

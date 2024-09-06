@@ -13,6 +13,8 @@ public class FieldItems : MonoBehaviour
         item.itemImage = _item.itemImage;
         item.itemType = _item.itemType;
         item.efts = _item.efts;
+        item.quantity = _item.quantity; // quantity 값을 복사
+        Debug.Log("SetItem called with quantity: " + item.quantity); // 디버깅 로그 추가
 
         //image.sprite = item.itemImage;
     }

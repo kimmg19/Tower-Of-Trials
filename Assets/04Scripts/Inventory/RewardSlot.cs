@@ -14,20 +14,32 @@ public class RewardSlot : MonoBehaviour
     public PlayerStats playerstats;
     public RewardChest rewardchest;
 
+    public Text RewardQuantityText;
+
     void Start()
     {
         buyButton.onClick.AddListener(OnCheckButtonClick);
+        RewardQuantityText.text = item.quantity.ToString();
     }
 
     void OnCheckButtonClick()
     {
         Inventory inventory = Inventory.instance;
 
+        Item newItem = new Item
+        {
+            itemName = item.itemName,
+            itemImage = item.itemImage,
+            quantity = item.quantity,
+            StorePrice = item.StorePrice,
+            efts = new List<ItemEffect>(item.efts) // ItemEffect 리스트 복사
+        };
+
         bool added = inventory.AddItem(item);
 
         if (added)
         {
-            playerstats.Gold += rewardchest.RewardGold / 8;
+            //playerstats.Gold += rewardchest.RewardGold / 8;
             RewardList.SetActive(false);
             playerstats.OnApplicationQuit();
             // 아이템이 인벤토리에 성공적으로 추가된 경우
