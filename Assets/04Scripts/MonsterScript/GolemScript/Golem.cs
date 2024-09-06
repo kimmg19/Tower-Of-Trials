@@ -9,28 +9,26 @@ public class Golem : BaseEnemy
     private Transform player;
     private NavMeshAgent agent;
     public float attackRange = 3.0f;
-    private float stompRangeMultiplier = 1.5f; // 스톰프 공격의 범위를 기본 공격보다 넓게 설정
+    private float stompRangeMultiplier = 1.5f;
+    private bool isJumping = false;
 
     // 골렘의 고유 스탯을 초기화
     protected override void InitializeStats()
     {
-        HP = 500; // 골렘의 체력 설정
-        damageAmount = 30; // 골렘의 공격력 설정
+        HP = 500;
+        damageAmount = 30;
     }
 
-    // 골렘만의 고유한 죽음 로직
     protected override void Die()
     {
         base.Die();
 
-        // 골렘이 죽었을 때 FirstFloorManager에 알려줌
         if (firstFloorManager != null)
         {
             firstFloorManager.OnGolemKilled();
         }
     }
 
-    // 시작 시 초기화
     protected override void Start()
     {
         base.Start();
@@ -38,7 +36,6 @@ public class Golem : BaseEnemy
         player = GameObject.FindWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
 
-        // 골렘 자식 오브젝트에서 헬스바 슬라이더를 찾기
         healthBar = GetComponentInChildren<Slider>();
 
         if (playerStats == null)
@@ -54,34 +51,74 @@ public class Golem : BaseEnemy
         if (healthBar == null)
         {
             Debug.LogWarning($"{gameObject.name} is missing a health bar!");
-        } else
-        {
-            Debug.Log($"{gameObject.name} has a health bar assigned: {healthBar.name}");
         }
     }
 
-    // 유니티 에디터에서 공격 범위를 시각화
     private void OnDrawGizmosSelected()
     {
-        // 기본 공격 범위
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
-
-        // 스톰프 공격 범위
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, attackRange * stompRangeMultiplier);
     }
 
-    // 애니메이션 이벤트에서 호출될 메서드
-    public void OnStompAttack()
+    public void OnNormalAttack()
     {
         Debug.Log("Golem performs a stomp attack.");
 
-        // 스톰프 공격의 범위 내에 있는 플레이어에게 데미지 적용
         float distance = Vector3.Distance(player.position, agent.transform.position);
-        if (distance <= attackRange * stompRangeMultiplier) // 스톰프 공격 범위는 기본 공격보다 넓음
+        if (distance <= attackRange * stompRangeMultiplier)
         {
-            playerStatus.TakeDamage(damageAmount); // 스톰프 공격으로 damageamount 데미지를 플레이어에게 가함
+            playerStatus.TakeDamage(damageAmount);
         }
+    }
+
+    // 점프 공격 메서드
+    public void JumpAttack(Animator animator)
+    {
+        if (!isJumping)
+        {
+            animator.SetTrigger("jumpAttack");
+            StartCoroutine(StartJumpAttack(animator));
+        }
+    }
+
+    IEnumerator StartJumpAttack(Animator animator)
+    {
+        isJumping = true;
+
+        // 점프 애니메이션 진행 시간 동안 NavMeshAgent의 이동을 멈춤
+        agent.isStopped = true;
+
+        Vector3 startPosition = agent.transform.position;
+        Vector3 targetPosition = player.position;
+
+        float jumpDuration = 1.0f;
+        float elapsedTime = 0f;
+
+        // 점프 높이 및 경로 계산
+        while (elapsedTime < jumpDuration)
+        {
+            elapsedTime += Time.deltaTime;
+
+            float percentComplete = elapsedTime / jumpDuration;
+
+            // 곡선을 따라 이동하면서 목표 위치로 이동
+            agent.transform.position = Vector3.Lerp(startPosition, targetPosition, percentComplete);
+
+            yield return null;
+        }
+
+        // 점프 후 NavMeshAgent의 위치를 정확히 목표 위치로 설정
+        agent.Warp(targetPosition);
+
+        // 착지 후 공격 처리
+        float distance = Vector3.Distance(player.position, agent.transform.position);
+        if (distance <= attackRange*2)
+        {
+            playerStatus.TakeDamage(damageAmount*2);
+        }
+
+        // NavMeshAgent 이동 재개
+        agent.isStopped = false;
+        isJumping = false;
     }
 }

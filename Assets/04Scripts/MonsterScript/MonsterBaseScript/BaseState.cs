@@ -9,6 +9,7 @@ public abstract class BaseState : StateMachineBehaviour
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        
         if (player == null)
         {
             player = GameObject.FindWithTag("Player").transform;

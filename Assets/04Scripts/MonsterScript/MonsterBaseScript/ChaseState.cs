@@ -25,10 +25,9 @@ public class ChaseState : BaseState
             animator.SetBool("isChasing", false);
         }
 
-        // 플레이어와의 거리가 1.3 이하일 경우 공격 상태로 전환
+        // 플레이어와의 거리가 2.0 이하일 경우 공격 상태로 전환
         if (distance < 2.0f && playerStatus.playerAlive)
         {
-            Debug.Log("기본");
             animator.SetBool("isAttacking", true);
         }
     }
