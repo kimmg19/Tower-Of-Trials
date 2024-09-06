@@ -11,6 +11,8 @@ public class Slot : MonoBehaviour, IPointerUpHandler
     public Image itemIcon;
     private PlayerStats playerStats;
 
+    public Text quantityText; // 아이템 수량을 표시할 UI Text
+
     void Start()
     {
         // PlayerStats 객체를 찾습니다.
@@ -19,17 +21,39 @@ public class Slot : MonoBehaviour, IPointerUpHandler
         {
             Debug.LogError("PlayerStats not found in the scene!");
         }
-        else
+
+        // itemIcon과 quantityText가 할당되지 않았다면, 자식에서 검색하여 초기화
+        if (itemIcon == null)
         {
-            //Debug.Log("PlayerStats successfully found in the scene.");
+            itemIcon = GetComponentInChildren<Image>();
+            if (itemIcon == null)
+            {
+                Debug.LogError("ItemIcon is not assigned in the Slot script and could not be found in children.");
+            }
+        }
+
+        if (quantityText == null)
+        {
+            quantityText = GetComponentInChildren<Text>();
+            if (quantityText == null)
+            {
+                Debug.LogError("QuantityText is not assigned in the Slot script and could not be found in children.");
+            }
         }
     }
+
 
     public void UpdateSlotUI()
     {
         if (itemIcon == null)
         {
-            Debug.LogError("ItemIcon is not assigned.");
+            Debug.LogError("ItemIcon가 할당되지 않았습니다.");
+            return;
+        }
+
+        if (quantityText == null)
+        {
+            Debug.LogError("QuantityText가 할당되지 않았습니다.");
             return;
         }
 
@@ -37,27 +61,21 @@ public class Slot : MonoBehaviour, IPointerUpHandler
         {
             if (item.itemImage != null)
             {
-                // 스프라이트가 파괴되지 않았는지 확인
-                if (item.itemImage != null)
-                {
-                    itemIcon.sprite = item.itemImage;
-                    itemIcon.gameObject.SetActive(true);
-                }
-                else
-                {
-                    Debug.LogWarning("Item's image is destroyed.");
-                    itemIcon.gameObject.SetActive(false);
-                }
+                itemIcon.sprite = item.itemImage;
+                itemIcon.gameObject.SetActive(true);
+                quantityText.text = item.quantity.ToString();
+                Debug.Log("UpdateSlotUI called with quantity: " + item.quantity); // 디버깅 로그 추가
             }
             else
             {
-                Debug.LogWarning("Item's image is not assigned.");
                 itemIcon.gameObject.SetActive(false);
+                quantityText.text = "";
             }
         }
         else
         {
             itemIcon.gameObject.SetActive(false);
+            quantityText.text = "";
         }
     }
 
@@ -68,10 +86,7 @@ public class Slot : MonoBehaviour, IPointerUpHandler
         {
             itemIcon.gameObject.SetActive(false);
         }
-        else
-        {
-            Debug.LogError("ItemIcon is not assigned.");
-        }
+        quantityText.text = ""; // 아이템이 제거되면 수량도 초기화
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -113,5 +128,4 @@ public class Slot : MonoBehaviour, IPointerUpHandler
             Debug.LogError("Exception occurred while using item: " + ex.Message);
         }
     }
-
 }

@@ -18,13 +18,19 @@ public class Item
     public List<ItemEffect> efts;
 
     public int StorePrice; // 아이템의 가격
+    public int quantity; // 아이템의 수량 추가
+
+    // 기본 생성자
+    public Item()
+    {
+        quantity = 1; // 기본 수량을 1로 설정
+    }
 
     public string ToJson()
     {
         return JsonUtility.ToJson(this);
     }
 
-    // JSON에서 역직렬화하기 위한 정적 메서드
     public static Item FromJson(string json)
     {
         return JsonUtility.FromJson<Item>(json);
@@ -37,7 +43,6 @@ public class Item
         {
             isUsed = eft.ExecuteRole(playerStats);
         }
-
         return isUsed;
     }
 }
