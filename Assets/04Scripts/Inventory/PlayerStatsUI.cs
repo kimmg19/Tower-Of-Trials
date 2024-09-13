@@ -13,6 +13,9 @@ public class PlayerStatsUI : MonoBehaviour
     public Text weaponATK;
     public Text GoldText;
 
+    public Text HpPotionRateText;
+    public Text MpPotionRateText;
+
     public PlayerStats playerStats;
     public PlayerMovement playerMovement;
     public Sword sword;
@@ -29,5 +32,7 @@ public class PlayerStatsUI : MonoBehaviour
         attackText.text = "Attack: " + upgrade.Attack.ToString();
         weaponATK.text = "+" + upgrade.WeaponATK.ToString();
         GoldText.text = playerStats.Gold.ToString() + " G";
+        HpPotionRateText.text = "Hp Potion: " + playerStats.HpPotionRate.ToString() + "%";
+        MpPotionRateText.text = "Mp Potion: " + playerStats.MpPotionRate.ToString() + "%";
     }
 }

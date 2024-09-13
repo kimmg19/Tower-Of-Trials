@@ -28,7 +28,7 @@ public class InventoryUI : MonoBehaviour
 
     public void SlotChange(int val)
     {
-        for(int i = 0; i < slots.Length; i++)
+        for (int i = 0; i < slots.Length; i++)
         {
             slots[i].slotnum = i;
 
@@ -65,14 +65,19 @@ public class InventoryUI : MonoBehaviour
 
     public void RedrawSlotUI()
     {
-        for(int i = 0; i< slots.Length; i++)
+        Debug.Log("RedrawSlotUI called.");
+
+        for (int i = 0; i < slots.Length; i++)
         {
             slots[i].RemoveSlot();
+            //Debug.Log($"Slot {i} cleared.");
         }
-        for(int i = 0; i < inven.items.Count; i++)
+        for (int i = 0; i < inven.items.Count; i++)
         {
             slots[i].item = inven.items[i];
             slots[i].UpdateSlotUI();
+            Debug.Log($"Slot {i} updated with item '{slots[i].item.itemName}' (quantity: {slots[i].item.quantity}).");
         }
+        Debug.Log("RedrawSlotUI completed.");
     }
 }

@@ -16,6 +16,8 @@ public class PlayerStats : MonoBehaviour
     public int maxMp = 100;
     public int maxStamina = 50;
     public int Gold = 0;
+    public int HpPotionRate = 20; // HP 회복 비율
+    public int MpPotionRate = 20; // MP 회복 비율
     [SerializeField] private int _currentHp;
     public int currentHp
     {
@@ -37,11 +39,24 @@ public class PlayerStats : MonoBehaviour
 
     void Awake()
     {
-        currentHp = maxHp;
-        currentMp = maxMp;
-        currentStamina = maxStamina;
-        Gold = PlayerPrefs.GetInt("PlayerGold", 0); // 기본값을 0으로 설정
+        // 기본값을 설정
+        maxStamina = PlayerPrefs.GetInt("PlayerMaxStamina", 50);
+
+        // maxStamina가 최소값 이하일 경우 기본값으로 설정
+        if (maxStamina < 50)
+        {
+            maxStamina = 50;
+            PlayerPrefs.SetInt("PlayerMaxStamina", maxStamina);
+        }
+
+        currentHp = PlayerPrefs.GetInt("PlayerCurrentHp", maxHp);
+        currentMp = PlayerPrefs.GetInt("PlayerCurrentMp", maxMp);
+        currentStamina = PlayerPrefs.GetInt("PlayerCurrentStamina", maxStamina);
+        Gold = PlayerPrefs.GetInt("PlayerGold", 0);
+        MpPotionRate = PlayerPrefs.GetInt("PlayerMpPotionRate", 20);
+        HpPotionRate = PlayerPrefs.GetInt("PlayerHpPotionRate", 20);
     }
+
     public void IncreaseSwordDamage(int amount)
     {
         if (sword != null)
@@ -65,8 +80,18 @@ public class PlayerStats : MonoBehaviour
 
     public void OnApplicationQuit()
     {
-        // 애플리케이션 종료 시 골드 값을 저장
+        PlayerPrefs.SetInt("PlayerMpPotionRate", MpPotionRate);
+        PlayerPrefs.SetInt("PlayerHpPotionRate", HpPotionRate);
+        PlayerPrefs.SetInt("PlayerMaxStamina", maxStamina);
         PlayerPrefs.SetInt("PlayerGold", Gold);
-        PlayerPrefs.Save(); // 즉시 저장을 원할 경우 호출
+
+        // 디버깅을 위한 로그 추가
+        Debug.Log("Saving PlayerPrefs: ");
+        Debug.Log("PlayerMpPotionRate: " + MpPotionRate);
+        Debug.Log("PlayerHpPotionRate: " + HpPotionRate);
+        Debug.Log("PlayerMaxStamina: " + maxStamina);
+        Debug.Log("PlayerGold: " + Gold);
+
+        PlayerPrefs.Save();
     }
 }
