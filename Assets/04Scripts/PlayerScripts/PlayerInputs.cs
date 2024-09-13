@@ -17,31 +17,43 @@ public class PlayerInputs : MonoBehaviour
 
     // 플레이어 상태 변수
     public Vector2 moveInput;
-     public bool isRunning = false;
+    public bool isRunning = false;
     [HideInInspector] public bool isDodging;
     [HideInInspector] public bool isGPress;
     [HideInInspector] public bool isInteracting = false;
     [HideInInspector] public bool isBlocking = false;
     [HideInInspector] public bool isWalking = false;
     [HideInInspector] public bool isAttacking = false;
-    [HideInInspector] public bool isJumping = false;
+    public bool isJumping = false;
+    public bool isSkillAttacking = false;
 
     // 스태미나 및 쿨타임 변수
-    [SerializeField] int strintStanima = 1;
-    [SerializeField] int blockStanima = 1;
+    [SerializeField] int sprintStamina = 1;
+    [SerializeField] int blockStamina = 1;
     [SerializeField] int jumpStamina = 5;
     [SerializeField] int rollStamina = 15;
+    [SerializeField] int skillMp = 15;
     [SerializeField] float jumpCooldownDuration = 1.5f;
     [SerializeField] float rollCooldownDuration = 1f;
+    [SerializeField] float skill01_CooldownDuration = 5f;    
 
     // UI 이미지 참조 (점프와 롤 쿨타임)
     [SerializeField] Image jumpCooldownImage;
     [SerializeField] Image rollCooldownImage;
+    [SerializeField] Image skill01_CooldownImage;
+
 
     // 애니메이터 및 쿨타임 상태 변수
     Animator animator;
-    private bool isJumpCooldown = false;
-    private bool isRollCooldown = false;
+    bool isJumpCooldown = false;
+    bool isRollCooldown = false;
+    bool isSkill01Cooldown = false;
+
+    // 스킬 파티클
+    [SerializeField] ParticleSystem skillParticle_01;
+
+    // 쿨타임 처리 코루틴 변수
+    Coroutine staminaCoroutine;
 
     void Start()
     {
@@ -58,35 +70,24 @@ public class PlayerInputs : MonoBehaviour
         // 쿨타임 이미지 초기화
         if (jumpCooldownImage != null) jumpCooldownImage.fillAmount = 0;
         if (rollCooldownImage != null) rollCooldownImage.fillAmount = 0;
+        if (skill01_CooldownImage != null) skill01_CooldownImage.fillAmount = 0;
+
     }
 
-
-    private Coroutine staminaCoroutine;
-
-    void OnMove(InputValue value)
+    private void OnMove(InputValue value)
     {
         if (isInteracting) return;
 
         moveInput = value.Get<Vector2>();
 
-        // 이동 입력이 0이 되면 스프린트 중지
+        // 이동 입력이 0이면 스프린트 중지
         if (moveInput.magnitude == 0 && isRunning)
         {
             StopSprinting();
         }
     }
 
-    IEnumerator StanimaCoroutine(int staminaUsage)
-    {
-        while (playerStats.currentStamina > 0 && isRunning)
-        {
-            playerStatus.UseStamina(staminaUsage);
-            yield return new WaitForSeconds(1.0f);
-        }
-        staminaCoroutine = null;
-    }
-
-    void OnSprint(InputValue value)
+    private void OnSprint(InputValue value)
     {
         isRunning = value.isPressed;
 
@@ -98,13 +99,15 @@ public class PlayerInputs : MonoBehaviour
             StopSprinting();
         }
     }
+
     private void StartSprinting()
     {
         if (staminaCoroutine == null)
         {
-            staminaCoroutine = StartCoroutine(StanimaCoroutine(strintStanima));
+            staminaCoroutine = StartCoroutine(StaminaCoroutine(sprintStamina));
         }
     }
+
     private void StopSprinting()
     {
         if (staminaCoroutine != null)
@@ -115,15 +118,26 @@ public class PlayerInputs : MonoBehaviour
 
         isRunning = false;
     }
-    void OnWalk(InputValue value)
+
+    private IEnumerator StaminaCoroutine(int staminaUsage)
+    {
+        while (playerStats.currentStamina > 0 && isRunning)
+        {
+            playerStatus.UseStamina(staminaUsage);
+            yield return new WaitForSeconds(1.0f);
+        }
+        staminaCoroutine = null;
+    }
+
+    private void OnWalk(InputValue value)
     {
         if (isInteracting || moveInput.magnitude == 0) return;
         isWalking = value.isPressed;
     }
 
-    void OnAttack()
+    private void OnAttack()
     {
-        if (isInteracting || isBlocking) return;
+        if (isInteracting || isBlocking || isSkillAttacking) return;
 
         if (playerMovement.characterController.isGrounded && !isDodging)
         {
@@ -132,102 +146,97 @@ public class PlayerInputs : MonoBehaviour
         }
     }
 
-    void OnRoll()
+    private void OnSkill01()
     {
-        // 롤(구르기) 동작 처리 및 쿨타임 관리
-        if (isInteracting || moveInput.magnitude == 0 || isDodging || isJumping || isRollCooldown) return;
-        if (playerStats.currentStamina < rollStamina) return;
+        if (isInteracting || isBlocking || isDodging || isJumping
+            || skillParticle_01.isPlaying || isAttacking|| isSkillAttacking|| isSkill01Cooldown) return;
+        StartCoroutine(Skill01_CooldownCoroutine());
+        playerStatus.UseMp(skillMp);
+        animator.SetTrigger("Skill01");  }
+
+    
+
+    private void OnRoll()
+    {
+        if (isInteracting  || isDodging || isJumping || isRollCooldown || isSkillAttacking
+            || moveInput.magnitude == 0|| playerStats.currentStamina < rollStamina) return;        
 
         playerMovement.Roll();
         playerStatus.UseStamina(rollStamina);
 
-        StartCoroutine(RollCooldownCoroutine()); // 롤 쿨타임 시작
+        StartCoroutine(RollCooldownCoroutine());
         isDodging = true;
     }
 
-    void OnInteraction()
+    private void OnInteraction()
     {
-        StartCoroutine(Interactting(() => isGPress = false));
+        StartCoroutine(InteractingCoroutine(() => isGPress = false));
         Debug.Log("G key pressed in PlayerInputs.");
     }
 
-    IEnumerator Interactting(Action onComplete)
+    private IEnumerator InteractingCoroutine(Action onComplete)
     {
         isGPress = true;
         yield return new WaitForSeconds(1f);
         onComplete?.Invoke();
-
     }
 
-    void OnPause()
+    private void OnPause()
     {
         if (isInteracting) return;
         inGameCanvas.GetComponent<InGameCanvas>().ClickPauseButton();
     }
 
-    void OnBlock(InputValue value)
+    private void OnBlock(InputValue value)
     {
-        // 방어 동작 처리 및 스태미나 관리
-        if (isInteracting || animationEvent.IsAttacking()) return;
-        animationEvent.OnFinishAttack();
-        animationEvent.AtttackEffectOff();
+        if (isInteracting || animationEvent.IsAttacking() || isSkillAttacking) return;
+
         isBlocking = value.isPressed;
 
         if (isBlocking && playerStats.currentStamina > 0)
         {
-            StartCoroutine(StanimaCoroutine(blockStanima));
-        }
-        else
+            StartCoroutine(StaminaCoroutine(blockStamina));
+        } else
         {
-            StopCoroutine(StanimaCoroutine(blockStanima));
+            StopCoroutine(StaminaCoroutine(blockStamina));
         }
+
         animator.SetBool("Block", isBlocking);
     }
 
-    void OnParry()
+    private void OnJump()
     {
-        // 패링 로직 (미구현 상태)
-    }
-
-    void OnJump()
-    {
-        // 점프 동작 처리 및 쿨타임 관리
-        if (!isInteracting && playerMovement.characterController.isGrounded && !isJumping && !animationEvent.IsAttacking() && !isDodging && !isJumpCooldown)
+        if (!isInteracting && playerMovement.characterController.isGrounded &&
+            !isJumping && !animationEvent.IsAttacking() && !isDodging && !isJumpCooldown && !isSkillAttacking)
         {
-            if (playerStats.currentStamina < jumpStamina) return;
-
-            StartCoroutine(JumpCoroutine()); // 점프 중 스태미나 관리
-            StartCoroutine(JumpCooldownCoroutine()); // 점프 쿨타임 시작
+            isJumping = true;
+            if (playerStats.currentStamina < jumpStamina) return;            
+            playerStatus.UseStamina(jumpStamina);
+            StartCoroutine(JumpCooldownCoroutine());
             playerMovement.Jump();
         }
-    }
+    }    
 
-    IEnumerator JumpCoroutine()
+    private IEnumerator JumpCooldownCoroutine()
     {
-        // 점프 상태 관리
-        isJumping = true;
-        playerStatus.UseStamina(jumpStamina);
-        yield return new WaitForSeconds(0.2f); // 점프 중 스태미나 사용 대기 시간
-        isJumping = false;
-    }
-
-    IEnumerator JumpCooldownCoroutine()
-    {
-        // 점프 쿨타임 관리
         isJumpCooldown = true;
         yield return CooldownCoroutine(jumpCooldownDuration, jumpCooldownImage, () => isJumpCooldown = false);
     }
 
-    IEnumerator RollCooldownCoroutine()
+    private IEnumerator RollCooldownCoroutine()
     {
-        // 구르기ㅣ 쿨타임 관리
         isRollCooldown = true;
         yield return CooldownCoroutine(rollCooldownDuration, rollCooldownImage, () => isRollCooldown = false);
     }
-
-    IEnumerator CooldownCoroutine(float duration, Image cooldownImage, Action onComplete)
+    private IEnumerator Skill01_CooldownCoroutine()
     {
-        // 쿨타임 진행 및 이미지 업데이트
+        isSkillAttacking = true;
+        isSkill01Cooldown = true;
+        yield return CooldownCoroutine(skill01_CooldownDuration,skill01_CooldownImage, () => isSkill01Cooldown = false);
+    }
+
+    private IEnumerator CooldownCoroutine(float duration, Image cooldownImage, Action onComplete)
+    {
         float timer = 0f;
         cooldownImage.fillAmount = 1;
 
@@ -242,13 +251,13 @@ public class PlayerInputs : MonoBehaviour
         onComplete?.Invoke();
     }
 
-    void OnLockOn()
+    private void OnLockOn()
     {
-        if (isInteracting) return;        
+        if (isInteracting) return;
         lockOnSystem.ToggleLockOn();
     }
 
-    void OnSwitchTarget()
+    private void OnSwitchTarget()
     {
         if (isInteracting) return;
         lockOnSystem.SwitchTarget();

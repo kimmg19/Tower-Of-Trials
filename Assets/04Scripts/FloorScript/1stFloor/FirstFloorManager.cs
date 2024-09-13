@@ -7,7 +7,10 @@ using UnityEngine.InputSystem;
 
 public class FirstFloorManager : MonoBehaviour
 {
-    [SerializeField] PlayableDirector bossCinematic; // 타임라인 에셋을 재생할 PlayableDirector
+    // 타임라인 에셋을 재생할 PlayableDirector
+    [SerializeField] PlayableDirector bossCinematic; 
+    [SerializeField] PlayableDirector firstFloorCinematic; 
+
     [SerializeField] GameObject slimeGroup;
     [SerializeField] GameObject turtleGroup;
     [SerializeField] GameObject golemDoor;
@@ -36,7 +39,7 @@ public class FirstFloorManager : MonoBehaviour
 
     void Start()
     {
-        
+        StartCoroutine("Play1stFloorCinematic");
         panelCanvasGroup = panel.GetComponent<CanvasGroup>();
         titleCanvasGroup = titlePanel.GetComponent<CanvasGroup>();
 
@@ -257,7 +260,18 @@ public class FirstFloorManager : MonoBehaviour
 
     }
 
+    IEnumerator Play1stFloorCinematic()
+    {
+        playerInputs.GetComponent<PlayerMovement>().enabled = false;
+        yield return new WaitForSeconds(1f);
+        if (firstFloorCinematic != null)
+        {
+            firstFloorCinematic.Play();
+        }
+        yield return new WaitForSeconds((float)firstFloorCinematic.duration);  //bossCinematic.duration은 시네마틱의 전체 길이를 초 단위로 나타냄
+        playerInputs.GetComponent<PlayerMovement>().enabled = true;
 
+    }
 
     IEnumerator SlowMotionEffect()
     {

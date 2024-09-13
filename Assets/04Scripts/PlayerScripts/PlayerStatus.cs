@@ -29,7 +29,6 @@ public class PlayerStatus : MonoBehaviour
         if (!playerInputs.isDodging)
         {
             animationEvent.OnFinishAttack();
-            animationEvent.AtttackEffectOff();
             if (playerStats.currentHp > 0)
             {
                 playerHitEffect.ShowHitEffect();
