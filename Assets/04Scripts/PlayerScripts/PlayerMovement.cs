@@ -7,32 +7,36 @@ using UnityEngine.Playables;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] Transform followCam; // Ä«¸Ş¶óÀÇ TransformÀ» ¼³Á¤
-    [HideInInspector] public Transform characterBody; // Ä³¸¯ÅÍÀÇ TransformÀ» ¼³Á¤
-    [HideInInspector] public CharacterController characterController; // Ä³¸¯ÅÍ ÄÁÆ®·Ñ·¯¸¦ ¼³Á¤
-    [HideInInspector] public Vector3 dodgeVec; // È¸ÇÇ ¹æÇâ º¤ÅÍ
-    Animator animator; // ¾Ö´Ï¸ŞÀÌÅÍ ÄÄÆ÷³ÍÆ®
-    AnimationEvent animationEvent; // ¾Ö´Ï¸ŞÀÌ¼Ç ÀÌº¥Æ® ÄÄÆ÷³ÍÆ®
-    PlayerStats playerStats; // ÇÃ·¹ÀÌ¾îÀÇ Åë°è µ¥ÀÌÅÍ
-    PlayerStatus playerStatus; // ÇÃ·¹ÀÌ¾îÀÇ »óÅÂ µ¥ÀÌÅÍ
-    PlayerInputs playerInputs; // ÇÃ·¹ÀÌ¾îÀÇ ÀÔ·Â µ¥ÀÌÅÍ
-    Vector3 velocity; // ¼Óµµ º¤ÅÍ
-    float turnSmoothVelocity; // È¸Àü ºÎµå·´°Ô ÇÏ±â À§ÇÑ º¯¼ö
-    public float speed = 1.0f; // ±âº» ¼Óµµ
-    float gravity = -9.8f; // Áß·Â °ª
-    float jumpHeight = 2f; // Á¡ÇÁ ³ôÀÌ
-    float smoothDampTime = 0.1f; // È¸Àü ºÎµå·´°Ô ÇÏ±â À§ÇÑ ½Ã°£
-    float speedDampTime = 0.1f; // ¼Óµµ º¯È­ ºÎµå·´°Ô ÇÏ±â À§ÇÑ ½Ã°£
+    [SerializeField] Transform followCam; // ì¹´ë©”ë¼ Transform ì°¸ì¡°
+    [HideInInspector] public Transform characterBody; // ìºë¦­í„°ì˜ Transform ì°¸ì¡°
+    [HideInInspector] public CharacterController characterController; // ìºë¦­í„° ì»¨íŠ¸ë¡¤ëŸ¬ ì°¸ì¡°
+    [HideInInspector] public Vector3 dodgeVec; // íšŒí”¼ ë°©í–¥ ë²¡í„°
+    Animator animator; // ì• ë‹ˆë©”ì´í„° ì°¸ì¡°
+    AnimationEvent animationEvent; // ì• ë‹ˆë©”ì´ì…˜ ì´ë²¤íŠ¸ ì°¸ì¡°
+    PlayerStats playerStats; // í”Œë ˆì´ì–´ ìŠ¤íƒ¯ ê´€ë¦¬
+    PlayerStatus playerStatus; // í”Œë ˆì´ì–´ ìƒíƒœ ê´€ë¦¬
+    PlayerInputs playerInputs; // í”Œë ˆì´ì–´ ì…ë ¥ ê´€ë¦¬
+    Vector3 velocity; // ì´ë™ ì†ë„ ë²¡í„°
+    float turnSmoothVelocity; // íšŒì „ ë¶€ë“œëŸ½ê²Œ ì „í™˜í•  ë•Œ í•„ìš”í•œ ë³€ìˆ˜
+    public float speed = 1.0f; // ê¸°ë³¸ ì´ë™ ì†ë„
+    float gravity = -9.8f; // ì¤‘ë ¥ ê°’
+    float jumpHeight = 2f; // ì í”„ ë†’ì´
+    float smoothDampTime = 0.1f; // íšŒì „ ë¶€ë“œëŸ½ê²Œ ì „í™˜í•  ë•Œ í•„ìš”í•œ ì‹œê°„
+    float speedDampTime = 0.1f; // ì†ë„ ë³€í™” ë¶€ë“œëŸ½ê²Œ ì „í™˜í•  ë•Œ í•„ìš”í•œ ì‹œê°„
     LockOnSystem lockOnSystem;
+
+    // ë°©ì–´ ì¤‘ ì´ë™ ì†ë„ë¥¼ ì¤„ì´ê¸° ìœ„í•œ ë³€ìˆ˜
+    private float blockingSpeedMultiplier = 0.5f; // ë°©ì–´ ì‹œ ì´ë™ ì†ë„ ê°ì†Œ ë¹„ìœ¨
+    private bool isBlocking = false; // í˜„ì¬ ë°©ì–´ ìƒíƒœì¸ì§€ ì—¬ë¶€
 
     void Start()
     {
-        // ÇÊ¿äÇÑ ÄÄÆ÷³ÍÆ®¿Í ¿ÀºêÁ§Æ®µéÀ» ÃÊ±âÈ­
+        // í•„ìš”í•œ ì»´í¬ë„ŒíŠ¸ì™€ ìŠ¤í¬ë¦½íŠ¸ë“¤ì„ ì´ˆê¸°í™”
         playerStatus = GetComponent<PlayerStatus>();
         playerStats = GetComponent<PlayerStats>();
         playerInputs = GetComponent<PlayerInputs>();
-        followCam = GameObject.Find("Main Camera").transform; // ¸ŞÀÎ Ä«¸Ş¶ó Ã£±â
-        characterBody = GameObject.Find("Player").transform; // ÇÃ·¹ÀÌ¾î ¿ÀºêÁ§Æ® Ã£±â
+        followCam = GameObject.Find("Main Camera").transform; // ë©”ì¸ ì¹´ë©”ë¼ ì°¾ê¸°
+        characterBody = GameObject.Find("Player").transform; // í”Œë ˆì´ì–´ íŠ¸ëœìŠ¤í¼ ì°¾ê¸°
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         animationEvent = GetComponent<AnimationEvent>();
@@ -41,8 +45,7 @@ public class PlayerMovement : MonoBehaviour
     
     void Update()
     {
-
-        // ÇÃ·¹ÀÌ¾î°¡ »ì¾ÆÀÖ°í »óÈ£ÀÛ¿ë ÁßÀÌ ¾Æ´Ò ¶§ ÀÌµ¿ ¹× Áß·Â Àû¿ë
+        // í”Œë ˆì´ì–´ê°€ ì‚´ì•„ìˆê³  ìƒí˜¸ì‘ìš© ì¤‘ì´ ì•„ë‹Œ ê²½ìš° ì´ë™ê³¼ ì¤‘ë ¥ ì ìš©
         if (playerStatus.playerAlive && !playerInputs.isInteracting)
         {
             Move(speed);
@@ -52,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Buffspeed()
     {
-        // ¼Óµµ Áõ°¡ ¹× ÀÌµ¿ ¾÷µ¥ÀÌÆ®
+        // ì´ë™ ì†ë„ ì¦ê°€ ë° ì´ë™ ê°±ì‹ 
         speed += 0.5f;
         playerStats.sprintSpeed += 0.5f;
         Move(speed);
@@ -60,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Debuffspeed()
     {
-        // ¼Óµµ °¨¼Ò ¹× ÀÌµ¿ ¾÷µ¥ÀÌÆ®
+        // ì´ë™ ì†ë„ ê°ì†Œ ë° ì´ë™ ê°±ì‹ 
         speed -= 0.5f;
         playerStats.sprintSpeed -= 0.5f;
         Move(speed);
@@ -70,12 +73,19 @@ public class PlayerMovement : MonoBehaviour
     {
         if (animationEvent.IsAttacking() && !playerInputs.isDodging) return;
 
+        // ë°©ì–´ ì¤‘ì¸ ê²½ìš° ì´ë™ ì†ë„ ê°ì†Œ
+        if (isBlocking)
+        {
+            newSpeed *= blockingSpeedMultiplier;
+            playerInputs.isSprinting = false; // ë°©ì–´ ì¤‘ì—ëŠ” ë‹¬ë¦¬ê¸° ë¶ˆê°€ëŠ¥
+        }
+
         if (playerInputs.isWalking)
         {
             newSpeed = playerStats.walkSpeed;
         }
 
-        float speed = (playerInputs.isRunning) ? playerStats.sprintSpeed : newSpeed;
+        float speed = (playerInputs.isSprinting && !isBlocking) ? playerStats.sprintSpeed : newSpeed; // ë°©ì–´ ì¤‘ì´ë©´ ìŠ¤í”„ë¦°íŠ¸ ë¶ˆê°€
         Vector3 moveDirection = CalculateMoveDirection();
 
         if (!lockOnSystem.isLockOn)
@@ -84,10 +94,10 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (lockOnSystem.isLockOn)
         {
-            // Ä³¸¯ÅÍÀÇ ·ÎÄÃ ¹æÇâ¿¡¼­ÀÇ ÀÔ·Â ¹æÇâÀ» °è»ê
+            // ìºë¦­í„°ì˜ ë¡œì»¬ ë°©í–¥ì—ì„œ ì…ë ¥ ë²¡í„° ê³„ì‚°
             Vector3 localMove = characterBody.InverseTransformDirection(moveDirection);
 
-            // ¾Ö´Ï¸ŞÀÌÅÍ ÆÄ¶ó¹ÌÅÍ¿¡ ·ÎÄÃ ÁÂÇ¥°è ±âÁØÀ¸·Î °ªÀ» Àü´Ş
+            // ì• ë‹ˆë©”ì´í„° íŒŒë¼ë¯¸í„°ì— ìˆ˜í‰ ë° ìˆ˜ì§ ì…ë ¥ ë°˜ì˜
             animator.SetFloat("Horizontal", localMove.x * speed, speedDampTime, Time.deltaTime);
             animator.SetFloat("Vertical", localMove.z * speed, speedDampTime, Time.deltaTime);
         }
@@ -106,7 +116,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // Ä³¸¯ÅÍ ÀÌµ¿ ÇÔ¼ö
+    // ìºë¦­í„° ì´ë™ í•¨ìˆ˜
     void MoveCharacter(Vector3 direction, float speed)
     {
         characterController.Move(direction * Time.deltaTime * playerStats.playerSpeed * speed);
@@ -122,7 +132,7 @@ public class PlayerMovement : MonoBehaviour
     void RotateCharacter(Vector3 moveDirection)
     {
         if (animator.runtimeAnimatorController == lockOnSystem.playerAnimator_LockOn) return;
-        // ÀÌµ¿ ¹æÇâ¿¡ µû¶ó Ä³¸¯ÅÍ È¸Àü
+        // ì´ë™ ë°©í–¥ì— ë”°ë¼ ìºë¦­í„° íšŒì „
         if (moveDirection != Vector3.zero)
         {
             float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg;
@@ -133,19 +143,19 @@ public class PlayerMovement : MonoBehaviour
 
     void ApplyGravity()
     {
-        // Ä³¸¯ÅÍ°¡ Áö¸é¿¡ ´ê¾Æ ÀÖ´ÂÁö È®ÀÎ
+        // ìºë¦­í„°ê°€ ì§€ë©´ì— ìˆëŠ”ì§€ í™•ì¸
         if (!characterController.isGrounded)
         {
-            // °øÁß¿¡ ÀÖÀ» ¶§¸¸ Áß·Â Àû¿ë
+            // ê³µì¤‘ì— ìˆì„ ë•Œ ì¤‘ë ¥ ì ìš©
             velocity.y += gravity * Time.deltaTime * 2;
         }
         else if (velocity.y < 0)
         {
-            // Áö¸é¿¡ ÀÖÀ» ¶§´Â ¼öÁ÷ ¼Óµµ¸¦ ÃÖ¼Ò°ªÀ¸·Î °íÁ¤
+            // ì§€ë©´ì— ìˆì„ ë•Œ ì†ë„ ìµœì†Œí™”
             velocity.y = -0.5f;
         }
 
-        // °è»êµÈ ¼Óµµ·Î Ä³¸¯ÅÍ ÀÌµ¿
+        // ì†ë„ì— ë”°ë¼ ìºë¦­í„° ì´ë™
         characterController.Move(velocity * Time.deltaTime);
     }
 
@@ -153,8 +163,8 @@ public class PlayerMovement : MonoBehaviour
     {
         velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         animator.SetTrigger("Jump");
-
     }
+
     public void Roll()
     {
         if (characterController.isGrounded)
@@ -167,6 +177,17 @@ public class PlayerMovement : MonoBehaviour
             characterController.center = new Vector3(0, 0.5f, 0);
             characterController.height = 1f;
             characterBody.rotation = Quaternion.LookRotation(dodgeVec);
+        }
+    }
+
+    // ë°©ì–´ ì¤‘ ì´ë™ ì†ë„ ì¡°ì ˆ ë©”ì„œë“œ
+    public void SetBlockingMovement(bool isBlocking)
+    {
+        this.isBlocking = isBlocking;
+        if (isBlocking)
+        {
+            // ë°©ì–´ ì¤‘ì¼ ë•Œ ìŠ¤íƒœë¯¸ë„ˆ ì†Œëª¨ ë°©ì§€
+            playerInputs.isSprinting = false; // ìŠ¤í”„ë¦°íŠ¸ ë¹„í™œì„±í™”
         }
     }
 }

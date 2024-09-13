@@ -10,8 +10,8 @@ public class Turtle : BaseEnemy
     // 거북이의 고유 스탯을 초기화
     protected override void InitializeStats()
     {
-        HP = 150; // 거북이의 체력 설정
-        damageAmount = 15; // 거북이의 공격력 설정
+        HP = 180; // 거북이의 체력 설정
+        damageAmount = 5; // 거북이의 공격력 설정
     }
 
     // 거북이만의 고유한 죽음 로직

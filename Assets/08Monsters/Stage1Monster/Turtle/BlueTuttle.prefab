@@ -412,7 +412,7 @@ GameObject:
   - component: {fileID: 1051077488022993650}
   m_Layer: 3
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -779,7 +779,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 66.44682, y: 0.00000071525574, z: 129.58313}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7935085118543155393}
@@ -823,6 +823,8 @@ MonoBehaviour:
   healthBar: {fileID: 4463077215240271270}
   animator: {fileID: 7084831668727285949}
   enableDamaging: 0
+  isParried: 0
+  isAttacking: 0
 --- !u!195 &6329380273701166256
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -905,7 +907,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9372633c8245c343a0ca951a65b56a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sphereCollider: {fileID: 1051077488022993650}
+  attackCollider: {fileID: 0}
 --- !u!1 &4064185841712135631
 GameObject:
   m_ObjectHideFlags: 0
@@ -965,14 +967,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4915416236413604530}
-  m_LocalRotation: {x: 0, y: -0.99965733, z: 0, w: 0.026177017}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.0071468144, y: 0.01, z: 0.01}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4819616009019635327}
   m_Father: {fileID: 7893318295278824936}
-  m_LocalEulerAnglesHint: {x: 0, y: -177, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 1.155}
@@ -1603,8 +1605,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 3419311310100710855}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

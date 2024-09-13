@@ -7,11 +7,11 @@ public class PlayerStats : MonoBehaviour
 {
     public Upgrade upgrade;
     public Sword sword;
-    public float weaponATK; // °­È­±îÁö Æ÷ÇÔµÈ ¹«±â°ø°Ý·Â
-    public int Attack; // ¸ó½ºÅÍÇÑÅ× µé¾î°¡´Â ÃÑ °ø°Ý·Â
+    public float weaponATK; // ï¿½ï¿½È­ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ôµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý·ï¿½
+    public int Attack; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î°¡ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ý·ï¿½
     public float playerSpeed = 4f;
     public float sprintSpeed = 1.5f;
-    public float walkSpeed = 0.5f;//ÃµÃµ¤¾ ¤Ó °È±â ¼Óµµ
+    public float walkSpeed = 0.5f;//ÃµÃµï¿½ï¿½ ï¿½ï¿½ ï¿½È±ï¿½ ï¿½Óµï¿½
     public int maxHp = 100;
     public int maxMp = 100;
     public int maxStamina = 50;
@@ -40,7 +40,7 @@ public class PlayerStats : MonoBehaviour
         currentHp = maxHp;
         currentMp = maxMp;
         currentStamina = maxStamina;
-        Gold = PlayerPrefs.GetInt("PlayerGold", 0); // ±âº»°ªÀ» 0À¸·Î ¼³Á¤
+        Gold = PlayerPrefs.GetInt("PlayerGold", 0); // ï¿½âº»ï¿½ï¿½ï¿½ï¿½ 0ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
     public void IncreaseSwordDamage(int amount)
     {
@@ -65,8 +65,8 @@ public class PlayerStats : MonoBehaviour
 
     public void OnApplicationQuit()
     {
-        // ¾ÖÇÃ¸®ÄÉÀÌ¼Ç Á¾·á ½Ã °ñµå °ªÀ» ÀúÀå
+        // ï¿½ï¿½ï¿½Ã¸ï¿½ï¿½ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         PlayerPrefs.SetInt("PlayerGold", Gold);
-        PlayerPrefs.Save(); // Áï½Ã ÀúÀåÀ» ¿øÇÒ °æ¿ì È£Ãâ
+        PlayerPrefs.Save(); // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ È£ï¿½ï¿½
     }
 }

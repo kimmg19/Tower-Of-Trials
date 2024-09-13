@@ -3,10 +3,15 @@ using UnityEngine;
 public class AttackState : BaseState
 {
     protected float attackRange = 2f;
+    private BaseEnemy enemy;
 
     protected override void OnStateEnterCustom(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        // 공격 상태 진입 시 특별한 동작 추가 가능
+        enemy = animator.GetComponent<BaseEnemy>();
+        if (enemy != null)
+        {
+            enemy.isAttacking = true; // 공격 상태 시작
+        }
     }
 
     protected override void OnStateUpdateCustom(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -22,6 +27,10 @@ public class AttackState : BaseState
         if (distance > attackRange || !playerStatus.playerAlive)
         {
             animator.SetBool("isAttacking", false);
+            if (enemy != null)
+            {
+                enemy.isAttacking = false; // 공격 상태 종료
+            }
         }
 
         // 공격 로직을 추가할 수 있습니다 (예: 데미지를 주는 메서드 호출 등)
@@ -29,8 +38,12 @@ public class AttackState : BaseState
 
     protected override void OnStateExitCustom(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        // 공격 상태 종료 시 특별한 동작 추가 가능
+        if (enemy != null)
+        {
+            enemy.isAttacking = false; // 공격 상태 종료
+        }
     }
+
     void LookAtPlayerXZ(Transform animator, Transform player)
     {
         // 플레이어와의 방향 벡터 계산 (Y축 고정)

@@ -35,13 +35,5 @@ public class Slime : BaseEnemy
         // 슬라임 자식 오브젝트에서 헬스바 슬라이더를 찾기
         healthBar = GetComponentInChildren<Slider>();
 
-        if (healthBar == null)
-        {
-            Debug.LogWarning($"{gameObject.name} is missing a health bar!");
-        }
-        else
-        {
-            //Debug.Log($"{gameObject.name} has a health bar assigned: {healthBar.name}");
-        }
     }
 }

@@ -73,6 +73,20 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+  - name: BuffSkill
+    clip: {fileID: 8300000, guid: 6857c17d0b39a594298d2c0ebc09f389, type: 3}
+    mixer: {fileID: 2288875582301175548, guid: 86271638b8ca4de4facf01edc61a6aeb, type: 2}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: ParrySuccess
+    clip: {fileID: 8300000, guid: a7736c1763bd76c4eb0d52aaad581deb, type: 3}
+    mixer: {fileID: 2288875582301175548, guid: 86271638b8ca4de4facf01edc61a6aeb, type: 2}
+    volume: 0.614
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
   - name: PlayerDie
     clip: {fileID: 8300000, guid: 73a158e99ad07154280d61719abe8d6c, type: 3}
     mixer: {fileID: 2288875582301175548, guid: 86271638b8ca4de4facf01edc61a6aeb, type: 2}
@@ -80,10 +94,17 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
-  - name: PlayerDieSFX
+  - name: PlayerDieBgm
     clip: {fileID: 8300000, guid: 35ce408210dfa9843ba14da86f8efb4e, type: 3}
-    mixer: {fileID: 2288875582301175548, guid: 86271638b8ca4de4facf01edc61a6aeb, type: 2}
-    volume: 0.758
+    mixer: {fileID: -6140534496448188841, guid: 86271638b8ca4de4facf01edc61a6aeb, type: 2}
+    volume: 0.778
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: VictoryBgm
+    clip: {fileID: 8300000, guid: a2b51b225bf36d84d8229678edb7762e, type: 3}
+    mixer: {fileID: -6140534496448188841, guid: 86271638b8ca4de4facf01edc61a6aeb, type: 2}
+    volume: 0.837
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -121,11 +142,4 @@ MonoBehaviour:
     volume: 0.25
     pitch: 1
     loop: 1
-    source: {fileID: 0}
-  - name: VictoryBgm
-    clip: {fileID: 8300000, guid: a2b51b225bf36d84d8229678edb7762e, type: 3}
-    mixer: {fileID: -6140534496448188841, guid: 86271638b8ca4de4facf01edc61a6aeb, type: 2}
-    volume: 0.509
-    pitch: 1
-    loop: 0
     source: {fileID: 0}

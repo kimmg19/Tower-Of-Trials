@@ -14,12 +14,16 @@ public class PlayerInputs : MonoBehaviour
     PlayerStats playerStats;
     PlayerUI playerUI;
     PlayerStatus playerStatus;
+    Shield shield;
+
+    // 파티클 프리팹 변수 추가
+    [SerializeField] GameObject buffParticlePrefab; // 버프 스킬 시 사용할 파티클 시스템 프리팹
 
     // 플레이어 상태 변수
     public Vector2 moveInput;
-     public bool isRunning = false;
-    [HideInInspector] public bool isDodging;
-    [HideInInspector] public bool isGPress;
+    [HideInInspector] public bool isSprinting = false;
+    [HideInInspector] public bool isDodging = false;
+    [HideInInspector] public bool isGPress = false;
     [HideInInspector] public bool isInteracting = false;
     [HideInInspector] public bool isBlocking = false;
     [HideInInspector] public bool isWalking = false;
@@ -27,8 +31,11 @@ public class PlayerInputs : MonoBehaviour
     [HideInInspector] public bool isJumping = false;
 
     // 스태미나 및 쿨타임 변수
-    [SerializeField] int strintStanima = 1;
-    [SerializeField] int blockStanima = 1;
+    [SerializeField] int blockInitialStamina = 3; // 방어 시작 시 처음 감소할 스태미나
+    [SerializeField] int blockStamina = 2; // 방어 중 지속적으로 소모할 스태미나
+    [SerializeField] float blockStaminaDecreaseInterval = 1f; // 방어 중 스태미나 감소 주기
+    [SerializeField] float blockStaminaAcceleration = 0.8f; // 방어 지속 시 스태미나 감소 주기 가속
+    [SerializeField] int sprintStamina = 1;
     [SerializeField] int jumpStamina = 5;
     [SerializeField] int rollStamina = 15;
     [SerializeField] float jumpCooldownDuration = 1.5f;
@@ -43,8 +50,18 @@ public class PlayerInputs : MonoBehaviour
     private bool isJumpCooldown = false;
     private bool isRollCooldown = false;
 
+    // 코루틴 참조 변수
+    private Coroutine blockStaminaCoroutine;
+
     void Start()
     {
+        // 방패 오브젝트를 찾아서 Shield 컴포넌트 참조
+        GameObject shieldObject = GameObject.FindGameObjectWithTag("Shield");
+        if (shieldObject != null)
+        {
+            shield = shieldObject.GetComponent<Shield>(); // Shield
+        }
+
         // 컴포넌트 초기화
         lockOnSystem = GetComponent<LockOnSystem>();
         playerStats = GetComponent<PlayerStats>();
@@ -60,9 +77,6 @@ public class PlayerInputs : MonoBehaviour
         if (rollCooldownImage != null) rollCooldownImage.fillAmount = 0;
     }
 
-
-    private Coroutine staminaCoroutine;
-
     void OnMove(InputValue value)
     {
         if (isInteracting) return;
@@ -70,51 +84,47 @@ public class PlayerInputs : MonoBehaviour
         moveInput = value.Get<Vector2>();
 
         // 이동 입력이 0이 되면 스프린트 중지
-        if (moveInput.magnitude == 0 && isRunning)
+        if (moveInput.magnitude == 0 && isSprinting)
         {
             StopSprinting();
         }
-    }
-
-    IEnumerator StanimaCoroutine(int staminaUsage)
-    {
-        while (playerStats.currentStamina > 0 && isRunning)
-        {
-            playerStatus.UseStamina(staminaUsage);
-            yield return new WaitForSeconds(1.0f);
-        }
-        staminaCoroutine = null;
     }
 
     void OnSprint(InputValue value)
     {
-        isRunning = value.isPressed;
+        // 방어 중에는 스프린트가 불가능하도록 처리
+        if (isBlocking) return;
 
-        if (isRunning && moveInput.magnitude != 0 && !isInteracting)
+        isSprinting = value.isPressed;
+
+        if (isSprinting && moveInput.magnitude != 0 && !isInteracting)
         {
             StartSprinting();
-        } else
+        }
+        else
         {
             StopSprinting();
         }
     }
+
     private void StartSprinting()
     {
-        if (staminaCoroutine == null)
+        // 스프린트 시작 시 스태미나가 충분한지 확인
+        if (playerStats.currentStamina >= sprintStamina)
         {
-            staminaCoroutine = StartCoroutine(StanimaCoroutine(strintStanima));
+            playerStatus.UseStamina(sprintStamina);
+        }
+        else
+        {
+            StopSprinting();
         }
     }
+
     private void StopSprinting()
     {
-        if (staminaCoroutine != null)
-        {
-            StopCoroutine(staminaCoroutine);
-            staminaCoroutine = null;
-        }
-
-        isRunning = false;
+        isSprinting = false;
     }
+
     void OnWalk(InputValue value)
     {
         if (isInteracting || moveInput.magnitude == 0) return;
@@ -156,7 +166,6 @@ public class PlayerInputs : MonoBehaviour
         isGPress = true;
         yield return new WaitForSeconds(1f);
         onComplete?.Invoke();
-
     }
 
     void OnPause()
@@ -167,27 +176,144 @@ public class PlayerInputs : MonoBehaviour
 
     void OnBlock(InputValue value)
     {
-        // 방어 동작 처리 및 스태미나 관리
         if (isInteracting || animationEvent.IsAttacking()) return;
+
         animationEvent.OnFinishAttack();
         animationEvent.AtttackEffectOff();
-        isBlocking = value.isPressed;
 
-        if (isBlocking && playerStats.currentStamina > 0)
+        isBlocking = value.isPressed;
+        animator.SetBool("Block", isBlocking);
+
+        if (isBlocking)
         {
-            StartCoroutine(StanimaCoroutine(blockStanima));
+            if (playerStats.currentStamina >= blockInitialStamina)
+            {
+                playerStatus.UseStamina(blockInitialStamina);
+                if (blockStaminaCoroutine != null)
+                {
+                    StopCoroutine(blockStaminaCoroutine);
+                }
+                blockStaminaCoroutine = StartCoroutine(BlockStaminaCoroutine());
+
+                if (shield != null)
+                {
+                    shield.StartBlocking(); // 방어 시작
+                    shield.ActivateParryWindow(); // 패링 윈도우 활성화
+                }
+            }
+            else
+            {
+                StopBlocking();
+            }
+
+            StopSprinting();
         }
         else
         {
-            StopCoroutine(StanimaCoroutine(blockStanima));
+            StopBlocking();
         }
-        animator.SetBool("Block", isBlocking);
     }
 
-    void OnParry()
+    private IEnumerator BlockStaminaCoroutine()
     {
-        // 패링 로직 (미구현 상태)
+        // 방어 상태 유지 중 스태미나 감소
+        float interval = blockStaminaDecreaseInterval;
+
+        while (isBlocking && playerStats.currentStamina > 0)
+        {
+            yield return new WaitForSeconds(interval);
+            playerStatus.UseStamina(blockStamina); // 지속적으로 스태미나 감소
+            interval *= blockStaminaAcceleration; // 감소 주기 점점 빠르게
+        }
+
+        StopBlocking(); // 스태미나가 바닥나면 방어 중지
     }
+
+    private void StopBlocking()
+    {
+        isBlocking = false;
+        animator.SetBool("Block", false);
+
+        if (blockStaminaCoroutine != null)
+        {
+            StopCoroutine(blockStaminaCoroutine);
+            blockStaminaCoroutine = null;
+        }
+
+        playerMovement.SetBlockingMovement(false);
+
+        if (shield != null)
+        {
+            shield.StopBlocking(); // 방어 종료
+        }
+    }
+
+    void OnLockOn()
+    {
+        if (isInteracting) return;        
+        lockOnSystem.ToggleLockOn();
+    }
+
+    void OnSwitchTarget()
+    {
+        if (isInteracting) return;
+        lockOnSystem.SwitchTarget();
+    }
+
+    void OnBuffSkill()
+    {
+        if (isInteracting) return;
+        
+        // 마나가 충분한지 확인
+        if (playerStats.currentMp >= 30)
+        {
+            AudioManager.instance.Play("BuffSkill");
+            // 애니메이션 트리거 설정
+            animator.SetTrigger("BuffSkill");
+
+            // 마나 소모
+            playerStatus.UseMp(30);
+
+            // 버프 스킬 실행
+            StartCoroutine(ActivateBuffSkill());
+        }
+        else
+        {
+            Debug.Log("Not enough MP for Buff Skill.");
+        }
+    }
+
+    private IEnumerator ActivateBuffSkill() // 버프 스킬 효과
+    {
+        // 버프 스킬이 시작되면서 상호작용 제한
+        isInteracting = true;
+
+        // 파티클 시스템 인스턴스화
+        if (buffParticlePrefab != null)
+        {
+            GameObject particleSystem = Instantiate(buffParticlePrefab, transform.position, Quaternion.identity);
+            particleSystem.transform.parent = this.transform; // 하이라키에 추가
+            Destroy(particleSystem, 10f); // 10초 후 삭제 (버프 효과와 일치)
+        }
+
+        // 상호작용 제한 해제 (애니메이션 초기화 시점)
+        yield return new WaitForSeconds(0.1f); // 잠깐의 대기 시간 후 상호작용 가능하게 설정
+        isInteracting = false;
+
+        // 공격력과 이동 속도 증가
+        playerStats.IncreaseSwordDamage(10); // 예시로 공격력을 10 증가
+        playerMovement.Buffspeed(); // 예시로 이동 속도를 증가시킵니다.
+
+        // 일정 시간 후 효과를 원래대로 되돌림
+        yield return new WaitForSeconds(10f); // 10초간 지속
+
+        // 효과를 원래대로 되돌림
+        playerStats.IncreaseSwordDamage(-10); // 공격력 감소
+        playerMovement.Debuffspeed(); // 이동 속도 원래대로
+
+        Debug.Log("Buff skill has ended.");
+    }
+
 
     void OnJump()
     {
@@ -220,37 +346,26 @@ public class PlayerInputs : MonoBehaviour
 
     IEnumerator RollCooldownCoroutine()
     {
-        // 구르기ㅣ 쿨타임 관리
+        // 구르기 쿨타임 관리
         isRollCooldown = true;
         yield return CooldownCoroutine(rollCooldownDuration, rollCooldownImage, () => isRollCooldown = false);
     }
 
     IEnumerator CooldownCoroutine(float duration, Image cooldownImage, Action onComplete)
     {
-        // 쿨타임 진행 및 이미지 업데이트
-        float timer = 0f;
-        cooldownImage.fillAmount = 1;
-
-        while (timer < duration)
+        // 쿨타임 이미지 업데이트
+        float elapsed = 0;
+        while (elapsed < duration)
         {
-            timer += Time.deltaTime;
-            cooldownImage.fillAmount = 1 - (timer / duration);
+            elapsed += Time.deltaTime;
+            if (cooldownImage != null)
+                cooldownImage.fillAmount = elapsed / duration;
             yield return null;
         }
 
-        cooldownImage.fillAmount = 0;
+        if (cooldownImage != null)
+            cooldownImage.fillAmount = 0;
+
         onComplete?.Invoke();
-    }
-
-    void OnLockOn()
-    {
-        if (isInteracting) return;        
-        lockOnSystem.ToggleLockOn();
-    }
-
-    void OnSwitchTarget()
-    {
-        if (isInteracting) return;
-        lockOnSystem.SwitchTarget();
     }
 }

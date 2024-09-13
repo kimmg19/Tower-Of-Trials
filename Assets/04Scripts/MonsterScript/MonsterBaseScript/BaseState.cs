@@ -14,19 +14,11 @@ public abstract class BaseState : StateMachineBehaviour
         {
             player = GameObject.FindWithTag("Player").transform;
             playerStatus = player.GetComponent<PlayerStatus>();
-            if (playerStatus == null)
-            {
-                Debug.LogError("PlayerStatus component not found on Player.");
-            }
         }
 
         if (agent == null)
         {            
             agent = animator.GetComponentInParent<NavMeshAgent>();
-            if (agent == null)
-            {
-                Debug.LogError("NavMeshAgent not found on the animator or its parent objects.");
-            }
         }
 
         OnStateEnterCustom(animator, stateInfo, layerIndex);
