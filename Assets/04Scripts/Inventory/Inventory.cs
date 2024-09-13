@@ -37,8 +37,14 @@ public class Inventory : MonoBehaviour
             SaveSlotCount();
         }
     }
+
+    public HpQuickSlot hpQuickSlot;
+    public MpQuickSlot mpQuickSlot;
+
     void Start()
     {
+        hpQuickSlot = FindObjectOfType<HpQuickSlot>(); // HpQuickSlot 인스턴스 찾기
+        mpQuickSlot = FindObjectOfType<MpQuickSlot>(); // MpQuickSlot 인스턴스 찾기
         LoadSlotCount(); // Load the slot count from PlayerPrefs
         LoadInventory();
     }
@@ -53,16 +59,18 @@ public class Inventory : MonoBehaviour
                 Debug.Log("Item added. New quantity: " + item.quantity); // 디버깅 로그 추가
                 onChangeItem?.Invoke();
                 SaveInventory();
+
                 return true;
             }
         }
 
         if (items.Count < SlotCnt)
         {
-            items.Add(_item); // 수량을 1로 설정하지 않고 그대로 추가
+            items.Add(_item);
             Debug.Log("New item added. Quantity: " + _item.quantity); // 디버깅 로그 추가
             onChangeItem?.Invoke();
             SaveInventory();
+
             return true;
         }
 
@@ -74,23 +82,24 @@ public class Inventory : MonoBehaviour
         if (_index >= 0 && _index < items.Count)
         {
             Item itemToRemove = items[_index];
-            if (itemToRemove.quantity > 1)
+            itemToRemove.quantity--; // 수량 감소
+
+            if (itemToRemove.quantity <= 0)
             {
-                itemToRemove.quantity--; // 수량 감소
-                Debug.Log("Item quantity decreased. New quantity: " + itemToRemove.quantity);
-                onChangeItem?.Invoke();
+                items.RemoveAt(_index); // 수량이 0 이하가 되면 아이템 제거
+                Debug.Log($"Item '{itemToRemove.itemName}' removed from inventory.");
             }
             else
             {
-                items.RemoveAt(_index); // 수량이 0이 되면 아이템 제거
-                Debug.Log("Item removed from inventory.");
-                onChangeItem?.Invoke();
+                Debug.Log($"Item '{itemToRemove.itemName}' quantity decreased. New quantity: {itemToRemove.quantity}");
             }
+
+            onChangeItem?.Invoke();
             SaveInventory();
         }
         else
         {
-            Debug.LogError("Index out of range.");
+            Debug.LogError($"Index {_index} out of range. Total items: {items.Count}");
         }
     }
 
@@ -101,13 +110,14 @@ public class Inventory : MonoBehaviour
             FieldItems fieldItems = collision.GetComponent<FieldItems>();
             if (AddItem(fieldItems.GetItem()))
                 fieldItems.DestroyItem();
-        } else
+        }
+        else
         {
             print(collision.name);
         }
     }
 
-        public void SaveInventory()
+    public void SaveInventory()
     {
         for (int i = 0; i < items.Count; i++)
         {
@@ -117,6 +127,34 @@ public class Inventory : MonoBehaviour
         PlayerPrefs.SetInt("InventoryItemCount", items.Count);
         PlayerPrefs.Save();
         Debug.Log("Inventory saved with " + items.Count + " items.");
+
+        if (hpQuickSlot != null)
+        {
+            // Find Hp Potion and update quantity
+            Item hpPotion = items.Find(item => item.itemName == "Hp Potion");
+            if (hpPotion != null)
+            {
+                hpQuickSlot.UpdateHpPotionQuantity(hpPotion.quantity);
+            }
+            else
+            {
+                hpQuickSlot.UpdateHpPotionQuantity(0);
+            }
+        }
+
+        if (mpQuickSlot != null)
+        {
+            // Find Mp Potion and update quantity
+            Item mpPotion = items.Find(item => item.itemName == "Mp Potion");
+            if (mpPotion != null)
+            {
+                mpQuickSlot.UpdateMpPotionQuantity(mpPotion.quantity);
+            }
+            else
+            {
+                mpQuickSlot.UpdateMpPotionQuantity(0);
+            }
+        }
     }
 
     // 인벤토리 불러오기 메서드
@@ -134,11 +172,38 @@ public class Inventory : MonoBehaviour
                 items.Add(item);
             }
         }
-
         if (onChangeItem != null)
             onChangeItem.Invoke();
 
         Debug.Log("Inventory loaded with " + items.Count + " items.");
+
+        if (hpQuickSlot != null)
+        {
+            // Find Hp Potion and update quantity
+            Item hpPotion = items.Find(item => item.itemName == "Hp Potion");
+            if (hpPotion != null)
+            {
+                hpQuickSlot.UpdateHpPotionQuantity(hpPotion.quantity);
+            }
+            else
+            {
+                hpQuickSlot.UpdateHpPotionQuantity(0);
+            }
+        }
+
+        if (mpQuickSlot != null)
+        {
+            // Find Mp Potion and update quantity
+            Item mpPotion = items.Find(item => item.itemName == "Mp Potion");
+            if (mpPotion != null)
+            {
+                mpQuickSlot.UpdateMpPotionQuantity(mpPotion.quantity);
+            }
+            else
+            {
+                mpQuickSlot.UpdateMpPotionQuantity(0);
+            }
+        }
     }
     private void SaveSlotCount()
     {
@@ -158,4 +223,5 @@ public class Inventory : MonoBehaviour
         SaveInventory(); // 변경된 인벤토리 상태 저장
         Debug.Log("Inventory has been reset. Current item count: " + items.Count);
     }
+
 }

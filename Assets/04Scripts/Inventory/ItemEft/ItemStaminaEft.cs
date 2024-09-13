@@ -6,15 +6,14 @@ using UnityEngine;
 public class ItemStaminaEft : ItemEffect
 {
     public int staminaPoint = 0; // 스태미나 회복 수치
-
     public override bool ExecuteRole(PlayerStats playerStats)
     {
         if (playerStats != null)
         {
-            if (playerStats.currentStamina < playerStats.maxStamina)
+            if (playerStats.maxStamina < 100)
             {
-                playerStats.currentStamina += staminaPoint;
-                playerStats.currentStamina = Mathf.Clamp(playerStats.currentStamina, 0, playerStats.maxStamina); // 최대 스태미나를 초과하지 않도록 제한
+                playerStats.maxStamina += staminaPoint;
+                //playerStats.maxStamina = Mathf.Clamp(playerStats.maxStamina, 50, 100); // 최대 스태미나를 100으로 제한
                 Debug.Log("Player Stamina Add: " + staminaPoint);
                 return true;
             }

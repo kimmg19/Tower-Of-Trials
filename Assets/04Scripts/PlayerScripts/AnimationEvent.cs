@@ -6,21 +6,26 @@ public class AnimationEvent : MonoBehaviour
 {
     PlayerMovement playerMovement;
     PlayerInputs playerInputs;
-    [SerializeField] TrailRenderer trailRenderer;
     [HideInInspector] public bool enableDamaging;
     Animator animator;
-
+    [SerializeField] ParticleSystem attack1;
+    [SerializeField] ParticleSystem attack2;
+    [SerializeField] ParticleSystem attack3_1;
+    [SerializeField] ParticleSystem attack3_2;
+    [SerializeField] ParticleSystem attack3_3;
+    SkillAttack skillAttack;
+    
+    [SerializeField] ParticleSystem skillEffect;
     // Sword 스크립트 참조 변수 추가
     private Sword sword;
 
     void Start()
     {
+        skillAttack = GetComponent<SkillAttack>();
         playerInputs = GetComponent<PlayerInputs>();
-        playerMovement = GetComponent<PlayerMovement>();
-        trailRenderer = GetComponentInChildren<TrailRenderer>();
-        trailRenderer.gameObject.SetActive(false);
+        playerMovement = GetComponent<PlayerMovement>();        
         animator = GetComponent<Animator>();
-
+        
         // Sword 스크립트 참조 설정
         sword = GetComponentInChildren<Sword>(); // 플레이어 하위에 있는 Sword 오브젝트를 찾아 참조
         if (sword == null)
@@ -42,29 +47,50 @@ public class AnimationEvent : MonoBehaviour
         enableDamaging = false;
         sword?.DisableCollider(); // Sword의 콜라이더 비활성화
     }
-
-    void AttackEffectOn()
+    void SkillEffectPlay()
     {
-        trailRenderer.gameObject.SetActive(true);
-        if (playerInputs.isDodging)  
-            AtttackEffectOff();
+        skillEffect.Play();
+        skillAttack.Skill();
     }
-
-    public void AtttackEffectOff()
+    void Attack01Effect()
     {
-        trailRenderer.gameObject.SetActive(false);
+        attack1.Play();
     }
+    void Attack02Effect() { 
+        attack2.Play();
+    }
+    void Attack03Effect1()
+    {
+        attack3_1.Play();
+    }
+    void Attack03Effect2()
+    {
+        attack3_2.Play();
+    }
+    void Attack03Effect3()
+    {
+        attack3_3.Play();
+    }   
+
+    
 
     public void OnFinishAttack()
     {
         playerInputs.isAttacking = false;
     }
-
+    void FinishSkillAttack()
+    {
+        playerInputs.isSkillAttacking=false;
+    }
     void EndDodge()
     {
         playerMovement.characterController.center = new Vector3(0, 0.88f, 0);
         playerMovement.characterController.height = 1.6f;
-        playerInputs.isDodging = false;
+        playerInputs.isDodging = false;        
+    }
+    void EndJump()
+    {        
+        playerInputs.isJumping = false;
     }
 
     public bool IsAttacking()

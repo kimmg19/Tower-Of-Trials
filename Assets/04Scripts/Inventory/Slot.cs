@@ -64,7 +64,7 @@ public class Slot : MonoBehaviour, IPointerUpHandler
                 itemIcon.sprite = item.itemImage;
                 itemIcon.gameObject.SetActive(true);
                 quantityText.text = item.quantity.ToString();
-                Debug.Log("UpdateSlotUI called with quantity: " + item.quantity); // 디버깅 로그 추가
+                //Debug.Log("UpdateSlotUI called with quantity: " + item.quantity); // 디버깅 로그 추가
             }
             else
             {

@@ -114,9 +114,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "BuffSkill",
+                    "name": "Skill01",
                     "type": "Button",
-                    "id": "357e1aea-820d-4502-902b-bc9b503b480c",
+                    "id": "1e3ce9b8-071b-48bf-b4d5-25dcae57bb3d",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -357,12 +357,12 @@
                 },
                 {
                     "name": "",
-                    "id": "9f46e042-ee2c-47cf-8f6d-b9a94b5480dc",
-                    "path": "<Keyboard>/e",
+                    "id": "b5be7870-9556-4172-b68b-688d99f6566d",
+                    "path": "<Keyboard>/1",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "BuffSkill",
+                    "action": "Skill01",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -389,6 +389,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Quick Slot Hp",
+                    "type": "Button",
+                    "id": "76d96ad4-325c-44cd-8265-b14da1f378f7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Quick Slot Mp",
+                    "type": "Button",
+                    "id": "27c553e8-46d3-484a-851d-58f325247642",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -411,6 +429,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Shop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3337a29b-983b-4e26-b61d-e323b3d66baf",
+                    "path": "<Keyboard>/f1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Quick Slot Hp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8aab1879-b62f-4ca2-9700-aaeab3907379",
+                    "path": "<Keyboard>/f2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Quick Slot Mp",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

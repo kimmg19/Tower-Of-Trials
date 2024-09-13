@@ -7,15 +7,17 @@ public class PlayerStats : MonoBehaviour
 {
     public Upgrade upgrade;
     public Sword sword;
-    public float weaponATK; // ï¿½ï¿½È­ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ôµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý·ï¿½
-    public int Attack; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î°¡ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ý·ï¿½
+    public float weaponATK; // °­È­±îÁö Æ÷ÇÔµÈ ¹«±â°ø°Ý·Â
+    public int Attack; // ¸ó½ºÅÍÇÑÅ× µé¾î°¡´Â ÃÑ °ø°Ý·Â
     public float playerSpeed = 4f;
     public float sprintSpeed = 1.5f;
-    public float walkSpeed = 0.5f;//ÃµÃµï¿½ï¿½ ï¿½ï¿½ ï¿½È±ï¿½ ï¿½Óµï¿½
+    public float walkSpeed = 0.5f;//ÃµÃµ¤¾ ¤Ó °È±â ¼Óµµ
     public int maxHp = 100;
     public int maxMp = 100;
     public int maxStamina = 50;
     public int Gold = 0;
+    public int HpPotionRate = 20; // HP È¸º¹ ºñÀ²
+    public int MpPotionRate = 20; // MP È¸º¹ ºñÀ²
     [SerializeField] private int _currentHp;
     public int currentHp
     {
@@ -37,11 +39,24 @@ public class PlayerStats : MonoBehaviour
 
     void Awake()
     {
-        currentHp = maxHp;
-        currentMp = maxMp;
-        currentStamina = maxStamina;
-        Gold = PlayerPrefs.GetInt("PlayerGold", 0); // ï¿½âº»ï¿½ï¿½ï¿½ï¿½ 0ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        // ±âº»°ªÀ» ¼³Á¤
+        maxStamina = PlayerPrefs.GetInt("PlayerMaxStamina", 50);
+
+        // maxStamina°¡ ÃÖ¼Ò°ª ÀÌÇÏÀÏ °æ¿ì ±âº»°ªÀ¸·Î ¼³Á¤
+        if (maxStamina < 50)
+        {
+            maxStamina = 50;
+            PlayerPrefs.SetInt("PlayerMaxStamina", maxStamina);
+        }
+
+        currentHp = PlayerPrefs.GetInt("PlayerCurrentHp", maxHp);
+        currentMp = PlayerPrefs.GetInt("PlayerCurrentMp", maxMp);
+        currentStamina = PlayerPrefs.GetInt("PlayerCurrentStamina", maxStamina);
+        Gold = PlayerPrefs.GetInt("PlayerGold", 0);
+        MpPotionRate = PlayerPrefs.GetInt("PlayerMpPotionRate", 20);
+        HpPotionRate = PlayerPrefs.GetInt("PlayerHpPotionRate", 20);
     }
+
     public void IncreaseSwordDamage(int amount)
     {
         if (sword != null)
@@ -65,8 +80,18 @@ public class PlayerStats : MonoBehaviour
 
     public void OnApplicationQuit()
     {
-        // ï¿½ï¿½ï¿½Ã¸ï¿½ï¿½ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        PlayerPrefs.SetInt("PlayerMpPotionRate", MpPotionRate);
+        PlayerPrefs.SetInt("PlayerHpPotionRate", HpPotionRate);
+        PlayerPrefs.SetInt("PlayerMaxStamina", maxStamina);
         PlayerPrefs.SetInt("PlayerGold", Gold);
-        PlayerPrefs.Save(); // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ È£ï¿½ï¿½
+
+        // µð¹ö±ëÀ» À§ÇÑ ·Î±× Ãß°¡
+        Debug.Log("Saving PlayerPrefs: ");
+        Debug.Log("PlayerMpPotionRate: " + MpPotionRate);
+        Debug.Log("PlayerHpPotionRate: " + HpPotionRate);
+        Debug.Log("PlayerMaxStamina: " + maxStamina);
+        Debug.Log("PlayerGold: " + Gold);
+
+        PlayerPrefs.Save();
     }
 }

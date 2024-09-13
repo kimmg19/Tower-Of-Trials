@@ -5,7 +5,7 @@ using UnityEngine;
 public class FieldItems : MonoBehaviour
 {
     public Item item;
-    public SpriteRenderer image;
+    //public SpriteRenderer image;
 
     public void SetItem(Item _item)
     {

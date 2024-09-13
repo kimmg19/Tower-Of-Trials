@@ -71,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(float newSpeed)
     {
-        if (animationEvent.IsAttacking() && !playerInputs.isDodging) return;
+        if ((animationEvent.IsAttacking() && !playerInputs.isDodging)|| playerInputs.isSkillAttacking) return;
 
         // 방어 중인 경우 이동 속도 감소
         if (isBlocking)
@@ -170,7 +170,6 @@ public class PlayerMovement : MonoBehaviour
         if (characterController.isGrounded)
         {
             animationEvent.OnFinishAttack();
-            animationEvent.AtttackEffectOff();
             AudioManager.instance.Play("PlayerRoll");
             dodgeVec = CalculateMoveDirection().normalized;
             animator.SetTrigger("Dodge");
