@@ -13,6 +13,7 @@ public class Golem : BaseEnemy
     private bool isJumping = false;
 
     public ParticleSystem rockDebrisEffect;
+    public Collider attackCollider; // Reference to the attack collider
 
     // 골렘의 고유 스탯을 초기화
     protected override void InitializeStats()
@@ -24,7 +25,6 @@ public class Golem : BaseEnemy
     protected override void Die()
     {
         base.Die();
-
         if (firstFloorManager != null)
         {
             firstFloorManager.OnGolemKilled();
@@ -37,19 +37,22 @@ public class Golem : BaseEnemy
         firstFloorManager = FindObjectOfType<FirstFloorManager>();
         player = GameObject.FindWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
-
-        healthBar = GetComponentInChildren<Slider>();
+        
+        // Get the attack collider
+        attackCollider = GetComponentInChildren<Collider>();
+        if (attackCollider != null)
+        {
+            attackCollider.enabled = false; // Disable collider by default
+        }
 
         if (playerStats == null)
         {
             Debug.LogError("PlayerStats component not found on Player.");
         }
-
         if (agent == null)
         {
             Debug.LogError("NavMeshAgent not found on the Golem.");
         }
-
         if (healthBar == null)
         {
             Debug.LogWarning($"{gameObject.name} is missing a health bar!");
@@ -73,8 +76,21 @@ public class Golem : BaseEnemy
         float distance = Vector3.Distance(player.position, agent.transform.position);
         if (distance <= attackRange * stompRangeMultiplier)
         {
-            playerStatus.TakeDamage(damageAmount);
+            // Enable damage for the duration of the attack
+            StartCoroutine(EnableDamageDuringAttack());
         }
+    }
+
+    private IEnumerator EnableDamageDuringAttack()
+    {
+        enableDamaging = true; // Allow damage
+        attackCollider.enabled = true; // Enable the attack collider
+
+        // Wait for a brief moment to simulate attack duration
+        yield return new WaitForSeconds(1.0f); // Adjust this based on your animation length
+
+        enableDamaging = false; // Disable damage
+        attackCollider.enabled = false; // Disable the attack collider after the attack
     }
 
     // 점프 공격 메서드
@@ -118,13 +134,15 @@ public class Golem : BaseEnemy
 
         // 착지 후 공격 처리
         float distance = Vector3.Distance(player.position, agent.transform.position);
-        if (distance <= attackRange*2)
+        if (distance <= attackRange * 2)
         {
             if (rockDebrisEffect != null)
             {
                 rockDebrisEffect.Play();
             }
-            playerStatus.TakeDamage(damageAmount*2);
+
+            // Enable damage for the duration of the attack
+            StartCoroutine(EnableDamageDuringAttack());
         }
 
         // NavMeshAgent 이동 재개
@@ -132,3 +150,4 @@ public class Golem : BaseEnemy
         isJumping = false;
     }
 }
+

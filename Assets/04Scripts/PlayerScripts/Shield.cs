@@ -6,8 +6,10 @@ public class Shield : MonoBehaviour
     [SerializeField] private ParticleSystem parryEffect; // 패링 성공 시 재생할 파티클 시스템
     [SerializeField] private float parryTimingWindow = 0.3f; // 패링 성공 가능 시간
     [SerializeField] private float damageReductionPercentage = 50f; // 방패 막기 시 데미지 감소 비율
+    [SerializeField] private float parryCooldown = 1.0f; // 패링 후 쿨다운 시간
     private bool isParryWindowActive = false;
     private bool isBlocking = false;
+    private bool canParry = true; // 패링 가능 상태
     private PlayerStatus playerStatus;
 
     private void Start()
@@ -26,7 +28,8 @@ public class Shield : MonoBehaviour
 
     public void ActivateParryWindow()
     {
-        if (!isParryWindowActive)
+        // 패링 가능 상태일 때만 패링 창을 열 수 있음
+        if (canParry && !isParryWindowActive)
         {
             StartCoroutine(ParryWindowCoroutine());
         }
@@ -35,15 +38,11 @@ public class Shield : MonoBehaviour
     public void StartBlocking()
     {
         isBlocking = true;
-        // 방패 막기 시작 시 애니메이션 등을 실행할 수 있음
-        // GetComponent<Animator>().SetBool("IsBlocking", true);
     }
 
     public void StopBlocking()
     {
         isBlocking = false;
-        // 방패 막기 종료 시 애니메이션 등을 처리
-        // GetComponent<Animator>().SetBool("IsBlocking", false);
     }
 
     private IEnumerator ParryWindowCoroutine()
@@ -60,7 +59,7 @@ public class Shield : MonoBehaviour
             BaseEnemy enemy = other.GetComponent<BaseEnemy>();
             if (enemy != null)
             {
-                if (isParryWindowActive)
+                if (isParryWindowActive && canParry) // 패링 창과 패링 가능 상태일 때만 패링 성공 처리
                 {
                     HandleParrySuccess(enemy);
                 }
@@ -94,15 +93,20 @@ public class Shield : MonoBehaviour
 
         AudioManager.instance.Play("ParrySuccess"); // 패링 성공 사운드 재생
 
-        // 패링 상태 리셋
+        // 패링 후 쿨다운 적용
         StartCoroutine(ResetParryState());
     }
 
     private IEnumerator ResetParryState()
     {
-        yield return new WaitForSeconds(0.5f); // 적절한 시간 이후에 패링 상태 리셋
-        playerStatus.SetParrySuccess(false);
+        canParry = false; // 패링 쿨다운 시작
         isParryWindowActive = false; // 패링 창 비활성화
+        playerStatus.SetParrySuccess(false); // 패링 성공 상태 해제
+
+        // 쿨다운 시간 대기
+        yield return new WaitForSeconds(parryCooldown);
+
+        canParry = true; // 쿨다운 후 다시 패링 가능
     }
 
     private void OnTriggerExit(Collider other)
