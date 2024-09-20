@@ -43,7 +43,6 @@ public class FirstAreaManager : MonoBehaviour
     void Start()
     {
         StartCoroutine("Play1stAreaCinematic");
-        playerInputs = GetComponent<PlayerInputs>();
         panelCanvasGroup = countPanel.GetComponent<CanvasGroup>();
         titleCanvasGroup = titlePanel.GetComponent<CanvasGroup>();
         clearPanelCanvasGroup = clearPanel.GetComponent<CanvasGroup>();
