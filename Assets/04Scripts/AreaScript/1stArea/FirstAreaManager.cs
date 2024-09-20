@@ -2,12 +2,13 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 using UnityEngine.Playables;
+using UnityEngine.InputSystem;
 
 public class FirstAreaManager : MonoBehaviour
 {
     // 타임라인 에셋을 재생할 PlayableDirector
-    [SerializeField] PlayableDirector bossCinematic; 
-    [SerializeField] PlayableDirector firstAreaCinematic; 
+    [SerializeField] PlayableDirector bossCinematic;
+    [SerializeField] PlayableDirector firstAreaCinematic;
 
     [SerializeField] GameObject slimeGroup;
     [SerializeField] GameObject turtleGroup;
@@ -19,7 +20,7 @@ public class FirstAreaManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI killText;
     [SerializeField] GameObject bossHealthBarCanvas; // 보스 피통 캔버스
 
-    [SerializeField] PlayerMovement playerMovement;
+    [SerializeField] PlayerInputs playerInputs;
     private CanvasGroup panelCanvasGroup;
     private CanvasGroup titleCanvasGroup;
     private CanvasGroup clearPanelCanvasGroup;
@@ -42,6 +43,7 @@ public class FirstAreaManager : MonoBehaviour
     void Start()
     {
         StartCoroutine("Play1stAreaCinematic");
+        playerInputs = GetComponent<PlayerInputs>();
         panelCanvasGroup = countPanel.GetComponent<CanvasGroup>();
         titleCanvasGroup = titlePanel.GetComponent<CanvasGroup>();
         clearPanelCanvasGroup = clearPanel.GetComponent<CanvasGroup>();
@@ -274,7 +276,7 @@ public class FirstAreaManager : MonoBehaviour
 
     IEnumerator PlayBossCinematic()
     {
-        playerMovement.GetComponent<PlayerMovement>().enabled = false;
+        playerInputs.isInteracting = true;
         yield return new WaitForSeconds(1f);
         if (bossCinematic != null)
         {
@@ -289,7 +291,7 @@ public class FirstAreaManager : MonoBehaviour
 
             // 시네마틱이 끝나고 체력바를 활성화
             yield return new WaitForSeconds((float)bossCinematic.duration);  // bossCinematic.duration은 시네마틱의 전체 길이를 초 단위로 나타냄
-            
+
             // 체력바 캔버스를 아예 활성화하는 대신, 투명도를 조정하는 방식으로 전환
             if (bossHealthBarCanvas != null)
             {
@@ -299,27 +301,27 @@ public class FirstAreaManager : MonoBehaviour
                     bossHealthBarCanvasGroup.alpha = 1f;  // 체력바 보이기
                     bossHealthBarCanvasGroup.interactable = true;
                     bossHealthBarCanvasGroup.blocksRaycasts = true;
-                }
-                else
+                } else
                 {
                     bossHealthBarCanvas.SetActive(true); // 캔버스 그룹이 없으면 기존 방식 사용
                 }
             }
 
-            playerMovement.GetComponent<PlayerMovement>().enabled = true;
+            playerInputs.isInteracting = false;
         }
     }
 
     IEnumerator Play1stAreaCinematic()
     {
-        playerMovement.GetComponent<PlayerMovement>().enabled = false;
+        playerInputs.isInteracting = true;
+
         yield return new WaitForSeconds(1f);
         if (firstAreaCinematic != null)
         {
             firstAreaCinematic.Play();
         }
         yield return new WaitForSeconds((float)firstAreaCinematic.duration);  //firstAreaCinematic.duration은 시네마틱의 전체 길이를 초 단위로 나타냄
-        playerMovement.GetComponent<PlayerMovement>().enabled = true;
+        playerInputs.isInteracting = false;
     }
 
     IEnumerator SlowMotionEffect()
