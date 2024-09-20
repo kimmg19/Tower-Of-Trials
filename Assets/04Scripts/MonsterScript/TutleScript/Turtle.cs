@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Turtle : BaseEnemy
 {
-    private FirstFloorManager firstFloorManager;
+    private FirstAreaManager firstAreaManager;
 
     // 거북이의 고유 스탯을 초기화
     protected override void InitializeStats()
@@ -18,9 +18,9 @@ public class Turtle : BaseEnemy
     protected override void Die()
     {
         base.Die();
-        if (firstFloorManager != null)
+        if (firstAreaManager != null)
         {
-            firstFloorManager.OnTurtleKilled(); // 거북이가 죽을 때 카운트 증가
+            firstAreaManager.OnTurtleKilled(); // 거북이가 죽을 때 카운트 증가
         }
     }
 
@@ -28,7 +28,7 @@ public class Turtle : BaseEnemy
     protected override void Start()
     {
         base.Start();
-        firstFloorManager = FindObjectOfType<FirstFloorManager>();
+        firstAreaManager = FindObjectOfType<FirstAreaManager>();
 
         // 거북이 자식 오브젝트에서 헬스바 슬라이더를 찾기
         healthBar = GetComponentInChildren<Slider>();

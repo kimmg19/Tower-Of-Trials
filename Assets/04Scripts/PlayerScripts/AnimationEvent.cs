@@ -55,21 +55,29 @@ public class AnimationEvent : MonoBehaviour
     void Attack01Effect()
     {
         attack1.Play();
+        AudioManager.instance.Play("Attack1SFX"); // 1타 공격 효과음 재생
     }
     void Attack02Effect() { 
         attack2.Play();
+        AudioManager.instance.Play("Attack2SFX"); // 2타 공격 효과음 재생
     }
     void Attack03Effect1()
     {
         attack3_1.Play();
+        AudioManager.instance.Play("Attack3_1SFX"); // 3타 공격 효과음 재생
+
+        
     }
     void Attack03Effect2()
     {
         attack3_2.Play();
+        AudioManager.instance.Play("Attack3_2SFX"); // 3타 공격 효과음 재생
+
     }
     void Attack03Effect3()
     {
         attack3_3.Play();
+        AudioManager.instance.Play("Attack3Voice"); // 3타 공격 효과음 재생
     }   
 
     

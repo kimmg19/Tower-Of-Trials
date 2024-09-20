@@ -4,23 +4,17 @@ using UnityEngine;
 
 public class EnemyAttackHandler : MonoBehaviour
 {
-    [SerializeField] private Collider attackCollider; // 다양한 콜라이더 타입 지원
+    [SerializeField] private Collider attackCollider; // Inspector에서 할당할 수 있도록 다시 필드로 설정
     private BaseEnemy enemy;
 
     void Start()
     {
         enemy = GetComponent<BaseEnemy>();
 
-        // 하이어라키에서 Collider 컴포넌트를 검색하여 자동 할당
+        // Collider가 Inspector에서 할당되지 않은 경우 경고 메시지 출력
         if (attackCollider == null)
         {
-            attackCollider = GetComponentInChildren<Collider>(); // 자식 오브젝트에서 Collider 찾기
-        }
-
-        // Collider가 없으면 경고 메시지 출력
-        if (attackCollider == null)
-        {
-            Debug.LogWarning($"{enemy.gameObject.name} does not have an attack collider assigned or found in the hierarchy!");
+            Debug.LogWarning($"{enemy.gameObject.name}에 공격 콜라이더가 할당되지 않았습니다. Inspector에서 할당해주세요.");
         }
     }
 
@@ -30,14 +24,18 @@ public class EnemyAttackHandler : MonoBehaviour
         // 패링 상태에서는 공격 콜라이더를 활성화하지 않음
         if (enemy.isParried)
         {
-            Debug.Log($"{enemy.gameObject.name} is parried and cannot enable damaging.");
+            Debug.Log($"{enemy.gameObject.name}은 패링되어 공격할 수 없습니다.");
             return;
         }
 
         if (enemy.isAttacking)
         {
             enemy.enableDamaging = true;
-            Debug.Log($"{enemy.gameObject.name} can now damage the player.");
+            if (attackCollider != null)
+            {
+                attackCollider.enabled = true; // 공격 콜라이더 활성화
+                Debug.Log($"{enemy.gameObject.name}이(가) 이제 플레이어에게 피해를 줄 수 있습니다.");
+            }
         }
     }
 
@@ -45,6 +43,10 @@ public class EnemyAttackHandler : MonoBehaviour
     void DamageDisable()
     {
         enemy.enableDamaging = false;
-        Debug.Log($"{enemy.gameObject.name} can no longer damage the player.");
+        if (attackCollider != null)
+        {
+            attackCollider.enabled = false; // 공격 콜라이더 비활성화
+            Debug.Log($"{enemy.gameObject.name}이(가) 더 이상 플레이어에게 피해를 줄 수 없습니다.");
+        }
     }
 }
