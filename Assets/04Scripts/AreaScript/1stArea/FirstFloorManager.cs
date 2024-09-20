@@ -8,8 +8,8 @@ using UnityEngine.InputSystem;
 public class FirstFloorManager : MonoBehaviour
 {
     // 타임라인 에셋을 재생할 PlayableDirector
-    [SerializeField] PlayableDirector bossCinematic; 
-    [SerializeField] PlayableDirector firstFloorCinematic; 
+    [SerializeField] PlayableDirector bossCinematic;
+    [SerializeField] PlayableDirector firstFloorCinematic;
 
     [SerializeField] GameObject slimeGroup;
     [SerializeField] GameObject turtleGroup;
@@ -19,7 +19,8 @@ public class FirstFloorManager : MonoBehaviour
     [SerializeField] GameObject panel;
     [SerializeField] TextMeshProUGUI killText;
 
-    [SerializeField] PlayerMovement playerInputs;
+    [SerializeField]PlayerInputs playerInputs;
+
     private CanvasGroup panelCanvasGroup;
     private CanvasGroup titleCanvasGroup;
 
@@ -39,7 +40,7 @@ public class FirstFloorManager : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine("Play1stFloorCinematic");
+        StartCoroutine("Play1stFloorCinematic");        
         panelCanvasGroup = panel.GetComponent<CanvasGroup>();
         titleCanvasGroup = titlePanel.GetComponent<CanvasGroup>();
 
@@ -242,7 +243,7 @@ public class FirstFloorManager : MonoBehaviour
 
     IEnumerator PlayBossCinematic()
     {
-        playerInputs.GetComponent<PlayerMovement>().enabled = false;
+        playerInputs.isInteracting = true;
         yield return new WaitForSeconds(1f);
         if (bossCinematic != null)
         {
@@ -256,21 +257,20 @@ public class FirstFloorManager : MonoBehaviour
             }
         }
         yield return new WaitForSeconds((float)bossCinematic.duration);  //bossCinematic.duration은 시네마틱의 전체 길이를 초 단위로 나타냄
-        playerInputs.GetComponent<PlayerMovement>().enabled = true;
+        playerInputs.isInteracting = false;
 
     }
 
     IEnumerator Play1stFloorCinematic()
     {
-        playerInputs.GetComponent<PlayerMovement>().enabled = false;
+        playerInputs.isInteracting = true;
         yield return new WaitForSeconds(1f);
         if (firstFloorCinematic != null)
         {
             firstFloorCinematic.Play();
         }
         yield return new WaitForSeconds((float)firstFloorCinematic.duration);  //bossCinematic.duration은 시네마틱의 전체 길이를 초 단위로 나타냄
-        playerInputs.GetComponent<PlayerMovement>().enabled = true;
-
+        playerInputs.isInteracting = false;
     }
 
     IEnumerator SlowMotionEffect()

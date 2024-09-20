@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+//using UnityEngine.UIElements;
 
 public class PlayerInputs : MonoBehaviour
 {
@@ -105,7 +106,7 @@ public class PlayerInputs : MonoBehaviour
     private void OnSprint(InputValue value)
     {
         // 방어 중에는 스프린트가 불가능하도록 처리
-        if (isBlocking) return;
+        if (isBlocking || playerStats.currentStamina < sprintStamina)  return; 
 
         isSprinting = value.isPressed;
 
@@ -133,17 +134,17 @@ public class PlayerInputs : MonoBehaviour
             StopCoroutine(staminaCoroutine);
             staminaCoroutine = null;
         }
-
         isSprinting = false;
     }
 
     private IEnumerator StaminaCoroutine(int staminaUsage)
     {
-        while (playerStats.currentStamina > 0 && isSprinting)
+        while (playerStats.currentStamina > sprintStamina && isSprinting)
         {
             playerStatus.UseStamina(staminaUsage);
             yield return new WaitForSeconds(1.0f);
         }
+        StopSprinting();
         staminaCoroutine = null;
     }
 
@@ -336,9 +337,9 @@ public class PlayerInputs : MonoBehaviour
     {
         if (!isInteracting && playerMovement.characterController.isGrounded &&
             !isJumping && !animationEvent.IsAttacking() && !isDodging && !isJumpCooldown && !isSkillAttacking)
-        {
+        {            
+            if (playerStats.currentStamina < jumpStamina) return;
             isJumping = true;
-            if (playerStats.currentStamina < jumpStamina) return;            
             playerStatus.UseStamina(jumpStamina);
             StartCoroutine(JumpCooldownCoroutine());
             playerMovement.Jump();
