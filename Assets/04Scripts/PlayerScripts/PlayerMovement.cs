@@ -9,8 +9,8 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] Transform followCam; // 카메라 Transform 참조
     [HideInInspector] public Transform characterBody; // 캐릭터의 Transform 참조
-    [HideInInspector] public CharacterController characterController; // 캐릭터 컨트롤러 참조
     [HideInInspector] public Vector3 dodgeVec; // 회피 방향 벡터
+    [SerializeField] public CharacterController characterController;
     Animator animator; // 애니메이터 참조
     AnimationEvent animationEvent; // 애니메이션 이벤트 참조
     PlayerStats playerStats; // 플레이어 스탯 관리
