@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Golem : BaseEnemy
 {
-    private FirstFloorManager firstFloorManager;
+    private FirstAreaManager firstAreaManager;
     private Transform player;
     private NavMeshAgent agent;
     public float attackRange = 3.0f;
@@ -13,7 +13,7 @@ public class Golem : BaseEnemy
     private bool isJumping = false;
 
     public ParticleSystem rockDebrisEffect;
-    public Collider attackCollider; // Reference to the attack collider
+    [SerializeField] private Collider attackCollider; // Attack collider as a serialized field
 
     // 골렘의 고유 스탯을 초기화
     protected override void InitializeStats()
@@ -25,22 +25,25 @@ public class Golem : BaseEnemy
     protected override void Die()
     {
         base.Die();
-        if (firstFloorManager != null)
+        if (firstAreaManager != null)
         {
-            firstFloorManager.OnGolemKilled();
+            firstAreaManager.OnGolemKilled();
         }
     }
 
     protected override void Start()
     {
         base.Start();
-        firstFloorManager = FindObjectOfType<FirstFloorManager>();
+        firstAreaManager = FindObjectOfType<FirstAreaManager>();
         player = GameObject.FindWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
-        
-        // Get the attack collider
-        attackCollider = GetComponentInChildren<Collider>();
-        if (attackCollider != null)
+
+        // Make sure attackCollider is assigned in the inspector
+        if (attackCollider == null)
+        {
+            Debug.LogError($"{gameObject.name} is missing the attack collider!");
+        }
+        else
         {
             attackCollider.enabled = false; // Disable collider by default
         }
@@ -76,7 +79,6 @@ public class Golem : BaseEnemy
         float distance = Vector3.Distance(player.position, agent.transform.position);
         if (distance <= attackRange * stompRangeMultiplier)
         {
-            // Enable damage for the duration of the attack
             StartCoroutine(EnableDamageDuringAttack());
         }
     }
@@ -150,4 +152,3 @@ public class Golem : BaseEnemy
         isJumping = false;
     }
 }
-

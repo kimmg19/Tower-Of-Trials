@@ -176,7 +176,7 @@ Transform:
   m_GameObject: {fileID: 1723477107994481190}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 78, y: 0.5, z: 21}
+  m_LocalPosition: {x: 78, y: 0.5, z: 27.66}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -215,7 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40546facc61fe7d42bd2ff978cd16a84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floorManager: {fileID: 5713548856175203913}
+  areaManager: {fileID: 5713548856175203913}
   isSlimeTrigger: 1
   isTurtleTrigger: 0
 --- !u!1 &2613668628129415450
@@ -247,7 +247,7 @@ Transform:
   m_GameObject: {fileID: 2613668628129415450}
   serializedVersion: 2
   m_LocalRotation: {x: -0.2218288, y: -0.000000016777694, z: -0.000000003816871, w: 0.9750856}
-  m_LocalPosition: {x: 80, y: 0.2, z: 117.5}
+  m_LocalPosition: {x: 80, y: 0.2, z: 9.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -550,7 +550,7 @@ Transform:
   m_GameObject: {fileID: 3269382948284901364}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 79.04, y: 0.5, z: 66.03}
+  m_LocalPosition: {x: 79.04, y: 0.5, z: 68.21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -589,7 +589,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40546facc61fe7d42bd2ff978cd16a84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floorManager: {fileID: 5713548856175203913}
+  areaManager: {fileID: 5713548856175203913}
   isSlimeTrigger: 0
   isTurtleTrigger: 1
 --- !u!1 &3599165716312387974
@@ -816,15 +816,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossCinematic: {fileID: 910540259765429456}
-  firstFloorCinematic: {fileID: 8245600033478244998}
+  firstAreaCinematic: {fileID: 8245600033478244998}
   slimeGroup: {fileID: 0}
   turtleGroup: {fileID: 0}
   golemDoor: {fileID: 0}
   rewardChest: {fileID: 0}
   titlePanel: {fileID: 0}
-  panel: {fileID: 0}
+  clearPanel: {fileID: 0}
+  countPanel: {fileID: 0}
   killText: {fileID: 0}
-  playerInputs: {fileID: 0}
+  bossHealthBarCanvas: {fileID: 0}
+  playerMovement: {fileID: 0}
   health: 100
 --- !u!1 &5101316548638301921
 GameObject:
@@ -1011,7 +1013,7 @@ GameObject:
   - component: {fileID: 4858035652467984309}
   - component: {fileID: 910540259765429456}
   m_Layer: 0
-  m_Name: BossTimeline
+  m_Name: 1stAreaBossTimeline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1076,6 +1078,8 @@ PlayableDirector:
   - key: {fileID: 0}
     value: {fileID: 0}
   - key: {fileID: 1411955365478891691, guid: 10949fcd4a193ce44808f7adf1b7bd5d, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 8267105347909763916, guid: 10949fcd4a193ce44808f7adf1b7bd5d, type: 2}
     value: {fileID: 0}
   m_ExposedReferences:
     m_References:
@@ -1182,7 +1186,7 @@ GameObject:
   - component: {fileID: 4947623357064789260}
   - component: {fileID: 8245600033478244998}
   m_Layer: 0
-  m_Name: 1stFloorStartTimeline
+  m_Name: 1stAreaStartTimeline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

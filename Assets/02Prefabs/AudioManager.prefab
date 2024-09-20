@@ -45,17 +45,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
-  - name: ZombieDie
+  - name: MonsterDie
     clip: {fileID: 8300000, guid: 39d048fe5ac0fe24489d885125296aa0, type: 3}
     mixer: {fileID: 2288875582301175548, guid: 86271638b8ca4de4facf01edc61a6aeb, type: 2}
-    volume: 1
+    volume: 0.376
     pitch: 1
     loop: 0
     source: {fileID: 0}
-  - name: ZombieHit
-    clip: {fileID: 8300000, guid: 42971485e9c282149adc851e65230b7b, type: 3}
+  - name: MonsterHit
+    clip: {fileID: 8300000, guid: 3df9bbbc130ccb344af5f3fc793a630f, type: 3}
     mixer: {fileID: 2288875582301175548, guid: 86271638b8ca4de4facf01edc61a6aeb, type: 2}
-    volume: 1
+    volume: 0.415
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -76,7 +76,7 @@ MonoBehaviour:
   - name: BuffSkill
     clip: {fileID: 8300000, guid: 6857c17d0b39a594298d2c0ebc09f389, type: 3}
     mixer: {fileID: 2288875582301175548, guid: 86271638b8ca4de4facf01edc61a6aeb, type: 2}
-    volume: 0.5
+    volume: 0.616
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -87,33 +87,61 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
-  - name: PlayerDieBgm
-    clip: {fileID: 8300000, guid: a7736c1763bd76c4eb0d52aaad581deb, type: 3}
-    mixer: {fileID: -6140534496448188841, guid: 86271638b8ca4de4facf01edc61a6aeb, type: 2}
-    volume: 0.614
+  - name: Attack1SFX
+    clip: {fileID: 8300000, guid: ebcbb664018f947728cb9b67468b0f48, type: 3}
+    mixer: {fileID: 2288875582301175548, guid: 86271638b8ca4de4facf01edc61a6aeb, type: 2}
+    volume: 0.214
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Attack2SFX
+    clip: {fileID: 8300000, guid: 07c38e0499aea4acd81b44991c0e4d07, type: 3}
+    mixer: {fileID: 2288875582301175548, guid: 86271638b8ca4de4facf01edc61a6aeb, type: 2}
+    volume: 0.201
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Attack3_1SFX
+    clip: {fileID: 8300000, guid: f3645d7388d9f4efc88a56c59b3a70d4, type: 3}
+    mixer: {fileID: 2288875582301175548, guid: 86271638b8ca4de4facf01edc61a6aeb, type: 2}
+    volume: 0.205
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Attack3_2SFX
+    clip: {fileID: 8300000, guid: 72de2a353cacc46d3aad1d65f2599d2a, type: 3}
+    mixer: {fileID: 2288875582301175548, guid: 86271638b8ca4de4facf01edc61a6aeb, type: 2}
+    volume: 0.192
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Attack3Voice
+    clip: {fileID: 8300000, guid: 171f04d3f87ca6140a6520d5fb2ef9f7, type: 3}
+    mixer: {fileID: 2288875582301175548, guid: 86271638b8ca4de4facf01edc61a6aeb, type: 2}
+    volume: 0.808
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: PlayerDie
     clip: {fileID: 8300000, guid: 73a158e99ad07154280d61719abe8d6c, type: 3}
     mixer: {fileID: 2288875582301175548, guid: 86271638b8ca4de4facf01edc61a6aeb, type: 2}
-    volume: 0.5
+    volume: 0.59
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: PlayerDieBgm
     clip: {fileID: 8300000, guid: 35ce408210dfa9843ba14da86f8efb4e, type: 3}
     mixer: {fileID: -6140534496448188841, guid: 86271638b8ca4de4facf01edc61a6aeb, type: 2}
-    volume: 0.778
+    volume: 0.821
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: VictoryBgm
-    clip: {fileID: 8300000, guid: a2b51b225bf36d84d8229678edb7762e, type: 3}
+    clip: {fileID: 8300000, guid: 4dbfbd1a56081db4ca174255a4d56b1f, type: 3}
     mixer: {fileID: -6140534496448188841, guid: 86271638b8ca4de4facf01edc61a6aeb, type: 2}
-    volume: 0.837
+    volume: 0.852
     pitch: 1
-    loop: 0
+    loop: 1
     source: {fileID: 0}
   - name: GameTitleSceneBgm
     clip: {fileID: 8300000, guid: 312bd1688cf10b94bbacf000622f3d12, type: 3}
@@ -132,14 +160,14 @@ MonoBehaviour:
   - name: 1stAreaBgm
     clip: {fileID: 8300000, guid: 86441850a4c454d4395eadbff77dd4c7, type: 3}
     mixer: {fileID: -6140534496448188841, guid: 86271638b8ca4de4facf01edc61a6aeb, type: 2}
-    volume: 0.347
+    volume: 0.205
     pitch: 1
     loop: 1
     source: {fileID: 0}
   - name: 2ndAreaBgm
-    clip: {fileID: 8300000, guid: 1cea78a56f0df774080531f8a8f824cc, type: 3}
+    clip: {fileID: 8300000, guid: 41315d67a80c499458c23661436b5515, type: 3}
     mixer: {fileID: -6140534496448188841, guid: 86271638b8ca4de4facf01edc61a6aeb, type: 2}
-    volume: 0.398
+    volume: 0.188
     pitch: 1
     loop: 1
     source: {fileID: 0}

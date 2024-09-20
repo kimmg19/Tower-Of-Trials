@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Slime : BaseEnemy
 {
-    private FirstFloorManager firstFloorManager;
+    private FirstAreaManager firstAreaManager;
     
 
     // 슬라임의 고유 스탯을 초기화
@@ -20,9 +20,9 @@ public class Slime : BaseEnemy
     {
         base.Die();
         // 슬라임의 고유한 죽음 처리를 추가할 수 있음
-        if (firstFloorManager != null)
+        if (firstAreaManager != null)
         {
-            firstFloorManager.OnSlimeKilled(); // 슬라임이 죽을 때 카운트 증가
+            firstAreaManager.OnSlimeKilled(); // 슬라임이 죽을 때 카운트 증가
         }
     }
 
@@ -30,7 +30,7 @@ public class Slime : BaseEnemy
     protected override void Start()
     {
         base.Start();
-        firstFloorManager = FindObjectOfType<FirstFloorManager>();
+        firstAreaManager = FindObjectOfType<FirstAreaManager>();
 
         // 슬라임 자식 오브젝트에서 헬스바 슬라이더를 찾기
         healthBar = GetComponentInChildren<Slider>();

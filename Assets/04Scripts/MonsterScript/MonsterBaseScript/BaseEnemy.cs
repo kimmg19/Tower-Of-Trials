@@ -36,6 +36,10 @@ public abstract class BaseEnemy : MonoBehaviour
         {
             Debug.LogWarning($"{gameObject.name} is missing a health bar!");
         }
+        else if (!healthBar.gameObject.activeInHierarchy)
+        {
+            healthBar.gameObject.SetActive(true); // 헬스바 활성화
+        }
     }
 
     protected virtual void Update()
@@ -72,6 +76,7 @@ public abstract class BaseEnemy : MonoBehaviour
     public virtual void TakeDamage(int damageAmount, bool parried = false)
     {
         HP -= damageAmount;
+        AudioManager.instance.Play("MonsterHit");
         isParried = parried; // 패링 상태 추적
         Debug.Log($"{gameObject.name} took {damageAmount} damage. Current HP: {HP}, Parried: {isParried}");
 
@@ -142,6 +147,7 @@ public abstract class BaseEnemy : MonoBehaviour
     protected virtual void Die()
     {
         animator.SetTrigger("die");
+        AudioManager.instance.Play("MonsterDie");
         GetComponent<Collider>().enabled = false;
         Invoke("DestroyEnemy", 3f);
     }
