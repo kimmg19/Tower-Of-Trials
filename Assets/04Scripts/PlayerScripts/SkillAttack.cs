@@ -27,7 +27,7 @@ public class SkillAttack : MonoBehaviour
     [SerializeField] float angle;                   // ���� ǥ�õ� ����. ���� ���� ���� ����������.
     [SerializeField] List<CastInfo> lineList;       // ǥ�õ� ���� ���� ����Ʈ
     [SerializeField] Vector3 offset;                // ��ġ ������ ����. zero �� �ص� ����*/
-
+    
     void Start()
     {
         playerstats = GetComponent<PlayerStats>();

@@ -17,6 +17,7 @@ public class FirstAreaManager : MonoBehaviour
     [SerializeField] GameObject titlePanel;  // 타이틀 패널
     [SerializeField] GameObject clearPanel; // 클리어 패널
     [SerializeField] GameObject countPanel; // 카운트 패널
+    [SerializeField] GameObject skillReawrdPanel;
     [SerializeField] TextMeshProUGUI killText;
     [SerializeField] GameObject bossHealthBarCanvas; // 보스 피통 캔버스
 
@@ -221,7 +222,19 @@ public class FirstAreaManager : MonoBehaviour
     }
     private IEnumerator ShowClearPanel()
     {
+        
         clearPanel.SetActive(true);
+        //최초 보상시에만 텍스트 표현. 2층 추가되면 2층 코드로 공격스킬 옮기기
+        if (playerInputs.CheckSkillUnlocked(playerInputs.attackSkill) == 1
+            && playerInputs.CheckSkillUnlocked(playerInputs.buffSkill) == 1)
+        {
+            skillReawrdPanel.SetActive(false);
+            print("이미 스킬 해제됨");
+        } else
+        {
+            PlayerPrefs.SetInt(playerInputs.attackSkill, 1);
+            PlayerPrefs.SetInt(playerInputs.buffSkill, 1);
+        }
         clearPanelCanvasGroup.alpha = 0f; // 초기에는 완전히 투명
         while (clearPanelCanvasGroup.alpha < 1f)
         {
