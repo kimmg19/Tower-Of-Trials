@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+//using UnityEngine.UIElements;
 
 public class PlayerInputs : MonoBehaviour
 {
@@ -19,53 +20,79 @@ public class PlayerInputs : MonoBehaviour
     [SerializeField] GameObject buffParticlePrefab; // 버프 스킬 시 사용할 파티클 시스템 프리팹
     // 플레이어 상태 변수
     public Vector2 moveInput;
-    // public bool isRunning = false;
     [HideInInspector] public bool isDodging;
     [HideInInspector] public bool isGPress;
     [HideInInspector] public bool isInteracting = false;
     [HideInInspector] public bool isBlocking = false;
     [HideInInspector] public bool isWalking = false;
     [HideInInspector] public bool isAttacking = false;
+    [HideInInspector] public bool isSkill_01_Unlocked = false;
+    [HideInInspector] public bool isSkill_02_Unlocked = false;
+    [HideInInspector] public string buffSkill = "BuffSkill";
+    [HideInInspector] public string attackSkill = "AttackSkill";
+
     public bool isSprinting = false;
     public bool isJumping = false;
     public bool isSkillAttacking = false;
 
     // 스태미나 및 쿨타임 변수
-    [SerializeField] int blockInitialStamina = 3; // 방어 시작 시 처음 감소할 스태미나
-    [SerializeField] int blockStamina = 2; // 방어 중 지속적으로 소모할 스태미나
-    [SerializeField] float blockStaminaDecreaseInterval = 1f; // 방어 중 스태미나 감소 주기
-    [SerializeField] float blockStaminaAcceleration = 0.8f; // 방어 지속 시 스태미나 감소 주기 가속
-    [SerializeField] int sprintStamina = 1;
-    [SerializeField] int jumpStamina = 5;
-    [SerializeField] int rollStamina = 15;
-    [SerializeField] int skillMp = 15;
-    [SerializeField] float jumpCooldownDuration = 1.5f;
-    [SerializeField] float rollCooldownDuration = 1f;
-    [SerializeField] float skill01_CooldownDuration = 5f;    
+    int blockInitialStamina = 3; // 방어 시작 시 처음 감소할 스태미나
+    int blockStamina = 2; // 방어 중 지속적으로 소모할 스태미나
+    float blockStaminaDecreaseInterval = 1f; // 방어 중 스태미나 감소 주기
+     float blockStaminaAcceleration = 0.8f; // 방어 지속 시 스태미나 감소 주기 가속
+    int sprintStamina = 1;
+    int jumpStamina = 5;
+    int rollStamina = 15;
+    int attackSkillMp = 15;
+    int buffSkillMp = 10;
+    //쿨타임
+    float jumpCooldownDuration = 1.5f;
+    float rollCooldownDuration = 1f;
+    float attackSkill_CooldownDuration = 5f;
+    float buffSkill_CooldownDuration = 10f;
+    //버픗 지속시간
+    float buffSkillDuration = 10;
 
-    // UI 이미지 참조 (점프와 롤 쿨타임)
+    // UI 이미지 참조 (점프와 롤 쿨타임이미지)
     [SerializeField] Image jumpCooldownImage;
     [SerializeField] Image rollCooldownImage;
-    [SerializeField] Image skill01_CooldownImage;
-
+    [SerializeField] Image attackSkill_CooldownImage;
+    [SerializeField] GameObject attackSkill_UnlockImage;
+    [SerializeField] Image buffSkill_CooldownImage;
+    [SerializeField] GameObject buffSkill_UnlockImage;
 
     // 애니메이터 및 쿨타임 상태 변수
     Animator animator;
     bool isJumpCooldown = false;
     bool isRollCooldown = false;
-    bool isSkill01Cooldown = false;
-
-    // 스킬 파티클
-    [SerializeField] ParticleSystem skillParticle_01;
-
-    // 쿨타임 처리 코루틴 변수
-        // 코루틴 참조 변수
+    bool isAttackSkillCooldown = false;
+    bool isBuffSkillCooldown = false;    
+    [SerializeField] ParticleSystem attackSkillParticle;  
     private Coroutine blockStaminaCoroutine;
     Coroutine staminaCoroutine;
 
+    private void Update()
+    {
+        if (CheckSkillUnlocked(attackSkill)==0)
+        {
+            attackSkill_UnlockImage.SetActive(true);
+        } else
+        {
+            attackSkill_UnlockImage.SetActive(false);
+
+        }
+        if (CheckSkillUnlocked(buffSkill) == 0)
+        {
+            buffSkill_UnlockImage.SetActive(true);
+        } else
+        {
+            buffSkill_UnlockImage.SetActive(false);
+
+        }
+    }
     void Start()
     {
-         // 방패 오브젝트를 찾아서 Shield 컴포넌트 참조
+        // 방패 오브젝트를 찾아서 Shield 컴포넌트 참조
         GameObject shieldObject = GameObject.FindGameObjectWithTag("Shield");
         if (shieldObject != null)
         {
@@ -85,7 +112,8 @@ public class PlayerInputs : MonoBehaviour
         // 쿨타임 이미지 초기화
         if (jumpCooldownImage != null) jumpCooldownImage.fillAmount = 0;
         if (rollCooldownImage != null) rollCooldownImage.fillAmount = 0;
-        if (skill01_CooldownImage != null) skill01_CooldownImage.fillAmount = 0;
+        if (attackSkill_CooldownImage != null) attackSkill_CooldownImage.fillAmount = 0;
+        if (buffSkill_CooldownImage != null) buffSkill_CooldownImage.fillAmount = 0;
 
     }
 
@@ -105,15 +133,14 @@ public class PlayerInputs : MonoBehaviour
     private void OnSprint(InputValue value)
     {
         // 방어 중에는 스프린트가 불가능하도록 처리
-        if (isBlocking) return;
+        if (isBlocking || playerStats.currentStamina < sprintStamina) return;
 
         isSprinting = value.isPressed;
 
         if (isSprinting && moveInput.magnitude != 0 && !isInteracting)
         {
             StartSprinting();
-        }
-        else
+        } else
         {
             StopSprinting();
         }
@@ -133,17 +160,17 @@ public class PlayerInputs : MonoBehaviour
             StopCoroutine(staminaCoroutine);
             staminaCoroutine = null;
         }
-
         isSprinting = false;
     }
 
     private IEnumerator StaminaCoroutine(int staminaUsage)
     {
-        while (playerStats.currentStamina > 0 && isSprinting)
+        while (playerStats.currentStamina > sprintStamina && isSprinting)
         {
             playerStatus.UseStamina(staminaUsage);
             yield return new WaitForSeconds(1.0f);
         }
+        StopSprinting();
         staminaCoroutine = null;
     }
 
@@ -151,33 +178,12 @@ public class PlayerInputs : MonoBehaviour
     {
         if (isInteracting || moveInput.magnitude == 0) return;
         isWalking = value.isPressed;
-    }
-
-    private void OnAttack()
-    {
-        if (isInteracting || isBlocking || isSkillAttacking) return;
-
-        if (playerMovement.characterController.isGrounded && !isDodging)
-        {
-            isAttacking = true;
-            animator.SetTrigger("Attack");
-        }
-    }
-
-    private void OnSkill01()
-    {
-        if (isInteracting || isBlocking || isDodging || isJumping
-            || skillParticle_01.isPlaying || isAttacking|| isSkillAttacking|| isSkill01Cooldown) return;
-        StartCoroutine(Skill01_CooldownCoroutine());
-        playerStatus.UseMp(skillMp);
-        animator.SetTrigger("Skill01");  }
-
-    
+    }    
 
     private void OnRoll()
     {
-        if (isInteracting  || isDodging || isJumping || isRollCooldown || isSkillAttacking
-            || moveInput.magnitude == 0|| playerStats.currentStamina < rollStamina) return;        
+        if (isInteracting || isDodging || isJumping || isRollCooldown || isSkillAttacking
+            || moveInput.magnitude == 0 || playerStats.currentStamina < rollStamina) return;
 
         playerMovement.Roll();
         playerStatus.UseStamina(rollStamina);
@@ -230,15 +236,13 @@ public class PlayerInputs : MonoBehaviour
                     shield.StartBlocking(); // 방어 시작
                     shield.ActivateParryWindow(); // 패링 윈도우 활성화
                 }
-            }
-            else
+            } else
             {
                 StopBlocking();
             }
 
             StopSprinting();
-        }
-        else
+        } else
         {
             StopBlocking();
         }
@@ -277,28 +281,61 @@ public class PlayerInputs : MonoBehaviour
             shield.StopBlocking(); // 방어 종료
         }
     }
+    private void OnAttack()
+    {
+        if (isInteracting || isBlocking || isSkillAttacking) return;
+
+        if (playerMovement.characterController.isGrounded && !isDodging)
+        {
+            isAttacking = true;
+            animator.SetTrigger("Attack");
+        }
+    }
+
+    private void OnAttackSkill()
+    {
+        int skillUnlocked = CheckSkillUnlocked(attackSkill);
+        print("공격 스킬 해제 여부: " + skillUnlocked);
+        if (skillUnlocked == 1)
+        {
+            if (isInteracting || isBlocking || isDodging || isJumping
+            || attackSkillParticle.isPlaying || isAttacking || isSkillAttacking || isAttackSkillCooldown) return;
+            StartCoroutine(AttackSkill_CooldownCoroutine());
+            if (playerStats.currentMp >= attackSkillMp)
+            {
+                playerStatus.UseMp(attackSkillMp);
+                animator.SetTrigger("AttackSkill");
+            } else
+            {
+                Debug.Log("Not enough MP for Buff Skill.");
+            }
+        } else
+        {
+            print("공격 스킬 잠겨있음");
+        }
+    }
 
     void OnBuffSkill()
     {
-        if (isInteracting) return;
-        
-        // 마나가 충분한지 확인
-        if (playerStats.currentMp >= 30)
+        int skillUnlocked = CheckSkillUnlocked(buffSkill);
+        print("버프 스킬 해제 여부: " + skillUnlocked);
+        if (skillUnlocked == 1)
         {
-            AudioManager.instance.Play("BuffSkill");
-            // 애니메이션 트리거 설정
-            animator.SetTrigger("BuffSkill");
-
-            // 마나 소모
-            playerStatus.UseMp(30);
-
-            // 버프 스킬 실행
-            StartCoroutine(ActivateBuffSkill());
+            if (isInteracting || isDodging || isJumping
+            || attackSkillParticle.isPlaying || isAttacking || isSkillAttacking || isBuffSkillCooldown) return;
+            StartCoroutine(BuffSkill_CooldownCoroutine());
+            if (playerStats.currentMp >= buffSkillMp)
+            {
+                AudioManager.instance.Play("BuffSkill");
+                animator.SetTrigger("BuffSkill");
+                playerStatus.UseMp(buffSkillMp);
+                StartCoroutine(ActivateBuffSkill());
+            } else
+            {
+                Debug.Log("Not enough MP for Buff Skill.");
+            }
         }
-        else
-        {
-            Debug.Log("Not enough MP for Buff Skill.");
-        }
+            
     }
 
     private IEnumerator ActivateBuffSkill() // 버프 스킬 효과
@@ -311,11 +348,11 @@ public class PlayerInputs : MonoBehaviour
         {
             GameObject particleSystem = Instantiate(buffParticlePrefab, transform.position, Quaternion.identity);
             particleSystem.transform.parent = this.transform; // 하이라키에 추가
-            Destroy(particleSystem, 10f); // 10초 후 삭제 (버프 효과와 일치)
+            Destroy(particleSystem, buffSkillDuration); // 10초 후 삭제 (버프 효과와 일치)
         }
 
         // 상호작용 제한 해제 (애니메이션 초기화 시점)
-        yield return new WaitForSeconds(0.1f); // 잠깐의 대기 시간 후 상호작용 가능하게 설정
+        yield return new WaitForSeconds(1.5f); // 잠깐의 대기 시간 후 상호작용 가능하게 설정
         isInteracting = false;
 
         // 공격력과 이동 속도 증가
@@ -323,7 +360,7 @@ public class PlayerInputs : MonoBehaviour
         playerMovement.Buffspeed(); // 예시로 이동 속도를 증가시킵니다.
 
         // 일정 시간 후 효과를 원래대로 되돌림
-        yield return new WaitForSeconds(10f); // 10초간 지속
+        yield return new WaitForSeconds(buffSkillDuration); // 지속시간
 
         // 효과를 원래대로 되돌림
         playerStats.IncreaseSwordDamage(-10); // 공격력 감소
@@ -337,13 +374,13 @@ public class PlayerInputs : MonoBehaviour
         if (!isInteracting && playerMovement.characterController.isGrounded &&
             !isJumping && !animationEvent.IsAttacking() && !isDodging && !isJumpCooldown && !isSkillAttacking)
         {
+            if (playerStats.currentStamina < jumpStamina) return;
             isJumping = true;
-            if (playerStats.currentStamina < jumpStamina) return;            
             playerStatus.UseStamina(jumpStamina);
             StartCoroutine(JumpCooldownCoroutine());
             playerMovement.Jump();
         }
-    }    
+    }
 
     private IEnumerator JumpCooldownCoroutine()
     {
@@ -356,11 +393,16 @@ public class PlayerInputs : MonoBehaviour
         isRollCooldown = true;
         yield return CooldownCoroutine(rollCooldownDuration, rollCooldownImage, () => isRollCooldown = false);
     }
-    private IEnumerator Skill01_CooldownCoroutine()
+    private IEnumerator AttackSkill_CooldownCoroutine()
     {
         isSkillAttacking = true;
-        isSkill01Cooldown = true;
-        yield return CooldownCoroutine(skill01_CooldownDuration,skill01_CooldownImage, () => isSkill01Cooldown = false);
+        isAttackSkillCooldown = true;
+        yield return CooldownCoroutine(attackSkill_CooldownDuration, attackSkill_CooldownImage, () => isAttackSkillCooldown = false);
+    }
+    private IEnumerator BuffSkill_CooldownCoroutine()
+    {
+        isBuffSkillCooldown = true;
+        yield return CooldownCoroutine(buffSkill_CooldownDuration, buffSkill_CooldownImage, () => isBuffSkillCooldown = false);
     }
 
     private IEnumerator CooldownCoroutine(float duration, Image cooldownImage, Action onComplete)
@@ -389,5 +431,10 @@ public class PlayerInputs : MonoBehaviour
     {
         if (isInteracting) return;
         lockOnSystem.SwitchTarget();
+    }
+    public int CheckSkillUnlocked(string skillName)
+    {
+        int isSkillUnlocked = PlayerPrefs.GetInt(skillName);
+        return isSkillUnlocked;
     }
 }

@@ -2,12 +2,13 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 using UnityEngine.Playables;
+using UnityEngine.InputSystem;
 
 public class FirstAreaManager : MonoBehaviour
 {
     // 타임라인 에셋을 재생할 PlayableDirector
-    [SerializeField] PlayableDirector bossCinematic; 
-    [SerializeField] PlayableDirector firstAreaCinematic; 
+    [SerializeField] PlayableDirector bossCinematic;
+    [SerializeField] PlayableDirector firstAreaCinematic;
 
     [SerializeField] GameObject slimeGroup;
     [SerializeField] GameObject turtleGroup;
@@ -16,10 +17,11 @@ public class FirstAreaManager : MonoBehaviour
     [SerializeField] GameObject titlePanel;  // 타이틀 패널
     [SerializeField] GameObject clearPanel; // 클리어 패널
     [SerializeField] GameObject countPanel; // 카운트 패널
+    [SerializeField] GameObject skillReawrdPanel;
     [SerializeField] TextMeshProUGUI killText;
     [SerializeField] GameObject bossHealthBarCanvas; // 보스 피통 캔버스
 
-    [SerializeField] PlayerMovement playerMovement;
+    [SerializeField] PlayerInputs playerInputs;
     private CanvasGroup panelCanvasGroup;
     private CanvasGroup titleCanvasGroup;
     private CanvasGroup clearPanelCanvasGroup;
@@ -220,7 +222,19 @@ public class FirstAreaManager : MonoBehaviour
     }
     private IEnumerator ShowClearPanel()
     {
+        
         clearPanel.SetActive(true);
+        //최초 보상시에만 텍스트 표현. 2층 추가되면 2층 코드로 공격스킬 옮기기
+        if (playerInputs.CheckSkillUnlocked(playerInputs.attackSkill) == 1
+            && playerInputs.CheckSkillUnlocked(playerInputs.buffSkill) == 1)
+        {
+            skillReawrdPanel.SetActive(false);
+            print("이미 스킬 해제됨");
+        } else
+        {
+            PlayerPrefs.SetInt(playerInputs.attackSkill, 1);
+            PlayerPrefs.SetInt(playerInputs.buffSkill, 1);
+        }
         clearPanelCanvasGroup.alpha = 0f; // 초기에는 완전히 투명
         while (clearPanelCanvasGroup.alpha < 1f)
         {
@@ -274,7 +288,7 @@ public class FirstAreaManager : MonoBehaviour
 
     IEnumerator PlayBossCinematic()
     {
-        playerMovement.GetComponent<PlayerMovement>().enabled = false;
+        playerInputs.isInteracting = true;
         yield return new WaitForSeconds(1f);
         if (bossCinematic != null)
         {
@@ -289,7 +303,7 @@ public class FirstAreaManager : MonoBehaviour
 
             // 시네마틱이 끝나고 체력바를 활성화
             yield return new WaitForSeconds((float)bossCinematic.duration);  // bossCinematic.duration은 시네마틱의 전체 길이를 초 단위로 나타냄
-            
+
             // 체력바 캔버스를 아예 활성화하는 대신, 투명도를 조정하는 방식으로 전환
             if (bossHealthBarCanvas != null)
             {
@@ -299,27 +313,27 @@ public class FirstAreaManager : MonoBehaviour
                     bossHealthBarCanvasGroup.alpha = 1f;  // 체력바 보이기
                     bossHealthBarCanvasGroup.interactable = true;
                     bossHealthBarCanvasGroup.blocksRaycasts = true;
-                }
-                else
+                } else
                 {
                     bossHealthBarCanvas.SetActive(true); // 캔버스 그룹이 없으면 기존 방식 사용
                 }
             }
 
-            playerMovement.GetComponent<PlayerMovement>().enabled = true;
+            playerInputs.isInteracting = false;
         }
     }
 
     IEnumerator Play1stAreaCinematic()
     {
-        playerMovement.GetComponent<PlayerMovement>().enabled = false;
+        playerInputs.isInteracting = true;
+
         yield return new WaitForSeconds(1f);
         if (firstAreaCinematic != null)
         {
             firstAreaCinematic.Play();
         }
         yield return new WaitForSeconds((float)firstAreaCinematic.duration);  //firstAreaCinematic.duration은 시네마틱의 전체 길이를 초 단위로 나타냄
-        playerMovement.GetComponent<PlayerMovement>().enabled = true;
+        playerInputs.isInteracting = false;
     }
 
     IEnumerator SlowMotionEffect()

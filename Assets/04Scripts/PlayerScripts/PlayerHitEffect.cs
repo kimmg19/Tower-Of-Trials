@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class PlayerHitEffect : MonoBehaviour
 {
+    //sd
     public Image hitEffectImage; // UI Image를 참조
     public float fadeDuration = 0.5f; // 페이드 지속 시간
 

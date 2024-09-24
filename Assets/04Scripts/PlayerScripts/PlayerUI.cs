@@ -19,6 +19,9 @@ public class PlayerUI : MonoBehaviour
     private float staminaRecoveryCooldown = 3f;  // 회복 시작까지 대기 시간
     private float staminaRecoveryTimer = 0f;  // 회복 타이머
 
+    private float mp_RecoveryRate = 10f;  // 3초당 mp 회복량
+    private float mp_RecoveryCooldown = 3f;  // 회복 시작까지 대기 시간
+    private float mp_RecoveryTimer = 0f;  // 회복 타이머
     void Start()
     {
         // 초기화
@@ -39,6 +42,7 @@ public class PlayerUI : MonoBehaviour
         HandleMp(); // mp UI 업데이트
         HandleStamina(); // 스태미나 UI 업데이트
         RecoverStamina(); // 스태미나 회복 처리
+        RecoverMP();
     }
 
     // 체력 UI 업데이트
@@ -74,6 +78,23 @@ public class PlayerUI : MonoBehaviour
                     playerStats.currentStamina = playerStats.maxStamina; // 현재 스태미나를 최대 스태미나로 설정
                 }
                 staminaRecoveryTimer = 0f; // 회복 타이머를 초기화하여 다음 회복 주기를 시작함
+            }
+        }
+    }
+
+    private void RecoverMP()
+    {
+        if (playerStats.currentMp < playerStats.maxMp) 
+        {
+            mp_RecoveryTimer += Time.deltaTime; 
+            if (mp_RecoveryTimer >= mp_RecoveryCooldown) 
+            {
+                playerStats.currentMp += Mathf.RoundToInt(mp_RecoveryRate);
+                if (playerStats.currentMp > playerStats.maxMp) 
+                {
+                    playerStats.currentMp = playerStats.maxMp;
+                }
+                mp_RecoveryTimer = 0f;
             }
         }
     }
