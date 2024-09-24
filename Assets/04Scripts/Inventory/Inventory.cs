@@ -113,7 +113,7 @@ public class Inventory : MonoBehaviour
         }
         else
         {
-            print(collision.name);
+            //print(collision.name);
         }
     }
 
