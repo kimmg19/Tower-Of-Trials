@@ -20,6 +20,7 @@ public class SkillAttack : MonoBehaviour
     [Header("Target")]
     [SerializeField] LayerMask targetMask;          // Ž�� ���
     [SerializeField] List<Transform> targetList;    // Ž�� ��� ����Ʈ
+    PlayerStats playerstats;
 
     /*[Header("Draw Line")]
     [Range(0.1f, 1f)]
@@ -29,6 +30,7 @@ public class SkillAttack : MonoBehaviour
 
     void Start()
     {
+        playerstats = GetComponent<PlayerStats>();
         targetList = new();
         //lineList = new();
         //StartCoroutine(DrawRayLine());      ��ų ���ݹ��� �����ִ� ����
@@ -59,7 +61,7 @@ public class SkillAttack : MonoBehaviour
                     if (enemy != null)
                     {
                         print("target in angle");
-                        enemy.TakeDamage(20, false);
+                        enemy.TakeDamage(Mathf.RoundToInt(playerstats.Attack * 1.5f), false);
                     }
                     else
                     {
@@ -107,10 +109,3 @@ public class SkillAttack : MonoBehaviour
         }
     }*/
 }
-
-
-
-
-
-
-

@@ -10,12 +10,15 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] AudioMixer audioMixer;
     [SerializeField] GameObject optionMenu;
+    [SerializeField] GameObject HelpImage;
     [SerializeField] Slider bgmSlider;
 
     void Start()
     {
         bgmSlider.onValueChanged.AddListener(SetBGMVolume);
         GetVolume();
+
+        HelpImage.SetActive(false);
     }
     void SetBGMVolume(float volume)
     {
@@ -63,6 +66,22 @@ public class MainMenu : MonoBehaviour
     void OnPause()
     {
         OnClickOption();
+    }
+
+    public void OnClickHelp()
+    {
+        if (!HelpImage.activeSelf)
+        {
+            HelpImage.SetActive(true);
+        }
+    }
+
+    public void OnClickHelpClose()
+    {
+        if (HelpImage.activeSelf)
+        {
+            HelpImage.SetActive(false);
+        }
     }
 }
 
