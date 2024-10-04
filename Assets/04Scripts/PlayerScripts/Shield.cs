@@ -1,17 +1,19 @@
 using System.Collections;
+using System.Threading;
+using Unity.XR.Oculus.Input;
 using UnityEngine;
 
 public class Shield : MonoBehaviour
 {
-    [SerializeField] private ParticleSystem parryEffect; // 패링 성공 시 재생할 파티클 시스템
-    [SerializeField] private float parryTimingWindow = 0.3f; // 패링 성공 가능 시간
-    [SerializeField] private float damageReductionPercentage = 50f; // 방패 막기 시 데미지 감소 비율
-    [SerializeField] private float parryCooldown = 1.0f; // 패링 후 쿨다운 시간
-    private bool isParryWindowActive = false;
-    private bool isBlocking = false;
-    private bool canParry = true; // 패링 가능 상태
+    [SerializeField] public ParticleSystem parryEffect; // 패링 성공 시 재생할 파티클 시스템
+    [SerializeField] public float parryTimingWindow = 1f; // 패링 성공 가능 시간
+    [SerializeField] public float damageReductionPercentage = 50f; // 방패 막기 시 데미지 감소 비율
+    [SerializeField] public float parryCooldown = 1.0f; // 패링 후 쿨다운 시간
+    [SerializeField] public bool isParryWindowActive = false;
+    [SerializeField] public bool isBlocking = false;
+    [SerializeField] public bool canParry = true; // 패링 가능 상태
     private PlayerStatus playerStatus;
-
+    string enemyTag = "AttackCollider";
     private void Start()
     {
         playerStatus = GetComponentInParent<PlayerStatus>();
@@ -52,34 +54,32 @@ public class Shield : MonoBehaviour
         isParryWindowActive = false;
     }
 
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Monster"))
+        BaseEnemy enemy = other.GetComponentInParent<BaseEnemy>();
+        if (other.CompareTag(enemyTag))
         {
-            BaseEnemy enemy = other.GetComponent<BaseEnemy>();
             if (enemy != null)
             {
                 if (isParryWindowActive && canParry) // 패링 창과 패링 가능 상태일 때만 패링 성공 처리
                 {
                     HandleParrySuccess(enemy);
-                }
-                else if (isBlocking)
+                } else if (isBlocking)
                 {
                     // 방패 막기 중: 데미지 감소 적용
                     int reducedDamage = Mathf.RoundToInt(enemy.GetDamageAmount() * (1 - damageReductionPercentage / 100));
                     playerStatus.TakeDamage(reducedDamage);
                     Debug.Log($"Blocked! Damage reduced to {reducedDamage}.");
-                }
-                else
+                } else
                 {
                     // 방패 막기 및 패링 실패 시: 일반 데미지 적용
                     playerStatus.TakeDamage(enemy.GetDamageAmount());
                 }
             }
         }
-    }
+    }*/
 
-    private void HandleParrySuccess(BaseEnemy enemy)
+    public void HandleParrySuccess(BaseEnemy enemy)
     {
         // 패링 성공 시 처리할 로직
         playerStatus.SetParrySuccess(true);
@@ -112,8 +112,8 @@ public class Shield : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         // 패링 상태 초기화
-        if (other.CompareTag("Monster"))
-        {
+        if (other.CompareTag(enemyTag))
+        {            
             playerStatus.SetParrySuccess(false);
         }
     }

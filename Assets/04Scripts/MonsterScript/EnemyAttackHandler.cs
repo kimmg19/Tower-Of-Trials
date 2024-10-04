@@ -34,7 +34,7 @@ public class EnemyAttackHandler : MonoBehaviour
             if (attackCollider != null)
             {
                 attackCollider.enabled = true; // 공격 콜라이더 활성화
-                Debug.Log($"{enemy.gameObject.name}이(가) 이제 플레이어에게 피해를 줄 수 있습니다.");
+                //Debug.Log($"{enemy.gameObject.name}이(가) 이제 플레이어에게 피해를 줄 수 있습니다.");
             }
         }
     }
@@ -46,7 +46,7 @@ public class EnemyAttackHandler : MonoBehaviour
         if (attackCollider != null)
         {
             attackCollider.enabled = false; // 공격 콜라이더 비활성화
-            Debug.Log($"{enemy.gameObject.name}이(가) 더 이상 플레이어에게 피해를 줄 수 없습니다.");
+            //Debug.Log($"{enemy.gameObject.name}이(가) 더 이상 플레이어에게 피해를 줄 수 없습니다.");
         }
     }
 }

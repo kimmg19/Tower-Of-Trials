@@ -33,7 +33,8 @@ public class LockOnSystem : MonoBehaviour
         if (isLockOn)
         {
             // 현재 타겟이 유효하지 않으면 ResetLockOn 호출--lockonRadius거리 이상 넘어가면 자동으로 풀림 
-            if (target == null || !target.gameObject.activeInHierarchy || Vector3.Distance(playerTransform.position, target.position) > lockOnRadius)
+            if (target == null || !target.gameObject.activeInHierarchy 
+                || Vector3.Distance(playerTransform.position, target.position) > lockOnRadius)
             {
                 ResetLockOn();
             } else

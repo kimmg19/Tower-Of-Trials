@@ -65,7 +65,7 @@ public class InventoryUI : MonoBehaviour
 
     public void RedrawSlotUI()
     {
-        Debug.Log("RedrawSlotUI called.");
+        //Debug.Log("RedrawSlotUI called.");
 
         for (int i = 0; i < slots.Length; i++)
         {
@@ -78,6 +78,6 @@ public class InventoryUI : MonoBehaviour
             slots[i].UpdateSlotUI();
             Debug.Log($"Slot {i} updated with item '{slots[i].item.itemName}' (quantity: {slots[i].item.quantity}).");
         }
-        Debug.Log("RedrawSlotUI completed.");
+        //Debug.Log("RedrawSlotUI completed.");
     }
 }

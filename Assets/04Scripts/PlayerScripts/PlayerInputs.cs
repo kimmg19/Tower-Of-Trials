@@ -23,7 +23,7 @@ public class PlayerInputs : MonoBehaviour
     [HideInInspector] public bool isDodging;
     [HideInInspector] public bool isGPress;
     [HideInInspector] public bool isInteracting = false;
-    [HideInInspector] public bool isBlocking = false;
+    [HideInInspector] public bool canBlocking = false;
     [HideInInspector] public bool isWalking = false;
     [HideInInspector] public bool isAttacking = false;
     [HideInInspector] public bool isSkill_01_Unlocked = false;
@@ -133,7 +133,7 @@ public class PlayerInputs : MonoBehaviour
     private void OnSprint(InputValue value)
     {
         // 방어 중에는 스프린트가 불가능하도록 처리
-        if (isBlocking || playerStats.currentStamina < sprintStamina) return;
+        if (canBlocking || playerStats.currentStamina < sprintStamina) return;
 
         isSprinting = value.isPressed;
 
@@ -217,10 +217,10 @@ public class PlayerInputs : MonoBehaviour
 
         animationEvent.OnFinishAttack();
 
-        isBlocking = value.isPressed;
-        animator.SetBool("Block", isBlocking);
+        canBlocking = value.isPressed;
+        animator.SetBool("Block", canBlocking);
 
-        if (isBlocking)
+        if (canBlocking)
         {
             if (playerStats.currentStamina >= blockInitialStamina)
             {
@@ -253,7 +253,7 @@ public class PlayerInputs : MonoBehaviour
         // 방어 상태 유지 중 스태미나 감소
         float interval = blockStaminaDecreaseInterval;
 
-        while (isBlocking && playerStats.currentStamina > 0)
+        while (canBlocking && playerStats.currentStamina > 0)
         {
             yield return new WaitForSeconds(interval);
             playerStatus.UseStamina(blockStamina); // 지속적으로 스태미나 감소
@@ -265,7 +265,7 @@ public class PlayerInputs : MonoBehaviour
 
     private void StopBlocking()
     {
-        isBlocking = false;
+        canBlocking = false;
         animator.SetBool("Block", false);
 
         if (blockStaminaCoroutine != null)
@@ -283,7 +283,7 @@ public class PlayerInputs : MonoBehaviour
     }
     private void OnAttack()
     {
-        if (isInteracting || isBlocking || isSkillAttacking) return;
+        if (isInteracting || canBlocking || isSkillAttacking) return;
 
         if (playerMovement.characterController.isGrounded && !isDodging)
         {
@@ -298,7 +298,7 @@ public class PlayerInputs : MonoBehaviour
         print("공격 스킬 해제 여부: " + skillUnlocked);
         if (skillUnlocked == 1)
         {
-            if (isInteracting || isBlocking || isDodging || isJumping
+            if (isInteracting || canBlocking || isDodging || isJumping
             || attackSkillParticle.isPlaying || isAttacking || isSkillAttacking || isAttackSkillCooldown) return;
             StartCoroutine(AttackSkill_CooldownCoroutine());
             if (playerStats.currentMp >= attackSkillMp)
@@ -369,7 +369,7 @@ public class PlayerInputs : MonoBehaviour
         Debug.Log("Buff skill has ended.");
     }
 
-    private void OnJump()
+    void OnJump()
     {
         if (!isInteracting && playerMovement.characterController.isGrounded &&
             !isJumping && !animationEvent.IsAttacking() && !isDodging && !isJumpCooldown && !isSkillAttacking)
@@ -423,7 +423,11 @@ public class PlayerInputs : MonoBehaviour
 
     private void OnLockOn()
     {
-        if (isInteracting) return;
+        if (isInteracting || animationEvent.IsAttacking())
+        {
+            print("돌아가");
+            return;
+        }
         lockOnSystem.ToggleLockOn();
     }
 

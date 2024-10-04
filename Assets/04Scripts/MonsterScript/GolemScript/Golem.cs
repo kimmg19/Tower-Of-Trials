@@ -79,15 +79,15 @@ public class Golem : BaseEnemy
         float distance = Vector3.Distance(player.position, agent.transform.position);
         if (distance <= attackRange * stompRangeMultiplier)
         {
-            StartCoroutine(EnableDamageDuringAttack());
+            StartCoroutine(EnableDamageDuringAttack(damageAmount));
         }
     }
 
-    private IEnumerator EnableDamageDuringAttack()
+    private IEnumerator EnableDamageDuringAttack(int damage)
     {
         enableDamaging = true; // Allow damage
         attackCollider.enabled = true; // Enable the attack collider
-
+        playerStatus.TakeDamage(damage);
         // Wait for a brief moment to simulate attack duration
         yield return new WaitForSeconds(1.0f); // Adjust this based on your animation length
 
@@ -144,7 +144,7 @@ public class Golem : BaseEnemy
             }
 
             // Enable damage for the duration of the attack
-            StartCoroutine(EnableDamageDuringAttack());
+            StartCoroutine(EnableDamageDuringAttack(damageAmount*2));
         }
 
         // NavMeshAgent 이동 재개

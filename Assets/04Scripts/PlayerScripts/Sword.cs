@@ -52,18 +52,19 @@ public class Sword : MonoBehaviour
         {
             BaseEnemy enemy = other.GetComponent<BaseEnemy>();
             if (enemy != null)
-            {
+            {              
+
                 // 패링 상태와 관계없이 항상 데미지를 입힘
                 enemy.TakeDamage(damageAmount); 
             }
-            else if (other.CompareTag("Dummy"))
+            /*else if (other.CompareTag("Dummy"))
             {
                 Dummy dummy = other.GetComponent<Dummy>();
                 if (dummy != null)
                 {
                     dummy.TakeDamage(); // Dummy에 데미지를 준다.
                 }
-            }
+            }*/
         }
     }
 }

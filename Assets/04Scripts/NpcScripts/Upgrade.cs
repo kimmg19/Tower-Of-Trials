@@ -27,7 +27,7 @@ public class Upgrade : MonoBehaviour
     {
         if (upgradePanel != null)
         {
-            Debug.Log("Awake");
+            //Debug.Log("Awake");
             upgradePanel.SetActive(false);
         }
 
@@ -38,7 +38,7 @@ public class Upgrade : MonoBehaviour
         UpgradePos = PlayerPrefs.GetInt("UpgradePos", 90); // 기본값 90
         UpgradeGold = PlayerPrefs.GetInt("UpgradeGold", 100); // 기본값 100
 
-        Debug.Log("Game data loaded.");
+        //Debug.Log("Game data loaded.");
 
         InvenWeaponEnhanceText.text = "+" + WeaponEnhancePoint.ToString();
         WeaponEnhanceText.text = "+" + WeaponEnhancePoint.ToString();

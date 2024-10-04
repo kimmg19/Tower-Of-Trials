@@ -13,7 +13,7 @@ public class PlayerStatus : MonoBehaviour
     [HideInInspector] public bool isParried = false;
 
     // 데미지를 무시하는 상태 관리 변수
-   public bool isDamageIgnored = false;
+    public bool isDamageIgnored = false;
     [SerializeField] private float ignoreDamageDuration = 2.0f; // 무적 시간 설정
 
     void Start()
@@ -30,14 +30,14 @@ public class PlayerStatus : MonoBehaviour
         // 무적 상태일 때 데미지를 무시
         if (isDamageIgnored)
         {
-            Debug.Log("Damage ignored due to invincibility.");
+            Debug.Log("무적 상태로 인해 데미지를 무시합니다.");
             return;
         }
 
         // 패링에 성공한 경우
         if (isParried)
         {
-            Debug.Log("Attack was parried. Player should be invincible.");
+            Debug.Log("공격이 패링되었습니다. 플레이어는 무적 상태입니다.");
             SetParrySuccess(true); // 패링 성공 상태 설정
             return;
         }
@@ -53,7 +53,7 @@ public class PlayerStatus : MonoBehaviour
                 playerStats.currentHp -= finalDamage;
                 AudioManager.instance.Play("PlayerHit");
 
-                Debug.Log("Player took damage.");
+                Debug.Log("플레이어가 데미지를 입었습니다.");
 
                 if (playerStats.currentHp <= 0)
                 {
@@ -61,15 +61,6 @@ public class PlayerStatus : MonoBehaviour
                 }
             }
         }
-    }
-
-    private IEnumerator IgnoreDamageForDuration()
-    {
-        isDamageIgnored = true;
-        Debug.Log("Invincibility activated for " + ignoreDamageDuration + " seconds.");
-        yield return new WaitForSeconds(ignoreDamageDuration);
-        isDamageIgnored = false;
-        Debug.Log("Invincibility ended.");
     }
 
     public void UseStamina(int amount)
@@ -104,8 +95,16 @@ public class PlayerStatus : MonoBehaviour
         isParried = success;
         if (success)
         {
-            Debug.Log("Parry was successful. Player is now invincible.");
+            Debug.Log("플레이어는 이제 무적 상태입니다.");
             StartCoroutine(IgnoreDamageForDuration()); // 패링 후 일정 시간 동안 무적 상태
         }
+    }
+    private IEnumerator IgnoreDamageForDuration()
+    {
+        isDamageIgnored = true;
+        Debug.Log("무적 상태가 " + ignoreDamageDuration + "초 동안 활성화됩니다.");
+        yield return new WaitForSeconds(ignoreDamageDuration);
+        isDamageIgnored = false;
+        Debug.Log("무적 상태가 종료되었습니다.");
     }
 }

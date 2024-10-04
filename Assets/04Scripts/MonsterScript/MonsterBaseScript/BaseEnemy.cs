@@ -156,33 +156,87 @@ public abstract class BaseEnemy : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
-
+    float delayTime = 0.01f;
     protected virtual void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && playerStatus.playerAlive)
+        // 방패 충돌 먼저 처리
+        if (other.CompareTag("Shield"))
         {
-            // 무적 상태를 체크하여 데미지를 무시
-            if (playerStatus.isDamageIgnored) 
-            {
-                Debug.Log($"{gameObject.name}'s attack was ignored due to player invincibility.");
-                return;
-            }
-
-            if (enableDamaging && !playerStatus.isParried)
-            {
-                // 플레이어가 공격할 때만 데미지를 입힐 수 있도록 조건을 추가
-                if (!playerInputs.isAttacking)
-                {
-                    Debug.Log($"{gameObject.name} is attempting to damage the player with enableDamaging: {enableDamaging}");
-                    playerStatus.TakeDamage(damageAmount);
-                    enableDamaging = false; // 공격 발생 후 바로 공격 가능 상태를 끔
-                }
-            }
-            else
-            {
-                Debug.Log($"{gameObject.name}'s attack was parried or enemy is in slow motion. No damage to player.");
-                enableDamaging = false; // 패링 성공 후에도 공격 가능 상태를 끔
-            }
+            ProcessTrigger(other.gameObject);
+        }
+        
+        else if (other.CompareTag("Player") && playerStatus.playerAlive)
+        {            
+                StartCoroutine(DelayedTrigger(other.gameObject, delayTime));
         }
     }
+
+    IEnumerator DelayedTrigger(GameObject obj, float delay)
+    {
+        
+        yield return new WaitForSeconds(delay);
+        //Debug.LogError("3");
+
+        // 방패와의 충돌 여부를 다시 확인
+        if (isShieldTriggered)
+        {
+            Debug.LogError("Shield was triggered. Ignoring Player collision.");
+            TriggerReset();
+            yield break;  // 코루틴 중지
+        }
+
+        // 무적 상태를 체크하여 데미지를 무시
+        if (playerStatus.isDamageIgnored)
+        {
+            Debug.Log($"{gameObject.name}'s attack was ignored due to player invincibility.");
+        }
+
+        if (enableDamaging && !playerStatus.isParried)
+        {
+            if (!playerInputs.isAttacking)
+            {
+                Debug.Log($"{gameObject.name} is attempting to damage the player with enableDamaging: {enableDamaging}");
+                playerStatus.TakeDamage(damageAmount);
+                enableDamaging = false;
+            }
+        } else
+        {
+            Debug.Log($"{gameObject.name}'s attack was parried or enemy is in slow motion. No damage to player.");
+            enableDamaging = false;
+        }
+        //Debug.LogError("4");
+    }
+
+    public bool isShieldTriggered = false;
+
+    void ProcessTrigger(GameObject obj)
+    {
+        isShieldTriggered = true; // 방패와 충돌했음을 표시
+        Shield shield = obj.GetComponent<Shield>();
+        //Debug.LogError("1");
+
+        if (shield.isParryWindowActive && shield.canParry)
+        {
+            shield.HandleParrySuccess(this);
+        } else if (shield.isBlocking)
+        {
+            int reducedDamage = Mathf.RoundToInt(GetDamageAmount() * (1 - shield.damageReductionPercentage / 100));
+            playerStatus.TakeDamage(reducedDamage);
+            Debug.Log($"Blocked! Damage reduced to {reducedDamage}.");
+        } else
+        {
+            playerStatus.TakeDamage(GetDamageAmount());
+        }
+        //Debug.LogError("2");
+        
+    }
+
+    void TriggerReset()
+    {
+        //Debug.LogError("555");
+        StopCoroutine("DelayedTrigger");
+        isShieldTriggered = false;
+    }
+
+
 }
