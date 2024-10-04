@@ -149,7 +149,8 @@ public abstract class BaseEnemy : MonoBehaviour
         animator.SetTrigger("die");
         AudioManager.instance.Play("MonsterDie");
         GetComponent<Collider>().enabled = false;
-        Invoke("DestroyEnemy", 3f);
+        DropItem();
+        Invoke("DestroyEnemy", 2f);
     }
 
     protected virtual void DestroyEnemy()
@@ -229,6 +230,13 @@ public abstract class BaseEnemy : MonoBehaviour
         }
         //Debug.LogError("2");
         
+    }
+
+    // 아이템 드랍 메서드 (상속받는 클래스에서 구현할 수 있음)
+    protected virtual void DropItem()
+    {
+        // 기본적으로 아무것도 드랍하지 않음
+        // 상속받는 클래스에서 오버라이딩하여 특정 아이템을 드랍하도록 구현
     }
 
     void TriggerReset()

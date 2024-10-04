@@ -22575,6 +22575,34 @@ PlayableDirector:
     - 61138c88264515b46bd4d45686494a4d: {fileID: 155363316}
     - e45a95bf49af8794d9c92dd5c10c025a: {fileID: 1253920055}
     - 760ceeaf32bd25445a885468c665b86d: {fileID: 155363316}
+--- !u!1 &1638935930 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 164570, guid: 69004ddfafdbced4eade02c4dba9877a, type: 3}
+  m_PrefabInstance: {fileID: 1905413300}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &1638935932
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1638935930}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1668762872
 GameObject:
   m_ObjectHideFlags: 0
@@ -25880,6 +25908,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Muscomorph
       objectReference: {fileID: 0}
+    - target: {fileID: 164570, guid: 69004ddfafdbced4eade02c4dba9877a, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 164570, guid: 69004ddfafdbced4eade02c4dba9877a, type: 3}
+      propertyPath: m_TagString
+      value: AttackCollider
+      objectReference: {fileID: 0}
     - target: {fileID: 448998, guid: 69004ddfafdbced4eade02c4dba9877a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -914.12
@@ -25928,10 +25964,17 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6590702538793929168, guid: 69004ddfafdbced4eade02c4dba9877a, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 164570, guid: 69004ddfafdbced4eade02c4dba9877a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1638935932}
   m_SourcePrefab: {fileID: 100100000, guid: 69004ddfafdbced4eade02c4dba9877a, type: 3}
 --- !u!4 &1905413301 stripped
 Transform:
