@@ -54,7 +54,7 @@ public class Shield : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Monster"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             BaseEnemy enemy = other.GetComponent<BaseEnemy>();
             if (enemy != null)
@@ -78,6 +78,7 @@ public class Shield : MonoBehaviour
             }
         }
     }
+
 
     private void HandleParrySuccess(BaseEnemy enemy)
     {
