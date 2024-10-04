@@ -144,12 +144,21 @@ public abstract class BaseEnemy : MonoBehaviour
         isParried = false; // 패링 상태 해제
     }
 
+    // 아이템 드랍 메서드 (상속받는 클래스에서 구현할 수 있음)
+    protected virtual void DropItem()
+    {
+        // 기본적으로 아무것도 드랍하지 않음
+        // 상속받는 클래스에서 오버라이딩하여 특정 아이템을 드랍하도록 구현
+    }
+
     protected virtual void Die()
     {
         animator.SetTrigger("die");
         AudioManager.instance.Play("MonsterDie");
         GetComponent<Collider>().enabled = false;
-        Invoke("DestroyEnemy", 3f);
+
+        DropItem();
+        Invoke("DestroyEnemy", 2f);
     }
 
     protected virtual void DestroyEnemy()
@@ -159,30 +168,43 @@ public abstract class BaseEnemy : MonoBehaviour
 
     protected virtual void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && playerStatus.playerAlive)
+        if (playerStatus.playerAlive)
         {
-            // 무적 상태를 체크하여 데미지를 무시
-            if (playerStatus.isDamageIgnored) 
+            int otherLayer = other.gameObject.layer;
+
+            if (otherLayer == LayerMask.NameToLayer("Shield"))
             {
-                Debug.Log($"{gameObject.name}'s attack was ignored due to player invincibility.");
+                Debug.Log("Attack hit the shield. No damage applied.");
+                // 방패 스크립트에서 데미지 처리를 담당하므로 여기서는 반환
                 return;
             }
-
-            if (enableDamaging && !playerStatus.isParried)
+            else if (otherLayer == LayerMask.NameToLayer("Player"))
             {
-                // 플레이어가 공격할 때만 데미지를 입힐 수 있도록 조건을 추가
-                if (!playerInputs.isAttacking)
+                // 무적 상태를 체크하여 데미지를 무시
+                if (playerStatus.isDamageIgnored) 
                 {
-                    Debug.Log($"{gameObject.name} is attempting to damage the player with enableDamaging: {enableDamaging}");
-                    playerStatus.TakeDamage(damageAmount);
-                    enableDamaging = false; // 공격 발생 후 바로 공격 가능 상태를 끔
+                    Debug.Log($"{gameObject.name}'s attack was ignored due to player invincibility.");
+                    return;
                 }
-            }
-            else
-            {
-                Debug.Log($"{gameObject.name}'s attack was parried or enemy is in slow motion. No damage to player.");
-                enableDamaging = false; // 패링 성공 후에도 공격 가능 상태를 끔
+
+                if (enableDamaging && !playerStatus.isParried)
+                {
+                    // 플레이어가 공격할 때만 데미지를 입힐 수 있도록 조건을 추가
+                    if (!playerInputs.isAttacking)
+                    {
+                        Debug.Log($"{gameObject.name} is attempting to damage the player with enableDamaging: {enableDamaging}");
+                        playerStatus.TakeDamage(damageAmount);
+                        enableDamaging = false; // 공격 발생 후 바로 공격 가능 상태를 끔
+                    }
+                }
+                else
+                {
+                    Debug.Log($"{gameObject.name}'s attack was parried or enemy is in slow motion. No damage to player.");
+                    enableDamaging = false; // 패링 성공 후에도 공격 가능 상태를 끔
+                }
             }
         }
     }
+
+
 }

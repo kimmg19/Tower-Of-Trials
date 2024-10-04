@@ -185,8 +185,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followCam: {fileID: 0}
   characterBody: {fileID: 0}
-  characterController: {fileID: 0}
   dodgeVec: {x: 0, y: 0, z: 0}
+  characterController: {fileID: 0}
   speed: 1
 --- !u!114 &273734133053606577
 MonoBehaviour:
@@ -200,8 +200,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a792cb79026e6004b871e7b62ceeaa1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trailRenderer: {fileID: 0}
   enableDamaging: 0
+  attack1: {fileID: 0}
+  attack2: {fileID: 0}
+  attack3_1: {fileID: 0}
+  attack3_2: {fileID: 0}
+  attack3_3: {fileID: 0}
+  skillEffect: {fileID: 0}
 --- !u!114 &985489472865417813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,6 +229,9 @@ MonoBehaviour:
   maxHp: 200
   maxMp: 100
   maxStamina: 50
+  Gold: 0
+  HpPotionRate: 20
+  MpPotionRate: 20
   _currentHp: 0
   _currentMp: 0
   _currentStamina: 0
@@ -240,6 +248,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerAlive: 1
+  isParried: 0
+  isDamageIgnored: 0
+  ignoreDamageDuration: 2
 --- !u!114 &6131503361087222839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,23 +263,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca4d7d1792371ff4b831fa3cdd93b32e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buffParticlePrefab: {fileID: 0}
   moveInput: {x: 0, y: 0}
-  isRunning: 0
   isDodging: 0
   isGPress: 0
   isInteracting: 0
   isBlocking: 0
   isWalking: 0
   isAttacking: 0
+  isSkill_01_Unlocked: 0
+  isSkill_02_Unlocked: 0
+  buffSkill: BuffSkill
+  attackSkill: AttackSkill
+  isSprinting: 0
   isJumping: 0
-  strintStanima: 1
-  blockStanima: 1
-  jumpStamina: 5
-  rollStamina: 15
-  jumpCooldownDuration: 1.5
-  rollCooldownDuration: 1
+  isSkillAttacking: 0
   jumpCooldownImage: {fileID: 0}
   rollCooldownImage: {fileID: 0}
+  attackSkill_CooldownImage: {fileID: 0}
+  attackSkill_UnlockImage: {fileID: 0}
+  buffSkill_CooldownImage: {fileID: 0}
+  buffSkill_UnlockImage: {fileID: 0}
+  attackSkillParticle: {fileID: 0}
 --- !u!114 &4040468184805825167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,6 +298,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   items: []
+  hpQuickSlot: {fileID: 0}
+  mpQuickSlot: {fileID: 0}
 --- !u!1 &978217346955404252
 GameObject:
   m_ObjectHideFlags: 0
@@ -2319,6 +2337,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageAmount: 20
+  playerstats: {fileID: 0}
 --- !u!65 &9159924192987574731
 BoxCollider:
   m_ObjectHideFlags: 0
