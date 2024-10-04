@@ -50,20 +50,6 @@ public class FirstAreaManager : MonoBehaviour
         bossHealthBarCanvasGroup = bossHealthBarCanvas.GetComponent<CanvasGroup>();
 
 
-        // if (clearPanelCanvasGroup == null)
-        // {
-        //     Debug.LogError("CanvasGroup component missing on the ClearPanel GameObject.");
-        // }
-        // if (panelCanvasGroup == null)
-        // {
-        //     Debug.LogError("CanvasGroup component missing on the CountPanel GameObject.");
-        // }
-
-        // if (titleCanvasGroup == null)
-        // {
-        //     Debug.LogError("CanvasGroup component missing on the TitlePanel GameObject.");
-        // }
-
         if (golemDoor != null)
         {
             golemDoor.SetActive(true); // 문은 처음에 열려있고
