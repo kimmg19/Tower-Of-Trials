@@ -13,12 +13,18 @@ public class MainMenu : MonoBehaviour
     [SerializeField] GameObject HelpImage;
     [SerializeField] Slider bgmSlider;
 
+    [SerializeField] GameObject HelpImage1;
+    [SerializeField] GameObject HelpImage2;
+    [SerializeField] GameObject HelpImage3;
+
     void Start()
     {
         bgmSlider.onValueChanged.AddListener(SetBGMVolume);
         GetVolume();
 
-        HelpImage.SetActive(false);
+        HelpImage1.SetActive(false);
+        HelpImage2.SetActive(false);
+        HelpImage3.SetActive(false);
     }
     void SetBGMVolume(float volume)
     {
@@ -27,7 +33,7 @@ public class MainMenu : MonoBehaviour
     }
     public void OnClickGameStart()
     {
-        
+
         LoadingSceneManager.LoadScene(2);
     }
 
@@ -41,7 +47,8 @@ public class MainMenu : MonoBehaviour
         if (optionMenu.activeSelf)
         {
             optionMenu.SetActive(false);
-        } else
+        }
+        else
         {
             optionMenu.SetActive(true);
         }
@@ -58,7 +65,7 @@ public class MainMenu : MonoBehaviour
     void GetVolume()
     {
         float bgmVolume;
-        audioMixer.GetFloat("BGM", out bgmVolume);   
+        audioMixer.GetFloat("BGM", out bgmVolume);
         bgmSlider.value = Mathf.Pow(10, bgmVolume / 20);
     }
 
@@ -70,19 +77,69 @@ public class MainMenu : MonoBehaviour
 
     public void OnClickHelp()
     {
-        if (!HelpImage.activeSelf)
+        if (!HelpImage1.activeSelf)
         {
-            HelpImage.SetActive(true);
+            HelpImage1.SetActive(true);
         }
     }
 
-    public void OnClickHelpClose()
+    public void OnClickHelpClose1()
     {
-        if (HelpImage.activeSelf)
+        if (HelpImage1.activeSelf)
         {
-            HelpImage.SetActive(false);
+            HelpImage1.SetActive(false);
+        }
+    }
+
+    public void OnClickHelpClose2()
+    {
+        if (HelpImage2.activeSelf)
+        {
+            HelpImage2.SetActive(false);
+        }
+    }
+
+    public void OnClickHelpClose3()
+    {
+        if (HelpImage3.activeSelf)
+        {
+            HelpImage3.SetActive(false);
+        }
+    }
+
+    public void OnClickHelpNext()
+    {
+        if (HelpImage1.activeSelf)
+        {
+            HelpImage1.SetActive(false);
+            HelpImage2.SetActive(true);
+        }
+    }
+
+    public void OnClickHelpNext2()
+    {
+        if (HelpImage2.activeSelf)
+        {
+            HelpImage2.SetActive(false);
+            HelpImage3.SetActive(true);
+        }
+    }
+
+    public void OnClickHelpPrev()
+    {
+        if (HelpImage2.activeSelf)
+        {
+            HelpImage2.SetActive(false);
+            HelpImage1.SetActive(true);
+        }
+    }
+
+    public void OnClickHelpPrev2()
+    {
+        if (HelpImage3.activeSelf)
+        {
+            HelpImage3.SetActive(false);
+            HelpImage2.SetActive(true);
         }
     }
 }
-
-
