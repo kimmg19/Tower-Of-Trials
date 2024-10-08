@@ -66,6 +66,13 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+  - name: PlayerJump
+    clip: {fileID: 8300000, guid: 3f3669dc2bf61434783f4934700e82f6, type: 3}
+    mixer: {fileID: 2288875582301175548, guid: 86271638b8ca4de4facf01edc61a6aeb, type: 2}
+    volume: 0.518
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
   - name: PlayerHit
     clip: {fileID: 8300000, guid: 5ed176f89f549d24a83fa420c256201e, type: 3}
     mixer: {fileID: 2288875582301175548, guid: 86271638b8ca4de4facf01edc61a6aeb, type: 2}
@@ -77,6 +84,27 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 6857c17d0b39a594298d2c0ebc09f389, type: 3}
     mixer: {fileID: 2288875582301175548, guid: 86271638b8ca4de4facf01edc61a6aeb, type: 2}
     volume: 0.616
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: PickUpItem
+    clip: {fileID: 8300000, guid: e66c05008dfd54b65a39750fb4ca35be, type: 3}
+    mixer: {fileID: 2288875582301175548, guid: 86271638b8ca4de4facf01edc61a6aeb, type: 2}
+    volume: 0.35
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: InventoryOpen
+    clip: {fileID: 8300000, guid: 914a4a2a124d040df96bf13308aadc2e, type: 3}
+    mixer: {fileID: 2288875582301175548, guid: 86271638b8ca4de4facf01edc61a6aeb, type: 2}
+    volume: 0.199
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: InventoryClose
+    clip: {fileID: 8300000, guid: ca056d4afe5e74498a0798f16e0e866d, type: 3}
+    mixer: {fileID: 2288875582301175548, guid: 86271638b8ca4de4facf01edc61a6aeb, type: 2}
+    volume: 0.235
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -157,6 +185,13 @@ MonoBehaviour:
     pitch: 1
     loop: 1
     source: {fileID: 0}
+  - name: 1stAreaBossBattleBgm
+    clip: {fileID: 8300000, guid: ff94d5cc0af7b4146894c4850047c72e, type: 3}
+    mixer: {fileID: -6140534496448188841, guid: 86271638b8ca4de4facf01edc61a6aeb, type: 2}
+    volume: 0.25
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
   - name: 1stAreaBgm
     clip: {fileID: 8300000, guid: 86441850a4c454d4395eadbff77dd4c7, type: 3}
     mixer: {fileID: -6140534496448188841, guid: 86271638b8ca4de4facf01edc61a6aeb, type: 2}
@@ -171,12 +206,12 @@ MonoBehaviour:
     pitch: 1
     loop: 1
     source: {fileID: 0}
-  - name: 1stAreaBossBattleBgm
-    clip: {fileID: 8300000, guid: ff94d5cc0af7b4146894c4850047c72e, type: 3}
-    mixer: {fileID: -6140534496448188841, guid: 86271638b8ca4de4facf01edc61a6aeb, type: 2}
-    volume: 0.25
+  - name: 2ndAreaFireOn
+    clip: {fileID: 8300000, guid: a652877b012108e41871f867ada9f176, type: 3}
+    mixer: {fileID: 2288875582301175548, guid: 86271638b8ca4de4facf01edc61a6aeb, type: 2}
+    volume: 0.673
     pitch: 1
-    loop: 1
+    loop: 0
     source: {fileID: 0}
   - name: AttackSkill
     clip: {fileID: 8300000, guid: 61e73f3e692c640eb9f9c7ee724ac862, type: 3}
