@@ -35,8 +35,8 @@ public class PlayerUI : MonoBehaviour
     {
         // 플레이어 상태 및 스탯에 따라 UI 업데이트
         // if (Input.GetKeyDown(KeyCode.Q)) { playerStatus.TakeDamage(10); } // q 키를 누르면 피 깎임. 테스트용
-        if (Input.GetKeyDown(KeyCode.E)) { playerStatus.UseStamina(10); } // e 키를 누르면 스태미나가 소모됨. 테스트용
-        if (Input.GetKeyDown(KeyCode.R)) { playerStatus.UseMp(10); } // r 키를 누르면 마나가 소모됨. 테스트용
+        //if (Input.GetKeyDown(KeyCode.E)) { playerStatus.UseStamina(10); } // e 키를 누르면 스태미나가 소모됨. 테스트용
+        //if (Input.GetKeyDown(KeyCode.R)) { playerStatus.UseMp(10); } // r 키를 누르면 마나가 소모됨. 테스트용
 
         HandleHp(); // 체력 UI 업데이트
         HandleMp(); // mp UI 업데이트

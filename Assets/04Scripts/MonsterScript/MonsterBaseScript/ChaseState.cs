@@ -4,7 +4,7 @@ using UnityEngine.AI;
 public class ChaseState : BaseState
 {
     public float chaseRange = 10f;
-    public float distance;
+    float distance;
     protected override void OnStateEnterCustom(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         agent.speed = 3.0f; // 추격 속도 설정

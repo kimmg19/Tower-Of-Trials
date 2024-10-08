@@ -84,6 +84,12 @@ public class Portal : MonoBehaviour
         Time.timeScale = 1f;
     }
 
+    public void OnClick4stArea()
+    {
+        LoadingSceneManager.LoadScene(6);
+        Time.timeScale = 1f;
+    }
+
     public void OnClickCloseButton()
     {
         print("눌렀음");

@@ -305,6 +305,7 @@ public class PlayerInputs : MonoBehaviour
             {
                 playerStatus.UseMp(attackSkillMp);
                 animator.SetTrigger("AttackSkill");
+                StartCoroutine(ActiveAttackSkill());
             } else
             {
                 Debug.Log("Not enough MP for Buff Skill.");
@@ -314,7 +315,12 @@ public class PlayerInputs : MonoBehaviour
             print("공격 스킬 잠겨있음");
         }
     }
-
+    private IEnumerator ActiveAttackSkill()
+    {
+        isInteracting = true;
+        yield return new WaitForSeconds(1);
+        isInteracting=false;
+    }
     void OnBuffSkill()
     {
         int skillUnlocked = CheckSkillUnlocked(buffSkill);
