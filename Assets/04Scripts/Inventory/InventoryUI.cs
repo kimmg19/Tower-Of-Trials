@@ -52,7 +52,18 @@ public class InventoryUI : MonoBehaviour
         playerInputs.isInteracting = !playerInputs.isInteracting;
         activeInventory = !activeInventory;
         inventoryPanel.SetActive(activeInventory);
+
+        // 인벤토리 상태에 따라 오디오 재생
+        if (activeInventory)
+        {
+            AudioManager.instance.Play("InventoryOpen"); // 인벤토리 열기 오디오 재생
+        }
+        else
+        {
+            AudioManager.instance.Play("InventoryClose"); // 인벤토리 닫기 오디오 재생
+        }
     }
+
 
     public void AddSlot()
     {

@@ -162,6 +162,7 @@ public class PlayerMovement : MonoBehaviour
     public void Jump()
     {
         velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        AudioManager.instance.Play("PlayerJump");
         animator.SetTrigger("Jump");
     }
 
