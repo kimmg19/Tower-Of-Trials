@@ -9,7 +9,7 @@ public class Princess : BaseEnemy
     private Transform player;
     private NavMeshAgent agent;
     public float attackRange = 3.0f;
-    private float stompRangeMultiplier = 1.5f;
+    //private float stompRangeMultiplier = 1.5f;
     private bool isJumping = false;
 
     //[SerializeField] private Collider attackCollider; // Attack collider as a serialized field
