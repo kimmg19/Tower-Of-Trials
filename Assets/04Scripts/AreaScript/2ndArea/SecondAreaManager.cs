@@ -17,6 +17,9 @@ public class SecondAreaManager : MonoBehaviour
     [SerializeField] GameObject clearPanel; // 클리어 패널
     private CanvasGroup clearCanvasGroup;   // 클리어 패널의 페이드 인,아웃을 위한 캔버스 그룹
 
+    [Header("Reward Settings")]
+    [SerializeField] GameObject rewardChest; // 보물상자 오브젝트
+
     void Start()
     {
         PlayEnterCinematic(); // 게임 시작 시 시네마틱 재생
@@ -35,6 +38,12 @@ public class SecondAreaManager : MonoBehaviour
             clearPanel.SetActive(false); // 시작 시 클리어 패널을 비활성화
             clearCanvasGroup.alpha = 0f; // 알파값을 0으로 설정 (투명)
         }
+
+        // 보물상자는 처음에 비활성화 상태로 시작
+        if (rewardChest != null)
+        {
+            rewardChest.SetActive(false);
+        }
     }
 
     void PlayEnterCinematic()
@@ -51,6 +60,7 @@ public class SecondAreaManager : MonoBehaviour
         if (clearCanvasGroup != null)
         {
             AudioManager.instance.Play("VictoryBgm");
+            rewardChest.SetActive(true);
             StartCoroutine(ShowClearPanel()); // 클리어 패널 페이드 인/아웃 시작
         }
     }

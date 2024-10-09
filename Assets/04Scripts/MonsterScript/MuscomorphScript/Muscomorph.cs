@@ -11,7 +11,7 @@ public class Muscomorph : BaseEnemy
     // Muscomorph의 고유 스탯을 초기화
     protected override void InitializeStats()
     {
-        HP = 250; // Muscomorph의 체력 설정
+        HP = 200; // Muscomorph의 체력 설정
         damageAmount = 20; // Muscomorph의 공격력 설정
     }
 
