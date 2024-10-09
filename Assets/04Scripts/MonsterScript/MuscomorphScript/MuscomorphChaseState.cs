@@ -13,8 +13,12 @@ public class MuscomorphChaseState : ChaseState
     {
         base.OnStateUpdateCustom(animator, stateInfo, layerIndex);
         // 추격 중에 Muscomorph만의 행동을 추가
+        if (distance < 2f && playerStatus.playerAlive)
+        {
 
-        
+            animator.SetBool("isAttacking", true);
+        }
+
     }
 
     protected override void OnStateExitCustom(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

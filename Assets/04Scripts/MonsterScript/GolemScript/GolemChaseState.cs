@@ -5,18 +5,25 @@ public class GolemChaseState : ChaseState
 {
     public float stompCooldown = 3.0f; // 스톰프 공격 쿨다운 시간
     public float stompTimer = 0.0f;
-    Golem golem;
+    Princess princess;
     protected override void OnStateEnterCustom(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnterCustom(animator, stateInfo, layerIndex);
-        // Golem의 추격 상태 진입 시 추가적인 동작을 정의
-        golem=animator.GetComponent<Golem>();
+        princess = animator.GetComponent<Princess>();
         stompTimer = 0.0f; // 스톰프 타이머 초기화
     }
 
     protected override void OnStateUpdateCustom(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateUpdateCustom(animator, stateInfo, layerIndex);
+
+
+        // 플레이어와의 거리가 일정 이하일 경우 공격 상태로 전환
+        if (distance < 3f && playerStatus.playerAlive)
+        {
+            
+            animator.SetBool("isAttacking", true);
+        }
         if (!playerStatus.playerAlive)
         {
             return; // 플레이어가 죽으면 추가 공격하지 않음
@@ -33,7 +40,7 @@ public class GolemChaseState : ChaseState
     private void JumpAttack(Animator animator)
     {
         //Rigidbody rigidbody=golem.GetComponent<Rigidbody>();
-        golem.JumpAttack(animator);
+        princess.JumpAttack(animator);
         //animator.SetTrigger("jumpAttack"); // 스톰프 공격 애니메이션 트리거
         stompTimer = 0.0f; // 쿨다운 타이머 초기화
     }
