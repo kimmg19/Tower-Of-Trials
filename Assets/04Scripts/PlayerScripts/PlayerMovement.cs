@@ -50,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Move(speed);
             ApplyGravity();
-            Debug.Log(velocity.y);
+            //Debug.Log(velocity.y);
         }
     }
 
@@ -181,7 +181,7 @@ public class PlayerMovement : MonoBehaviour
         velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         AudioManager.instance.Play("PlayerJump");
         animator.SetTrigger("Jump");
-        Debug.Log(gravity);
+        //Debug.Log(gravity);
     }
 
     public void Roll()
