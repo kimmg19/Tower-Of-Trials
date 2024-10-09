@@ -17,12 +17,13 @@ public class ThirdArea : MonoBehaviour
 
     void Start()
     {
+        player = GameObject.FindWithTag("Player");
+        playerstatus = player.GetComponent<PlayerStatus>();
+
+        StartCoroutine("Play3rdAreaCinematic");
         playermesh.SetActive(false);
         playerUI.SetActive(false);
         ingameCanvas.SetActive(false);
-        player = GameObject.FindWithTag("Player");
-        playerstatus = player.GetComponent<PlayerStatus>();
-        StartCoroutine("Play3rdAreaCinematic");
     }
 
     void OnTriggerEnter(Collider other)
@@ -44,13 +45,14 @@ public class ThirdArea : MonoBehaviour
     {
         playerInputs.isInteracting = true;
 
-        yield return new WaitForSeconds(20f);
+        yield return new WaitForSeconds(1f);
         if (ThirdAreaCinematic != null)
         {
             ThirdAreaCinematic.Play();
         }
         yield return new WaitForSeconds((float)ThirdAreaCinematic.duration);  //ThirdAreaCinematic.duration은 시네마틱의 전체 길이를 초 단위로 나타냄
         playerInputs.isInteracting = false;
+        Debug.Log("컷씬끝");
         playermesh.SetActive(true);
         playerUI.SetActive(true);
         ingameCanvas.SetActive(true);
