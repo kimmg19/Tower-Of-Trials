@@ -4,18 +4,20 @@ using UnityEngine.UI;
 
 public abstract class BaseEnemy : MonoBehaviour
 {
-    protected int HP;
+    [SerializeField]protected int HP;
     protected int damageAmount;
     public Slider healthBar;
     public Animator animator;
-    public bool enableDamaging = false;
-    public bool isParried = false; // 패링 상태를 추적하는 변수
+    [HideInInspector] public bool enableDamaging = false;
+    [HideInInspector] public bool isParried = false; // 패링 상태를 추적하는 변수
+    [HideInInspector] public bool isAttacking = false; // 공격 상태를 추적하는 변수
 
     protected PlayerStats playerStats;
     protected PlayerStatus playerStatus;
     protected PlayerInputs playerInputs;
+    float delayTime = 0.01f;
+    bool isShieldTriggered = false;
 
-    public bool isAttacking = false; // 공격 상태를 추적하는 변수
 
     protected virtual void Start()
     {
@@ -35,8 +37,7 @@ public abstract class BaseEnemy : MonoBehaviour
         if (healthBar == null)
         {
             Debug.LogWarning($"{gameObject.name} is missing a health bar!");
-        }
-        else if (!healthBar.gameObject.activeInHierarchy)
+        } else if (!healthBar.gameObject.activeInHierarchy)
         {
             healthBar.gameObject.SetActive(true); // 헬스바 활성화
         }
@@ -54,8 +55,7 @@ public abstract class BaseEnemy : MonoBehaviour
                 isAttacking = true;
                 enableDamaging = true; // 공격 애니메이션이 시작될 때 enableDamaging을 켭니다.
             }
-        }
-        else
+        } else
         {
             if (isAttacking)
             {
@@ -89,8 +89,7 @@ public abstract class BaseEnemy : MonoBehaviour
         if (HP <= 0)
         {
             Die();
-        }
-        else if (isParried)
+        } else if (isParried)
         {
             // 패링 성공 시에만 슬로우 모션 애니메이션 재생
             StartCoroutine(PlaySlowHitAnimation());
@@ -149,6 +148,7 @@ public abstract class BaseEnemy : MonoBehaviour
         animator.SetTrigger("die");
         AudioManager.instance.Play("MonsterDie");
         GetComponent<Collider>().enabled = false;
+        GetComponentInChildren<Collider>().enabled = false;
         DropItem();
         Invoke("DestroyEnemy", 2f);
     }
@@ -157,31 +157,28 @@ public abstract class BaseEnemy : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
-    float delayTime = 0.01f;
     protected virtual void OnTriggerEnter(Collider other)
     {
         // 방패 충돌 먼저 처리
         if (other.CompareTag("Shield"))
         {
             ProcessTrigger(other.gameObject);
-        }
-        
-        else if (other.CompareTag("Player") && playerStatus.playerAlive)
-        {            
-                StartCoroutine(DelayedTrigger(other.gameObject, delayTime));
+        } else if (other.CompareTag("Player") && playerStatus.playerAlive)
+        {
+            StartCoroutine(DelayedTrigger(other.gameObject, delayTime));
         }
     }
 
     IEnumerator DelayedTrigger(GameObject obj, float delay)
     {
-        
+
         yield return new WaitForSeconds(delay);
         //Debug.LogError("3");
 
         // 방패와의 충돌 여부를 다시 확인
         if (isShieldTriggered)
         {
-            Debug.LogError("Shield was triggered. Ignoring Player collision.");
+            //Debug.LogError("Shield was triggered. Ignoring Player collision.");
             TriggerReset();
             yield break;  // 코루틴 중지
         }
@@ -208,7 +205,6 @@ public abstract class BaseEnemy : MonoBehaviour
         //Debug.LogError("4");
     }
 
-    public bool isShieldTriggered = false;
 
     void ProcessTrigger(GameObject obj)
     {
@@ -229,7 +225,7 @@ public abstract class BaseEnemy : MonoBehaviour
             playerStatus.TakeDamage(GetDamageAmount());
         }
         //Debug.LogError("2");
-        
+
     }
 
     // 아이템 드랍 메서드 (상속받는 클래스에서 구현할 수 있음)

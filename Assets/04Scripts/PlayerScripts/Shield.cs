@@ -12,6 +12,8 @@ public class Shield : MonoBehaviour
     [SerializeField] public bool isParryWindowActive = false;
     [SerializeField] public bool isBlocking = false;
     [SerializeField] public bool canParry = true; // 패링 가능 상태
+    [SerializeField] private Animator animator; // Add Animator
+
     private PlayerStatus playerStatus;
     string enemyTag = "AttackCollider";
     private void Start()
@@ -85,6 +87,8 @@ public class Shield : MonoBehaviour
         playerStatus.SetParrySuccess(true);
         enemy.TakeDamage(0, true); // 데미지 0, 패링 상태 true
         Debug.Log("Parry Successful!");
+
+        animator.SetTrigger("ParrySuccess");
 
         if (parryEffect != null)
         {

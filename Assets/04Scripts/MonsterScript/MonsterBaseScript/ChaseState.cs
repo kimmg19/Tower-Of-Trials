@@ -4,7 +4,7 @@ using UnityEngine.AI;
 public class ChaseState : BaseState
 {
     public float chaseRange = 10f;
-    public float distance;
+    protected float distance;
     protected override void OnStateEnterCustom(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         agent.speed = 3.0f; // 추격 속도 설정
@@ -12,7 +12,6 @@ public class ChaseState : BaseState
 
     protected override void OnStateUpdateCustom(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-
         LookAtPlayerXZ(animator.transform, player.transform);
 
         agent.SetDestination(player.position); // 플레이어의 위치로 이동
@@ -25,18 +24,13 @@ public class ChaseState : BaseState
             animator.SetBool("isChasing", false);
         }
 
-        // 플레이어와의 거리가 1.7 이하일 경우 공격 상태로 전환
-        if (distance <1.7f && playerStatus.playerAlive)
-        {
-            animator.SetBool("isAttacking", true);
-        }
     }
 
     protected override void OnStateExitCustom(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         agent.SetDestination(agent.transform.position); // 이동 정지
     }
-    void LookAtPlayerXZ(Transform animator, Transform player)
+    protected void LookAtPlayerXZ(Transform animator, Transform player)
     {
         // 플레이어와의 방향 벡터 계산 (Y축 고정)
         Vector3 direction = player.position - animator.position;

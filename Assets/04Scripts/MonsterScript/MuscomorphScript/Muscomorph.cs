@@ -11,27 +11,36 @@ public class Muscomorph : BaseEnemy
     // Muscomorph의 고유 스탯을 초기화
     protected override void InitializeStats()
     {
-        HP = 250; // Muscomorph의 체력 설정
+        HP = 200; // Muscomorph의 체력 설정
         damageAmount = 20; // Muscomorph의 공격력 설정
     }
 
-    // 아이템 드랍 로직 오버라이딩
+        // 아이템 드랍 로직 오버라이딩
     protected override void DropItem()
     {
         if (keyPrefab != null)
         {
-            // 몬스터의 위치에 아이템 생성
+            // 몬스터의 위치에 키 아이템 생성
             Vector3 dropPosition = transform.position;
             GameObject item = Instantiate(keyPrefab, dropPosition, Quaternion.identity);
 
+            GameObject particleEffect = null;
+            
             // 파티클 효과 생성
             if (particleEffectPrefab != null)
             {
-                Instantiate(particleEffectPrefab, dropPosition, Quaternion.identity);
+                particleEffect = Instantiate(particleEffectPrefab, dropPosition, Quaternion.identity);
             }
             else
             {
                 Debug.LogWarning($"{gameObject.name} has no particleEffectPrefab assigned.");
+            }
+
+            // 파티클을 키 아이템의 KeyItem 스크립트에 연결
+            KeyItem keyItemScript = item.GetComponent<KeyItem>();
+            if (keyItemScript != null)
+            {
+                keyItemScript.particleEffect = particleEffect;
             }
 
             // LeanTween을 사용해 아이템을 위로 튀어오르게 만듦

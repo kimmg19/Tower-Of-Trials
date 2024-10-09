@@ -13,7 +13,7 @@ public class Golem : BaseEnemy
     private bool isJumping = false;
 
     public ParticleSystem rockDebrisEffect;
-    [SerializeField] private Collider attackCollider; // Attack collider as a serialized field
+    //[SerializeField] private Collider attackCollider; // Attack collider as a serialized field
 
     // 골렘의 고유 스탯을 초기화
     protected override void InitializeStats()
@@ -39,14 +39,14 @@ public class Golem : BaseEnemy
         agent = GetComponent<NavMeshAgent>();
 
         // Make sure attackCollider is assigned in the inspector
-        if (attackCollider == null)
+        /*if (attackCollider == null)
         {
             Debug.LogError($"{gameObject.name} is missing the attack collider!");
         }
         else
         {
             attackCollider.enabled = false; // Disable collider by default
-        }
+        }*/
 
         if (playerStats == null)
         {
@@ -86,13 +86,13 @@ public class Golem : BaseEnemy
     private IEnumerator EnableDamageDuringAttack(int damage)
     {
         enableDamaging = true; // Allow damage
-        attackCollider.enabled = true; // Enable the attack collider
+        //attackCollider.enabled = true; // Enable the attack collider
         playerStatus.TakeDamage(damage);
         // Wait for a brief moment to simulate attack duration
         yield return new WaitForSeconds(1.0f); // Adjust this based on your animation length
 
         enableDamaging = false; // Disable damage
-        attackCollider.enabled = false; // Disable the attack collider after the attack
+        //attackCollider.enabled = false; // Disable the attack collider after the attack
     }
 
     // 점프 공격 메서드
@@ -131,7 +131,7 @@ public class Golem : BaseEnemy
             yield return null;
         }
 
-        // 점프 후 NavMeshAgent의 위치를 정확히 목표 위치로 설정
+        // NavMeshAgent의 위치를 정확히 목표 위치로 설정
         agent.Warp(targetPosition);
 
         // 착지 후 공격 처리
