@@ -84,6 +84,12 @@ public class Portal : MonoBehaviour
         Time.timeScale = 1f;
     }
 
+    public void OnClick3rdFloor()
+    {
+        LoadingSceneManager.LoadScene(5);
+        Time.timeScale = 1f;
+    }
+
     public void OnClickCloseButton()
     {
         print("눌렀음");

@@ -50,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Move(speed);
             ApplyGravity();
+            Debug.Log(velocity.y);
         }
     }
 
@@ -140,29 +141,46 @@ public class PlayerMovement : MonoBehaviour
             characterBody.rotation = Quaternion.Euler(0f, currentAngle, 0f);
         }
     }
-
+    /*
     void ApplyGravity()
     {
-        // 캐릭터가 지면에 있는지 확인
-        if (!characterController.isGrounded)
+        if (characterController.isGrounded)
+        {
+            // 지면에 있을 때 중력 초기화
+            if (velocity.y < 0)
+            {
+                //velocity.y = -2.0f;
+                velocity.y += gravity * Time.deltaTime * 2;
+            }
+        }
+        else
         {
             // 공중에 있을 때 중력 적용
             velocity.y += gravity * Time.deltaTime * 2;
         }
-        else if (velocity.y < 0)
-        {
-            // 지면에 있을 때 속도 최소화
-            velocity.y = -0.5f;
-        }
 
         // 속도에 따라 캐릭터 이동
         characterController.Move(velocity * Time.deltaTime);
+    }
+    */
+    void ApplyGravity()
+    {
+        velocity.y += gravity * Time.deltaTime * 2;
+        // 속도에 따라 캐릭터 이동
+        characterController.Move(velocity * Time.deltaTime);
+    }
+    
+    //velocity.y가 중첩되지않도록 초기화 / 중첩되면 빠르게 떨어짐. Jump하면 초기화하기때문에 괜찮았던 것
+    public void VelocityNormalize()
+    {
+        velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
     }
 
     public void Jump()
     {
         velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         animator.SetTrigger("Jump");
+        Debug.Log(gravity);
     }
 
     public void Roll()

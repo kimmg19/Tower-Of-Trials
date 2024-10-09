@@ -8,6 +8,7 @@ public class PlayerStatus : MonoBehaviour
     private PlayerInputs playerInputs;
     private Animator animator;
     private InGameCanvas inGameCanvas;
+    private SavePoint savePoint;
 
     [HideInInspector] public bool playerAlive = true;
     [HideInInspector] public bool isParried = false;
@@ -23,6 +24,12 @@ public class PlayerStatus : MonoBehaviour
         animator = GetComponent<Animator>();
         playerStats = GetComponent<PlayerStats>();
         inGameCanvas = FindObjectOfType<InGameCanvas>();
+
+        savePoint = FindObjectOfType<SavePoint>();
+        if (savePoint == null)
+        {
+            Debug.LogError("SavePoint를 찾을 수 없습니다.");
+        }
     }
 
     public void TakeDamage(int damage, bool isParried = false)
@@ -73,7 +80,7 @@ public class PlayerStatus : MonoBehaviour
         playerStats.currentMp = Mathf.Max(playerStats.currentMp - amount, 0);
     }
 
-    private void Die()
+    public void Die()
     {
         if (!playerAlive)
             return;
@@ -87,6 +94,39 @@ public class PlayerStatus : MonoBehaviour
 
         playerAlive = false;
         inGameCanvas.dieImage.SetActive(true);
+    }
+
+    public void Descent()
+    {
+        if (playerStats.currentHp <= 40)
+        {
+            Die();
+            //playerAlive = false;
+        }
+
+        playerAlive = false;
+        playerStats.currentHp -= 40;
+        playerHitEffect.ShowHitEffect();
+
+        if (savePoint != null)
+        {
+            //animator.SetTrigger("PlayerDie");
+            savePoint.LoadPlayerPosition();
+            Debug.Log("세이브 포인트로 이동!");
+            StartCoroutine(DeactivateAfterDelay());
+        }
+        else
+        {
+            Debug.LogWarning("SavePoint가 null입니다.");
+        }
+
+        //playerStats.OnApplicationQuit();
+    }
+
+    private IEnumerator DeactivateAfterDelay()
+    {
+        yield return new WaitForSeconds(0.1f); // 1초 대기
+        playerAlive = true; // 오브젝트 비활성화
     }
 
     // 패링 성공 여부 설정 메서드
