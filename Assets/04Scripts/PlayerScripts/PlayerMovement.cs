@@ -173,7 +173,7 @@ public class PlayerMovement : MonoBehaviour
 
         // 여러 방향에서 Raycast
         Vector3 origin = transform.position;
-        float checkDistance = 0.2f;
+        float checkDistance = 0.1f;
 
         // 정중앙 아래 방향
         if (Physics.Raycast(origin, Vector3.down, checkDistance)) return true;
