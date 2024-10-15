@@ -10,21 +10,30 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] AudioMixer audioMixer;
     [SerializeField] GameObject optionMenu;
-    [SerializeField] GameObject helpImage;
     [SerializeField] GameObject infoPanel;
+    [SerializeField] GameObject OptionPanel;
     [SerializeField] Slider bgmSlider;
+
+    [SerializeField] GameObject HelpImage1;
+    [SerializeField] GameObject HelpImage2;
+    [SerializeField] GameObject HelpImage3;
 
     public RectTransform title; // 타이틀의 RectTransform 추가
     public CanvasGroup titleCanvasGroup; // 타이틀의 CanvasGroup 추가
     public CanvasGroup infoCanvasGroup; // Info 패널의 CanvasGroup 추가
     public float fadeDuration = 2.5f; // 나타나는 시간
 
+    public ButtonEffect buttonEffectScript;
+
     void Start()
     {
         bgmSlider.onValueChanged.AddListener(SetBGMVolume);
         GetVolume();
 
-        helpImage.SetActive(false);
+        HelpImage1.SetActive(false);
+        HelpImage2.SetActive(false);
+        HelpImage3.SetActive(false);
+
         infoPanel.SetActive(false);
         infoCanvasGroup.alpha = 0; // 패널 초기 상태 투명하게 설정
 
@@ -114,16 +123,84 @@ public class MainMenu : MonoBehaviour
         OnClickOption();
     }
 
-    public void OnClickHelp()
+    public void OnClickCloseOptionButton()
     {
-        helpImage.SetActive(!helpImage.activeSelf);
+        if (OptionPanel.activeSelf)
+        {
+            OptionPanel.SetActive(false);
+        }
     }
 
-    public void OnClickHelpClose()
+    public void OnClickHelp()
     {
-        if (helpImage.activeSelf)
+        if (!HelpImage1.activeSelf)
         {
-            helpImage.SetActive(false);
+            HelpImage1.SetActive(true);
+        }
+
+        if (buttonEffectScript != null)
+        {
+            buttonEffectScript.enabled = false;
+        }
+    }
+
+    public void OnClickHelpClose1()
+    {
+        if (HelpImage1.activeSelf)
+        {
+            HelpImage1.SetActive(false);
+        }
+    }
+
+    public void OnClickHelpClose2()
+    {
+        if (HelpImage2.activeSelf)
+        {
+            HelpImage2.SetActive(false);
+        }
+    }
+
+    public void OnClickHelpClose3()
+    {
+        if (HelpImage3.activeSelf)
+        {
+            HelpImage3.SetActive(false);
+        }
+    }
+
+    public void OnClickHelpNext()
+    {
+        if (HelpImage1.activeSelf)
+        {
+            HelpImage1.SetActive(false);
+            HelpImage2.SetActive(true);
+        }
+    }
+
+    public void OnClickHelpNext2()
+    {
+        if (HelpImage2.activeSelf)
+        {
+            HelpImage2.SetActive(false);
+            HelpImage3.SetActive(true);
+        }
+    }
+
+    public void OnClickHelpPrev()
+    {
+        if (HelpImage2.activeSelf)
+        {
+            HelpImage2.SetActive(false);
+            HelpImage1.SetActive(true);
+        }
+    }
+
+    public void OnClickHelpPrev2()
+    {
+        if (HelpImage3.activeSelf)
+        {
+            HelpImage3.SetActive(false);
+            HelpImage2.SetActive(true);
         }
     }
 }

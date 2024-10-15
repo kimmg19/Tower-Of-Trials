@@ -31,7 +31,8 @@ public class SensitivityController : MonoBehaviour
         if (playerInputs.isInteracting)
         {
             StartUICameraMode();
-        } else
+        }
+        else
         {
             StopUICameraMode();
         }

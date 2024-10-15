@@ -50,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Move(speed);
             ApplyGravity();
-            //Debug.Log(velocity.y);
+            Debug.Log(velocity.y);
         }
     }
 
@@ -141,35 +141,72 @@ public class PlayerMovement : MonoBehaviour
             characterBody.rotation = Quaternion.Euler(0f, currentAngle, 0f);
         }
     }
-    /*
-    void ApplyGravity()
+
+    public void ApplyGravity()
     {
-        if (characterController.isGrounded)
+        bool isGrounded = CheckGrounded();
+
+        if (isGrounded)
         {
             // 지면에 있을 때 중력 초기화
             if (velocity.y < 0)
             {
-                //velocity.y = -2.0f;
-                velocity.y += gravity * Time.deltaTime * 2;
+                velocity.y = -2.0f;
             }
+            Debug.Log("지면에 있음");
         }
         else
         {
             // 공중에 있을 때 중력 적용
             velocity.y += gravity * Time.deltaTime * 2;
+            Debug.Log("지면에 있지 않음");
         }
 
         // 속도에 따라 캐릭터 이동
         characterController.Move(velocity * Time.deltaTime);
     }
-    */
+
+    private bool CheckGrounded()
+    {
+        // 기본 Raycast (정확한 아래 방향)
+        if (characterController.isGrounded) return true;
+
+        // 여러 방향에서 Raycast
+        Vector3 origin = transform.position;
+        float checkDistance = 0.2f;
+
+        // 정중앙 아래 방향
+        if (Physics.Raycast(origin, Vector3.down, checkDistance)) return true;
+
+        // 약간 기울어진 방향으로 Raycast
+        Vector3[] directions = {
+        new Vector3(-0.1f, -1f, 0), // 왼쪽
+        new Vector3(0.1f, -1f, 0),  // 오른쪽
+        new Vector3(-0.1f, -1f, -0.1f), // 왼쪽 뒤쪽
+        new Vector3(0.1f, -1f, -0.1f),  // 오른쪽 뒤쪽
+        new Vector3(-0.1f, -1f, 0.1f), // 왼쪽 앞쪽
+        new Vector3(0.1f, -1f, 0.1f)   // 오른쪽 앞쪽
+    };
+
+        foreach (var direction in directions)
+        {
+            if (Physics.Raycast(origin + direction, Vector3.down, checkDistance))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /*
     void ApplyGravity()
     {
         velocity.y += gravity * Time.deltaTime * 2;
         // 속도에 따라 캐릭터 이동
         characterController.Move(velocity * Time.deltaTime);
     }
-    
+    */
     //velocity.y가 중첩되지않도록 초기화 / 중첩되면 빠르게 떨어짐. Jump하면 초기화하기때문에 괜찮았던 것
     public void VelocityNormalize()
     {

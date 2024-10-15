@@ -53,6 +53,11 @@ public class InGameCanvas : MonoBehaviour
         pauseMenu.SetActive(false);
         optionMenu.SetActive(true);
     }
+    public void ClickOptionCloseButton()
+    {
+        optionMenu.SetActive(false);
+        pauseMenu.SetActive(true);
+    }
     public void ClickToMainButton()
     {
         

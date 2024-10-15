@@ -21,11 +21,11 @@ public class ThirdArea : MonoBehaviour
         playerstatus = player.GetComponent<PlayerStatus>();
 
         StartCoroutine("Play3rdAreaCinematic");
-        playermesh.SetActive(false);
-        playerUI.SetActive(false);
-        ingameCanvas.SetActive(false);
+        //playermesh.SetActive(false);
+        //playerUI.SetActive(false);
+        //ingameCanvas.SetActive(false);
     }
-
+    /*
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && !hasDescentTriggered)
@@ -35,7 +35,7 @@ public class ThirdArea : MonoBehaviour
             //hasDescentTriggered = true; // 한 번만 호출되도록 설정
         }
     }
-
+    */
     public void ResetDescentTrigger()
     {
         hasDescentTriggered = false;
