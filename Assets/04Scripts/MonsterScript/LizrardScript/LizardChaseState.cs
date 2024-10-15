@@ -14,7 +14,7 @@ public class LizardChaseState : ChaseState
         base.OnStateUpdateCustom(animator, stateInfo, layerIndex);
         // 추격 중에 Lizard만의 행동을 추가
         // 플레이어와의 거리가 일정 이하일 경우 공격 상태로 전환
-        if (distance < 2f && playerStatus.playerAlive)
+        if (distance < 2.2f && playerStatus.playerAlive)
         {
 
             animator.SetBool("isAttacking", true);

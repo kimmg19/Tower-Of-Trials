@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &43221429161759229
 RectTransform:
   m_ObjectHideFlags: 0
@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -769.5354, y: 621.6281}
+  m_AnchoredPosition: {x: -810, y: 668}
   m_SizeDelta: {x: 500, y: 285}
   m_Pivot: {x: 0.5416072, y: 0.6663846}
 --- !u!222 &3163004499002461715
@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 5648608035327739970}
   - component: {fileID: 8412649699017070990}
   - component: {fileID: 1197862872171172134}
+  - component: {fileID: 4159172562261118206}
   m_Layer: 5
   m_Name: Help Button
   m_TagString: Untagged
@@ -209,6 +210,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4159172562261118206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 772339890414400104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b81fc348306fb8940a82e050c559357b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleFactor: 1.2
+  scaleDuration: 0.2
 --- !u!1 &5468850567504289766
 GameObject:
   m_ObjectHideFlags: 0

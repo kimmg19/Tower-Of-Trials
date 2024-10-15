@@ -7,17 +7,17 @@ public class PlayerStats : MonoBehaviour
 {
     public Upgrade upgrade;
     public Sword sword;
-    public float weaponATK; // °­È­±îÁö Æ÷ÇÔµÈ ¹«±â°ø°Ý·Â
-    public int Attack; // ¸ó½ºÅÍÇÑÅ× µé¾î°¡´Â ÃÑ °ø°Ý·Â
+    public float weaponATK; // ï¿½ï¿½È­ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ôµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý·ï¿½
+    public int Attack; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î°¡ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ý·ï¿½
     public float playerSpeed = 4f;
     public float sprintSpeed = 1.5f;
-    public float walkSpeed = 0.5f;//ÃµÃµ¤¾ ¤Ó °È±â ¼Óµµ
+    public float walkSpeed = 0.5f;//ÃµÃµï¿½ï¿½ ï¿½ï¿½ ï¿½È±ï¿½ ï¿½Óµï¿½
     public int maxHp = 100;
     public int maxMp = 100;
     public int maxStamina = 50;
     public int Gold = 0;
-    public int HpPotionRate = 20; // HP È¸º¹ ºñÀ²
-    public int MpPotionRate = 20; // MP È¸º¹ ºñÀ²
+    public int HpPotionRate = 20; // HP È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public int MpPotionRate = 20; // MP È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     [SerializeField] private int _currentHp;
     public int currentHp
     {
@@ -39,10 +39,10 @@ public class PlayerStats : MonoBehaviour
 
     void Awake()
     {
-        // ±âº»°ªÀ» ¼³Á¤
+        // ï¿½âº»ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         maxStamina = PlayerPrefs.GetInt("PlayerMaxStamina", 50);
 
-        // maxStamina°¡ ÃÖ¼Ò°ª ÀÌÇÏÀÏ °æ¿ì ±âº»°ªÀ¸·Î ¼³Á¤
+        // maxStaminaï¿½ï¿½ ï¿½Ö¼Ò°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½âº»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (maxStamina < 50)
         {
             maxStamina = 50;
@@ -71,7 +71,7 @@ public class PlayerStats : MonoBehaviour
         weaponATK = sword.damageAmount;
     }
 
-    private void Update()
+    void Update()
     {
         Attack = upgrade.Attack;
         weaponATK = upgrade.WeaponATK;
@@ -85,7 +85,7 @@ public class PlayerStats : MonoBehaviour
         PlayerPrefs.SetInt("PlayerMaxStamina", maxStamina);
         PlayerPrefs.SetInt("PlayerGold", Gold);
 
-        // µð¹ö±ëÀ» À§ÇÑ ·Î±× Ãß°¡
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ ï¿½ß°ï¿½
         Debug.Log("Saving PlayerPrefs: ");
         Debug.Log("PlayerMpPotionRate: " + MpPotionRate);
         Debug.Log("PlayerHpPotionRate: " + HpPotionRate);

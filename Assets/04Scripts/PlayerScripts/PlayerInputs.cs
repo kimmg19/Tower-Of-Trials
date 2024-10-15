@@ -354,7 +354,7 @@ public class PlayerInputs : MonoBehaviour
         {
             GameObject particleSystem = Instantiate(buffParticlePrefab, transform.position, Quaternion.identity);
             particleSystem.transform.parent = this.transform; // 하이라키에 추가
-            Destroy(particleSystem, buffSkillDuration); // 10초 후 삭제 (버프 효과와 일치)
+            Destroy(particleSystem, 11.5f); // 10초 후 삭제 (버프 효과와 일치)
         }
 
         // 상호작용 제한 해제 (애니메이션 초기화 시점)

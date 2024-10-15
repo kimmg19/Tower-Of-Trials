@@ -8,6 +8,8 @@ public class PlayerStatus : MonoBehaviour
     private PlayerInputs playerInputs;
     private Animator animator;
     private InGameCanvas inGameCanvas;
+    [SerializeField] public CharacterController characterController;
+
     private SavePoint savePoint;
 
     [HideInInspector] public bool playerAlive = true;
@@ -24,6 +26,8 @@ public class PlayerStatus : MonoBehaviour
         animator = GetComponent<Animator>();
         playerStats = GetComponent<PlayerStats>();
         inGameCanvas = FindObjectOfType<InGameCanvas>();
+        characterController = GetComponent<CharacterController>();
+
 
         savePoint = FindObjectOfType<SavePoint>();
         if (savePoint == null)
@@ -93,6 +97,12 @@ public class PlayerStatus : MonoBehaviour
         AudioManager.instance.Play("PlayerDieBgm");
 
         playerAlive = false;
+
+        // **입력 차단**
+        playerInputs.enabled = false;  // 플레이어 입력 비활성화
+
+        // **콜라이더 비활성화**
+        characterController.enabled = false;  // 캐릭터 컨트롤러 비활성화
         inGameCanvas.dieImage.SetActive(true);
     }
 

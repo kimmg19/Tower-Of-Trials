@@ -10,7 +10,7 @@ public class AltarInteraction : MonoBehaviour
     public bool isPlayerInRange = false; 
     public string requiredKeyItemName = "Key"; 
     public TextMeshProUGUI interactionText; 
-    PlayerInputs playerInputs;
+
 
     public GameObject[] pillars; // 5개의 기둥 오브젝트
     public ParticleSystem[] pillarParticles; // 각 기둥에 연결된 파티클 시스템
@@ -20,6 +20,9 @@ public class AltarInteraction : MonoBehaviour
     [Header("Cinematic Settings")]
     public PlayableDirector secondAreaClearDirector; // 2nd Area Clear 타임라인
     public SecondAreaManager secondAreaManager; // 2구역 매니저
+
+    [Header("Other Settings")]
+    [SerializeField] PlayerInputs playerInputs;
 
     private void Start()
     {
@@ -35,13 +38,15 @@ public class AltarInteraction : MonoBehaviour
 
     private void Update()
     {
-        if (isPlayerInRange && playerInputs.isGPress && !isInteracting)
+        // playerInputs가 null이 아니고 활성화되어 있는지 확인
+        if (playerInputs != null && playerInputs.isGPress && isPlayerInRange && !isInteracting)
         {
             isInteracting = true;
             AttemptInteraction();
         }
 
-        if (!playerInputs.isGPress)
+        // playerInputs가 null이 아니고 비활성화된 경우
+        if (playerInputs != null && !playerInputs.isGPress)
         {
             isInteracting = false;
         }
@@ -108,6 +113,8 @@ public class AltarInteraction : MonoBehaviour
     {
         if (secondAreaClearDirector != null)
         {
+            playerInputs.enabled = false;
+            playerInputs.isInteracting = true;
             AudioManager.instance.Stop("2ndAreaBgm");
             secondAreaClearDirector.Play(); // 2nd Area Clear 타임라인 실행
             Debug.Log("2nd Area Clear Scene played!");
@@ -125,6 +132,8 @@ public class AltarInteraction : MonoBehaviour
         {
             // 타임라인이 끝났을 때 2구역 매니저의 클리어 패널 처리 로직을 1초 후에 실행
             StartCoroutine(DelayedClearPanelFade(1f)); // 1초 후에 실행
+            playerInputs.enabled = true;
+            playerInputs.isInteracting = false;
         }
     }
 

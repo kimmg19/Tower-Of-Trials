@@ -12,21 +12,16 @@ public class ConversationStarter : MonoBehaviour
     [SerializeField] private GameObject conversation;
     [SerializeField] private NPCConversation myConversation;
     private bool isPlayerInRange = false;
-    Animator animaor;
-
+    Animator playerAnimator; // 플레이어 애니메이터를 추가합니다.
 
     void Awake()
     {
         player = GameObject.FindWithTag("Player");
         playerInputs = player.GetComponent<PlayerInputs>();
-        animaor = GetComponent<Animator>();
-
+        playerAnimator = player.GetComponent<Animator>(); // 플레이어 애니메이터 참조
 
         // 초기화 로그 추가
         Debug.Log("NPCInteraction Awake: Initialized player and playerInputs.");
-
-        // 프롬프트를 초기에는 비활성화
-
     }
 
     void OnTriggerEnter(Collider other)
@@ -57,8 +52,10 @@ public class ConversationStarter : MonoBehaviour
             ConversationManager.Instance.StartConversation(myConversation);
             interactionPrompt.SetActive(false); // 안내 문구 종료
             conversation.SetActive(true);
-            // isGPress를 초기화
             playerInputs.isGPress = false;
+            
+            // 플레이어 애니메이션 속도 설정
+            playerAnimator.SetFloat("speed", 0);
 
             // 플레이어 상호작용 상태로 설정
             playerInputs.isInteracting = true;
@@ -68,13 +65,12 @@ public class ConversationStarter : MonoBehaviour
         }
     }
 
-    // 대화 종료 시 호출되는 함수
     public void EndConversation()
     {
-        
         conversation.SetActive(false);
 
-        // 플레이어 상호작용 상태 해제
+        // 대화 종료 시 애니메이션 속도를 원래대로 복구
+        playerAnimator.SetFloat("speed", playerInputs.moveInput.magnitude); // 원래 속도로 설정
         playerInputs.isInteracting = false;
 
         // 대화 종료 이벤트 핸들러 해제
