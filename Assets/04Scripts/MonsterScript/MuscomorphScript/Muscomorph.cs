@@ -7,7 +7,7 @@ public class Muscomorph : BaseEnemy
 {
     public GameObject keyPrefab; // 열쇠 아이템 프리팹
     public GameObject particleEffectPrefab; // 파티클 효과 프리팹
-
+    public float attackRange = 2f;
     // Muscomorph의 고유 스탯을 초기화
     protected override void InitializeStats()
     {

@@ -7,12 +7,12 @@ public class Lizard : BaseEnemy
 {
     public GameObject keyPrefab; // 열쇠 아이템 프리팹
     public GameObject particleEffectPrefab; // 파티클 효과 프리팹
-
+    public float attackRange = 1f;
     // Lizard의 고유 스탯을 초기화
     protected override void InitializeStats()
     {
         HP = 300; // Lizard의 체력 설정
-        damageAmount = 25; // Muscomorph의 공격력 설정
+        damageAmount = 25; // Lizard의 공격력 설정
     }
 
         // 아이템 드랍 로직 오버라이딩

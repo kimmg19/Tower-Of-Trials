@@ -4,11 +4,11 @@ using UnityEngine.UI;
 
 public abstract class BaseEnemy : MonoBehaviour
 {
-    [SerializeField]protected int HP;
+    [SerializeField] protected int HP;
     protected int damageAmount;
     public Slider healthBar;
     public Animator animator;
-    [HideInInspector] public bool enableDamaging = false;
+    public bool enableDamaging = false;
     [HideInInspector] public bool isParried = false; // 패링 상태를 추적하는 변수
     [HideInInspector] public bool isAttacking = false; // 공격 상태를 추적하는 변수
 
@@ -42,27 +42,36 @@ public abstract class BaseEnemy : MonoBehaviour
             healthBar.gameObject.SetActive(true); // 헬스바 활성화
         }
     }
-
     protected virtual void Update()
     {
+        //Debug.LogError("isAttacking:" + isAttacking);
+
+        //Debug.LogError("enableDamaging:" + enableDamaging);
         // 애니메이터 상태 디버깅 로그 추가
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
-        if (stateInfo.IsName("AttackState"))
+        /*if (stateInfo.IsName("AttackState")|| stateInfo.IsName("AttackState1")||
+            stateInfo.IsName("AttackState2")|| stateInfo.IsName("AttackState3"))
         {
+            
             if (!isAttacking)
             {
+
                 isAttacking = true;
-                enableDamaging = true; // 공격 애니메이션이 시작될 때 enableDamaging을 켭니다.
+                //enableDamaging = true; // 공격 애니메이션이 시작될 때 enableDamaging을 켭니다.
+                
+
             }
         } else
         {
             if (isAttacking)
             {
+
                 isAttacking = false;
                 enableDamaging = false; // 공격 애니메이션이 끝나면 enableDamaging을 끕니다.
+                
             }
-        }
+        }*/
 
         // 헬스바를 개별적으로 업데이트
         if (healthBar != null)
@@ -78,7 +87,7 @@ public abstract class BaseEnemy : MonoBehaviour
         HP -= damageAmount;
         AudioManager.instance.Play("MonsterHit");
         isParried = parried; // 패링 상태 추적
-        Debug.Log($"{gameObject.name} took {damageAmount} damage. Current HP: {HP}, Parried: {isParried}");
+        //Debug.Log($"{gameObject.name} took {damageAmount} damage. Current HP: {HP}, Parried: {isParried}");
 
         // 헬스바 업데이트
         if (healthBar != null)
@@ -104,42 +113,43 @@ public abstract class BaseEnemy : MonoBehaviour
 
     private IEnumerator PlaySlowHitAnimation()
     {
-        animator.Play("getHit", -1, 0f);
+        animator.SetTrigger("damage");
 
         // 애니메이션 속도를 느리게 설정
         float originalSpeed = animator.speed;
-        animator.speed = 0.5f; // 2배 느리게
+        animator.speed = 0.7f; // 2배 느리게
 
         // 적의 모든 콜라이더 중 공격 전용 콜라이더를 비활성화
-        Collider[] colliders = GetComponents<Collider>();
+        Collider[] colliders = GetComponentsInChildren<Collider>();
+        print(colliders[0].name);
         foreach (var collider in colliders)
         {
             // 공격용 콜라이더는 레이어를 통해 식별
             if (collider.gameObject.layer == LayerMask.NameToLayer("EnemyAttackCollider"))
             {
                 collider.enabled = false;
-                Debug.Log($"{collider.gameObject.name} attack collider disabled during slow motion.");
+                //Debug.LogError($"{collider.gameObject.name} attack collider disabled during slow motion.");
             }
         }
 
         // 느린 히트 애니메이션이 진행되는 동안 대기 (실제 시간 기준)
         yield return new WaitForSecondsRealtime(animator.GetCurrentAnimatorStateInfo(0).length / animator.speed);
-
         // 원래 속도로 복구
         animator.speed = originalSpeed;
 
         // 패링 후 적의 공격 콜라이더를 다시 활성화
-        foreach (var collider in colliders)
+        /*foreach (var collider in colliders)
         {
             if (collider.gameObject.layer == LayerMask.NameToLayer("EnemyAttackCollider"))
             {
                 collider.enabled = true;
-                Debug.Log($"{collider.gameObject.name} attack collider re-enabled after slow motion.");
+                Debug.LogError($"{collider.gameObject.name} attack collider re-enabled after slow motion.");
             }
-        }
+        }*/
 
         // 패링 후 다시 공격할 수 있도록 설정
         enableDamaging = true;
+
         isParried = false; // 패링 상태 해제
     }
 
@@ -148,7 +158,7 @@ public abstract class BaseEnemy : MonoBehaviour
         animator.SetTrigger("die");
         AudioManager.instance.Play("MonsterDie");
         GetComponent<Collider>().enabled = false;
-        GetComponentInChildren<Collider>().enabled = false;
+        enableDamaging = false;
         DropItem();
         Invoke("DestroyEnemy", 2f);
     }
@@ -159,9 +169,19 @@ public abstract class BaseEnemy : MonoBehaviour
     }
     protected virtual void OnTriggerEnter(Collider other)
     {
+       
+
+        Collider thisCollider = GetComponent<Collider>();
+
+        // 트리거된 다른 객체의 Collider
+        Collider otherCollider = other;
+
+        //Debug.LogError("이 객체의 Collider: " + thisCollider.name);
+        //Debug.LogError("트리거된 객체의 Collider: " + otherCollider.name);
+
         // 방패 충돌 먼저 처리
         if (other.CompareTag("Shield"))
-        {
+        {            
             ProcessTrigger(other.gameObject);
         } else if (other.CompareTag("Player") && playerStatus.playerAlive)
         {
@@ -173,12 +193,12 @@ public abstract class BaseEnemy : MonoBehaviour
     {
 
         yield return new WaitForSeconds(delay);
-        //Debug.LogError("3");
 
         // 방패와의 충돌 여부를 다시 확인
         if (isShieldTriggered)
         {
-            //Debug.LogError("Shield was triggered. Ignoring Player collision.");
+
+            Debug.LogError("Shield was triggered. Ignoring Player collision.");
             TriggerReset();
             yield break;  // 코루틴 중지
         }
@@ -186,23 +206,28 @@ public abstract class BaseEnemy : MonoBehaviour
         // 무적 상태를 체크하여 데미지를 무시
         if (playerStatus.isDamageIgnored)
         {
-            Debug.Log($"{gameObject.name}'s attack was ignored due to player invincibility.");
+            Debug.Log($"{gameObject.name}의 공격 무시-무적상태.");
         }
 
         if (enableDamaging && !playerStatus.isParried)
         {
+
             if (!playerInputs.isAttacking)
             {
-                Debug.Log($"{gameObject.name} is attempting to damage the player with enableDamaging: {enableDamaging}");
+                Debug.LogError($"{gameObject.name} is attempting to damage");
                 playerStatus.TakeDamage(damageAmount);
+                ;
+
                 enableDamaging = false;
             }
-        } else
-        {
-            Debug.Log($"{gameObject.name}'s attack was parried or enemy is in slow motion. No damage to player.");
-            enableDamaging = false;
         }
-        //Debug.LogError("4");
+        /*else
+        {
+            Debug.LogError($"{gameObject.name}'s attack was parried or enemy is in slow motion. No damage to player.");
+            
+
+            enableDamaging = false;
+        }*/
     }
 
 
@@ -210,7 +235,6 @@ public abstract class BaseEnemy : MonoBehaviour
     {
         isShieldTriggered = true; // 방패와 충돌했음을 표시
         Shield shield = obj.GetComponent<Shield>();
-        //Debug.LogError("1");
 
         if (shield.isParryWindowActive && shield.canParry)
         {
@@ -224,7 +248,6 @@ public abstract class BaseEnemy : MonoBehaviour
         {
             playerStatus.TakeDamage(GetDamageAmount());
         }
-        //Debug.LogError("2");
 
     }
 
@@ -237,7 +260,6 @@ public abstract class BaseEnemy : MonoBehaviour
 
     void TriggerReset()
     {
-        //Debug.LogError("555");
         StopCoroutine("DelayedTrigger");
         isShieldTriggered = false;
     }

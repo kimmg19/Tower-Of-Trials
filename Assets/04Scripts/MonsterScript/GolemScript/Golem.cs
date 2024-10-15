@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -11,7 +12,7 @@ public class Golem : BaseEnemy
     public float attackRange = 3.0f;
     private float stompRangeMultiplier = 1.5f;
     private bool isJumping = false;
-
+    
     public ParticleSystem rockDebrisEffect;
     //[SerializeField] private Collider attackCollider; // Attack collider as a serialized field
 
@@ -79,22 +80,11 @@ public class Golem : BaseEnemy
         float distance = Vector3.Distance(player.position, agent.transform.position);
         if (distance <= attackRange * stompRangeMultiplier)
         {
-            StartCoroutine(EnableDamageDuringAttack(damageAmount));
+            playerStatus.TakeDamage(damageAmount);
         }
     }
 
-    private IEnumerator EnableDamageDuringAttack(int damage)
-    {
-        enableDamaging = true; // Allow damage
-        //attackCollider.enabled = true; // Enable the attack collider
-        playerStatus.TakeDamage(damage);
-        // Wait for a brief moment to simulate attack duration
-        yield return new WaitForSeconds(1.0f); // Adjust this based on your animation length
-
-        enableDamaging = false; // Disable damage
-        //attackCollider.enabled = false; // Disable the attack collider after the attack
-    }
-
+    
     // 점프 공격 메서드
     public void JumpAttack(Animator animator)
     {
@@ -144,7 +134,7 @@ public class Golem : BaseEnemy
             }
 
             // Enable damage for the duration of the attack
-            StartCoroutine(EnableDamageDuringAttack(damageAmount*2));
+            playerStatus.TakeDamage(damageAmount*2);
         }
 
         // NavMeshAgent 이동 재개

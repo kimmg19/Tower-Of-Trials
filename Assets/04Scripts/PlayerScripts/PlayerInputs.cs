@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 //using UnityEngine.UIElements;
 
@@ -70,7 +71,7 @@ public class PlayerInputs : MonoBehaviour
     [SerializeField] ParticleSystem attackSkillParticle;  
     private Coroutine blockStaminaCoroutine;
     Coroutine staminaCoroutine;
-
+    Sword sword;
     private void Update()
     {
         if (CheckSkillUnlocked(attackSkill)==0)
@@ -108,7 +109,7 @@ public class PlayerInputs : MonoBehaviour
         inGameCanvas = GameObject.Find("InGameCanvas");
         animationEvent = GetComponent<AnimationEvent>();
         animator = GetComponent<Animator>();
-
+        sword=GetComponent<Sword>();
         // 쿨타임 이미지 초기화
         if (jumpCooldownImage != null) jumpCooldownImage.fillAmount = 0;
         if (rollCooldownImage != null) rollCooldownImage.fillAmount = 0;
@@ -184,7 +185,7 @@ public class PlayerInputs : MonoBehaviour
     {
         if (isInteracting || isDodging || isJumping || isRollCooldown || isSkillAttacking
             || moveInput.magnitude == 0 || playerStats.currentStamina < rollStamina) return;
-
+        
         playerMovement.Roll();
         playerStatus.UseStamina(rollStamina);
 
@@ -354,7 +355,7 @@ public class PlayerInputs : MonoBehaviour
         {
             GameObject particleSystem = Instantiate(buffParticlePrefab, transform.position, Quaternion.identity);
             particleSystem.transform.parent = this.transform; // 하이라키에 추가
-            Destroy(particleSystem, buffSkillDuration); // 10초 후 삭제 (버프 효과와 일치)
+            Destroy(particleSystem, 11.5f); // 10초 후 삭제 (버프 효과와 일치)
         }
 
         // 상호작용 제한 해제 (애니메이션 초기화 시점)

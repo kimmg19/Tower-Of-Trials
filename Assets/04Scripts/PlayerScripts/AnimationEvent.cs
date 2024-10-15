@@ -6,7 +6,6 @@ public class AnimationEvent : MonoBehaviour
 {
     PlayerMovement playerMovement;
     PlayerInputs playerInputs;
-    [HideInInspector] public bool enableDamaging;
     Animator animator;
     [SerializeField] ParticleSystem attack1;
     [SerializeField] ParticleSystem attack2;
@@ -37,14 +36,12 @@ public class AnimationEvent : MonoBehaviour
     // 애니메이션 이벤트로 호출될 메서드
     void DamageAble()
     {
-        enableDamaging = true;
         sword?.EnableCollider(); // Sword의 콜라이더 활성화
     }
 
     // 애니메이션 이벤트로 호출될 메서드
     void DamageDisable()
     {
-        enableDamaging = false;
         sword?.DisableCollider(); // Sword의 콜라이더 비활성화
     }
     void SkillEffectPlay()

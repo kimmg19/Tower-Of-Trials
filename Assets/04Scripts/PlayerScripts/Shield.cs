@@ -6,7 +6,7 @@ using UnityEngine;
 public class Shield : MonoBehaviour
 {
     [SerializeField] public ParticleSystem parryEffect; // 패링 성공 시 재생할 파티클 시스템
-    [SerializeField] public float parryTimingWindow = 1f; // 패링 성공 가능 시간
+    [SerializeField] public float parryTimingWindow = 0.5f; // 패링 성공 가능 시간
     [SerializeField] public float damageReductionPercentage = 50f; // 방패 막기 시 데미지 감소 비율
     [SerializeField] public float parryCooldown = 1.0f; // 패링 후 쿨다운 시간
     [SerializeField] public bool isParryWindowActive = false;

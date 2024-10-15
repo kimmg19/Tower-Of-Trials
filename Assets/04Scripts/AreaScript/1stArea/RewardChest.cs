@@ -13,6 +13,9 @@ public class RewardChest : MonoBehaviour
     [SerializeField]
     private GameObject RewardList;
 
+    // 포탈 오브젝트 추가
+    [SerializeField]
+    private GameObject comebackPortal;
     GameObject obj;
     PlayerInputs playerInputs;
 
@@ -34,6 +37,11 @@ public class RewardChest : MonoBehaviour
         {
             RewardList.SetActive(false);
         }
+        // 포탈 비활성화 (처음에는 보이지 않음)
+        if (comebackPortal != null)
+        {
+            comebackPortal.SetActive(false);
+        }
     }
 
     void Update()
@@ -50,6 +58,12 @@ public class RewardChest : MonoBehaviour
                 RewardsChest.SetActive(false);
                 playerInputs.isInteracting = false;
                 RewardList.SetActive(true);
+
+                // 포탈을 활성화
+                if (comebackPortal != null)
+                {
+                    comebackPortal.SetActive(true);
+                }
         }
 
         RewardGoldText.text = RewardGold.ToString() + " G";
@@ -59,9 +73,9 @@ public class RewardChest : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // ĵ���� Ȱ��ȭ
+            // ĵ���� Ȱ��ȭ
             AskRewardSelection.SetActive(true);
-            Debug.Log("���� �浹");
+            Debug.Log("���� �浹");
         }
     }
 
@@ -69,7 +83,7 @@ public class RewardChest : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // ĵ���� ��Ȱ��ȭ
+            // ĵ���� ��Ȱ��ȭ
             if (AskRewardSelection != null)
             {
                 AskRewardSelection.SetActive(false);
