@@ -89,6 +89,9 @@ public class PlayerStatus : MonoBehaviour
         if (!playerAlive)
             return;
 
+        playerInputs.enabled = false;  // 플레이어 입력 비활성화
+        // **콜라이더 비활성화**
+        characterController.enabled = false;  // 캐릭터 컨트롤러 비활성화
         animator.SetTrigger("PlayerDie");
 
         // 모든 BGM을 멈추고 사망 효과음 재생
@@ -99,10 +102,7 @@ public class PlayerStatus : MonoBehaviour
         playerAlive = false;
 
         // **입력 차단**
-        playerInputs.enabled = false;  // 플레이어 입력 비활성화
 
-        // **콜라이더 비활성화**
-        characterController.enabled = false;  // 캐릭터 컨트롤러 비활성화
         inGameCanvas.dieImage.SetActive(true);
     }
 
