@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 //using UnityEngine.UIElements;
 
@@ -70,7 +71,7 @@ public class PlayerInputs : MonoBehaviour
     [SerializeField] ParticleSystem attackSkillParticle;  
     private Coroutine blockStaminaCoroutine;
     Coroutine staminaCoroutine;
-
+    Sword sword;
     private void Update()
     {
         if (CheckSkillUnlocked(attackSkill)==0)
@@ -108,7 +109,7 @@ public class PlayerInputs : MonoBehaviour
         inGameCanvas = GameObject.Find("InGameCanvas");
         animationEvent = GetComponent<AnimationEvent>();
         animator = GetComponent<Animator>();
-
+        sword=GetComponent<Sword>();
         // 쿨타임 이미지 초기화
         if (jumpCooldownImage != null) jumpCooldownImage.fillAmount = 0;
         if (rollCooldownImage != null) rollCooldownImage.fillAmount = 0;
@@ -184,7 +185,7 @@ public class PlayerInputs : MonoBehaviour
     {
         if (isInteracting || isDodging || isJumping || isRollCooldown || isSkillAttacking
             || moveInput.magnitude == 0 || playerStats.currentStamina < rollStamina) return;
-
+        
         playerMovement.Roll();
         playerStatus.UseStamina(rollStamina);
 
