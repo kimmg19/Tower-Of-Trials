@@ -30,6 +30,8 @@ public class EnemyAttackHandler : MonoBehaviour
 
         if (enemy.isAttacking)
         {
+           
+
             enemy.enableDamaging = true;
             if (attackCollider != null)
             {

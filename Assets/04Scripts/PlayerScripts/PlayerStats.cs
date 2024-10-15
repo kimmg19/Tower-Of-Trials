@@ -86,11 +86,11 @@ public class PlayerStats : MonoBehaviour
         PlayerPrefs.SetInt("PlayerGold", Gold);
 
         // 디버깅을 위한 로그 추가
-        Debug.Log("Saving PlayerPrefs: ");
-        Debug.Log("PlayerMpPotionRate: " + MpPotionRate);
-        Debug.Log("PlayerHpPotionRate: " + HpPotionRate);
-        Debug.Log("PlayerMaxStamina: " + maxStamina);
-        Debug.Log("PlayerGold: " + Gold);
+        //Debug.Log("Saving PlayerPrefs: ");
+        //Debug.Log("PlayerMpPotionRate: " + MpPotionRate);
+        //Debug.Log("PlayerHpPotionRate: " + HpPotionRate);
+        //Debug.Log("PlayerMaxStamina: " + maxStamina);
+        //Debug.Log("PlayerGold: " + Gold);
 
         PlayerPrefs.Save();
     }

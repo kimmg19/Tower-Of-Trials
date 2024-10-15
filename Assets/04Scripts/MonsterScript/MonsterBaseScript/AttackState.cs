@@ -1,10 +1,11 @@
+using System.Net.Security;
 using UnityEngine;
 
 public class AttackState : BaseState
 {
-    protected float attackRange = 1.7f;
-    private BaseEnemy enemy;
-
+    protected float attackRange;
+    protected BaseEnemy enemy;
+    protected float distance;
     protected override void OnStateEnterCustom(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         enemy = animator.GetComponent<BaseEnemy>();
@@ -21,17 +22,9 @@ public class AttackState : BaseState
             LookAtPlayerXZ(animator.transform, player.transform);
         }
 
-        float distance = Vector3.Distance(player.position, animator.transform.position);
+        distance=Vector3.Distance(player.position, animator.transform.position);
         
-        // 거리가 멀어지면 공격 상태 종료
-        if (distance > attackRange || !playerStatus.playerAlive)
-        {
-            animator.SetBool("isAttacking", false);
-            if (enemy != null)
-            {
-                enemy.isAttacking = false; // 공격 상태 종료
-            }
-        }
+        
 
         // 공격 로직을 추가할 수 있습니다 (예: 데미지를 주는 메서드 호출 등)
     }

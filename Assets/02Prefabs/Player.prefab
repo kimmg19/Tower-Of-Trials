@@ -3830,7 +3830,7 @@ CharacterController:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1408
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -3975,7 +3975,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a792cb79026e6004b871e7b62ceeaa1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enableDamaging: 0
   attack1: {fileID: 2329159763352793890}
   attack2: {fileID: 649658051695988592}
   attack3_1: {fileID: 3216122181697604953}
@@ -4415,7 +4414,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 483d1643332ee3049968aa3dad46fe15, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 483d1643332ee3049968aa3dad46fe15, type: 3}
+      propertyPath: m_TagString
+      value: Weapon
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 483d1643332ee3049968aa3dad46fe15, type: 3}
       propertyPath: m_RootOrder
@@ -6028,7 +6031,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400120, guid: 98a5bbd40d8949f4282f9afc4bbe92b6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.05174123
+      value: -0.0517416
       objectReference: {fileID: 0}
     - target: {fileID: 400120, guid: 98a5bbd40d8949f4282f9afc4bbe92b6, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6036,7 +6039,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400120, guid: 98a5bbd40d8949f4282f9afc4bbe92b6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.06757173
+      value: -0.06757259
       objectReference: {fileID: 0}
     - target: {fileID: 400120, guid: 98a5bbd40d8949f4282f9afc4bbe92b6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6388,11 +6391,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400146, guid: 98a5bbd40d8949f4282f9afc4bbe92b6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.105428e-17
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400146, guid: 98a5bbd40d8949f4282f9afc4bbe92b6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.552714e-17
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400146, guid: 98a5bbd40d8949f4282f9afc4bbe92b6, type: 3}
       propertyPath: m_LocalRotation.x
@@ -8578,7 +8581,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.125
   m_Height: 0.35
@@ -8606,7 +8609,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.125
   m_Height: 0.35
@@ -8634,7 +8637,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 0.16
   m_Center: {x: -0.13, y: 0.03, z: 0}
@@ -9974,7 +9977,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.19
   m_Height: 0.59
@@ -10002,7 +10005,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.16
   m_Height: 0.57
@@ -10030,7 +10033,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.16
   m_Height: 0.57
@@ -10058,7 +10061,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.2
   m_Height: 0.6
@@ -10086,7 +10089,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 0.2
   m_Center: {x: 0, y: 0.09, z: 0}
@@ -10112,7 +10115,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 0.2
   m_Center: {x: 0, y: -0.09, z: 0}
@@ -10457,7 +10460,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: bc9cd43c1351bb145a624e283d4e8daf, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: bc9cd43c1351bb145a624e283d4e8daf, type: 3}
       propertyPath: m_TagString
@@ -10559,13 +10562,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parryEffect: {fileID: 2392044997544072122}
-  parryTimingWindow: 0.5
+  parryTimingWindow: 0.3
   damageReductionPercentage: 50
   parryCooldown: 1
   isParryWindowActive: 0
   isBlocking: 0
   canParry: 1
-  animator: {fileID: 0}
+  animator: {fileID: 1003550210944798193}
 --- !u!65 &339162742869007440
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10579,13 +10582,13 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 392
+    m_Bits: 1417
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.4, y: 0.36, z: 0.71560234}
+  m_Size: {x: 1.22, y: 0.33, z: 0.57}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &4361617969910374593 stripped
 Transform:

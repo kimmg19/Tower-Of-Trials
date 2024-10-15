@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEditor.ShaderGraph.Internal;
 
 public class Slime : BaseEnemy
 {
     private FirstAreaManager firstAreaManager;
-    
+    public float attackRange=1.7f;
 
     // 슬라임의 고유 스탯을 초기화
     protected override void InitializeStats()
