@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PrincessIdleState : IdleState
 {
+    
     protected override void OnStateEnterCustom(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnterCustom(animator, stateInfo, layerIndex);
@@ -12,7 +13,7 @@ public class PrincessIdleState : IdleState
     protected override void OnStateUpdateCustom(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateUpdateCustom(animator, stateInfo, layerIndex);
-        // 대기 중에 Muscomorph만의 행동을 추가
+       
     }
 
     protected override void OnStateExitCustom(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

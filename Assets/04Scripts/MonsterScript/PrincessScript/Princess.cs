@@ -5,10 +5,11 @@ using UnityEngine.UI;
 
 public class Princess : BaseEnemy
 {
-    private Transform player;
-    private NavMeshAgent agent;
-    public float attackRange = 1.2f;
     
+    private NavMeshAgent agent;
+    [SerializeField]public float attackRange = 2f;
+    public GameObject dragons;
+    float time;
     //[SerializeField] private Collider attackCollider; // Attack collider as a serialized field
 
     // 골렘의 고유 스탯을 초기화
@@ -17,20 +18,37 @@ public class Princess : BaseEnemy
         HP = 1000;
         damageAmount = 2;
     }
+    protected override void Update()
+    {        
+        base.Update();
+        time+=Time.deltaTime;
+        if (time > 5f)
+        {
+            StartCoroutine(DrakarisAttack());
+        }
+    }
+
+    private IEnumerator DrakarisAttack()
+    {
+        dragons.SetActive(true);
+        animator.SetTrigger("Drakaris");
+        yield return new WaitForSeconds(5f);
+        dragons.SetActive(false);
+        time = 0f;
+
+
+    }
 
     protected override void Die()
     {
-        base.Die();        
+        base.Die();
     }
 
     protected override void Start()
     {
         base.Start();
-        player = GameObject.FindWithTag("Player").transform;
+        animator.SetBool("isChasing", true);
         agent = GetComponent<NavMeshAgent>();
-
-        
-
         if (playerStats == null)
         {
             Debug.LogError("PlayerStats component not found on Player.");
@@ -44,12 +62,4 @@ public class Princess : BaseEnemy
             Debug.LogWarning($"{gameObject.name} is missing a health bar!");
         }
     }
-
-    
-
-    
-
-    
-
-    
 }

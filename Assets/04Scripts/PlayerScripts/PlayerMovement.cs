@@ -50,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Move(speed);
             ApplyGravity();
-            Debug.Log(velocity.y);
+            //Debug.Log(velocity.y);
         }
     }
 

@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class Golem : BaseEnemy
 {
     private FirstAreaManager firstAreaManager;
-    private Transform player;
     private NavMeshAgent agent;
     public float attackRange = 3.0f;
     private float stompRangeMultiplier = 1.5f;
@@ -36,7 +35,6 @@ public class Golem : BaseEnemy
     {
         base.Start();
         firstAreaManager = FindObjectOfType<FirstAreaManager>();
-        player = GameObject.FindWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
 
         // Make sure attackCollider is assigned in the inspector
@@ -77,7 +75,7 @@ public class Golem : BaseEnemy
         }
         Debug.Log("Golem performs a stomp attack.");
 
-        float distance = Vector3.Distance(player.position, agent.transform.position);
+        float distance = Vector3.Distance(player.transform.position, agent.transform.position);
         if (distance <= attackRange * stompRangeMultiplier)
         {
             playerStatus.TakeDamage(damageAmount);
@@ -103,7 +101,7 @@ public class Golem : BaseEnemy
         agent.isStopped = true;
 
         Vector3 startPosition = agent.transform.position;
-        Vector3 targetPosition = player.position;
+        Vector3 targetPosition = player.transform.position;
 
         float jumpDuration = 1.0f;
         float elapsedTime = 0f;
@@ -125,7 +123,7 @@ public class Golem : BaseEnemy
         agent.Warp(targetPosition);
 
         // 착지 후 공격 처리
-        float distance = Vector3.Distance(player.position, agent.transform.position);
+        float distance = Vector3.Distance(player.transform.position, agent.transform.position);
         if (distance <= attackRange * 2)
         {
             if (rockDebrisEffect != null)

@@ -34,6 +34,7 @@ public class Sword : MonoBehaviour
         if (swordCollider != null)
         {
             swordCollider.enabled = true;
+            
         }
     }
 

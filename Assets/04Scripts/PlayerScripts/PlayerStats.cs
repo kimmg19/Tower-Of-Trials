@@ -87,10 +87,10 @@ public class PlayerStats : MonoBehaviour
 
         // ������� ���� �α� �߰�
         Debug.Log("Saving PlayerPrefs: ");
-        Debug.Log("PlayerMpPotionRate: " + MpPotionRate);
+        /*Debug.Log("PlayerMpPotionRate: " + MpPotionRate);
         Debug.Log("PlayerHpPotionRate: " + HpPotionRate);
         Debug.Log("PlayerMaxStamina: " + maxStamina);
-        Debug.Log("PlayerGold: " + Gold);
+        Debug.Log("PlayerGold: " + Gold);*/
 
         PlayerPrefs.Save();
     }

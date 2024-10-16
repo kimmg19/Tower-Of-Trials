@@ -11,7 +11,7 @@ public abstract class BaseEnemy : MonoBehaviour
     public bool enableDamaging = false;
     [HideInInspector] public bool isParried = false; // 패링 상태를 추적하는 변수
     [HideInInspector] public bool isAttacking = false; // 공격 상태를 추적하는 변수
-
+    protected GameObject player;
     protected PlayerStats playerStats;
     protected PlayerStatus playerStatus;
     protected PlayerInputs playerInputs;
@@ -21,7 +21,7 @@ public abstract class BaseEnemy : MonoBehaviour
 
     protected virtual void Start()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
             playerStats = player.GetComponent<PlayerStats>();
@@ -45,31 +45,23 @@ public abstract class BaseEnemy : MonoBehaviour
     protected virtual void Update()
     {
         //Debug.LogError("isAttacking:" + isAttacking);
-
         //Debug.LogError("enableDamaging:" + enableDamaging);
-        // 애니메이터 상태 디버깅 로그 추가
-        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
-        /*if (stateInfo.IsName("AttackState")|| stateInfo.IsName("AttackState1")||
-            stateInfo.IsName("AttackState2")|| stateInfo.IsName("AttackState3"))
+        /*AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        if (stateInfo.IsName("AttackState") || stateInfo.IsName("AttackState1") ||
+            stateInfo.IsName("AttackState2") || stateInfo.IsName("AttackState3"))
         {
-            
             if (!isAttacking)
             {
-
                 isAttacking = true;
                 //enableDamaging = true; // 공격 애니메이션이 시작될 때 enableDamaging을 켭니다.
-                
-
             }
         } else
         {
             if (isAttacking)
             {
-
                 isAttacking = false;
                 enableDamaging = false; // 공격 애니메이션이 끝나면 enableDamaging을 끕니다.
-                
             }
         }*/
 
