@@ -1,16 +1,11 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UI;
 
 public class Princess : BaseEnemy
 {
-    
     private NavMeshAgent agent;
-    [SerializeField]public float attackRange = 2f;
-    public GameObject dragons;
-    float time;
-    //[SerializeField] private Collider attackCollider; // Attack collider as a serialized field
+    [SerializeField] public float attackRange = 2f;
+    // public FourthAreaManager fourthAreaManager;
 
     // 골렘의 고유 스탯을 초기화
     protected override void InitializeStats()
@@ -18,25 +13,10 @@ public class Princess : BaseEnemy
         HP = 1000;
         damageAmount = 2;
     }
+
     protected override void Update()
-    {        
-        base.Update();
-        time+=Time.deltaTime;
-        if (time > 5f)
-        {
-            StartCoroutine(DrakarisAttack());
-        }
-    }
-
-    private IEnumerator DrakarisAttack()
     {
-        dragons.SetActive(true);
-        animator.SetTrigger("Drakaris");
-        yield return new WaitForSeconds(5f);
-        dragons.SetActive(false);
-        time = 0f;
-
-
+        base.Update();
     }
 
     protected override void Die()
@@ -55,7 +35,7 @@ public class Princess : BaseEnemy
         }
         if (agent == null)
         {
-            Debug.LogError("NavMeshAgent not found on the Golem.");
+            Debug.LogError("NavMeshAgent not found on the Princess.");
         }
         if (healthBar == null)
         {
