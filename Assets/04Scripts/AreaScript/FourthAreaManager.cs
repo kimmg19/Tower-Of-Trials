@@ -5,8 +5,13 @@ public class FourthAreaManager : MonoBehaviour
 {
     public GameObject dragons;
     public GameObject dragon;
-    private float time;
-
+    public ParticleSystem flame;
+    public float time;
+    float particlePlayingTime;
+    private void Start()
+    {
+        particlePlayingTime = flame.main.duration + flame.main.startLifetime.constant;//불쏘는거? 파티클 종료까지 시간
+    }
     void Update()
     {
         time += Time.deltaTime;
@@ -16,16 +21,17 @@ public class FourthAreaManager : MonoBehaviour
         }
         if (time > 8f)
         {
-            StartCoroutine(DrakarisFlyAttack());
+            //StartCoroutine(DrakarisFlyAttack());
         }
     }
 
     private IEnumerator DrakarisAttack()
     {
         dragons.SetActive(true);
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(particlePlayingTime);
         dragons.SetActive(false);
         time = 0f;
+        
     }
 
     private IEnumerator DrakarisFlyAttack()

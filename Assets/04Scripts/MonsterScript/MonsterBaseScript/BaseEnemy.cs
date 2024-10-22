@@ -11,7 +11,7 @@ public abstract class BaseEnemy : MonoBehaviour
     public bool enableDamaging = false;
     [HideInInspector] public bool isParried = false; // 패링 상태를 추적하는 변수
     [HideInInspector] public bool isAttacking = false; // 공격 상태를 추적하는 변수
-    protected GameObject player;
+    [HideInInspector] public GameObject player;
     protected PlayerStats playerStats;
     protected PlayerStatus playerStatus;
     protected PlayerInputs playerInputs;
@@ -190,7 +190,7 @@ public abstract class BaseEnemy : MonoBehaviour
         if (isShieldTriggered)
         {
 
-            Debug.LogError("Shield was triggered. Ignoring Player collision.");
+            //Debug.LogError("Shield was triggered. Ignoring Player collision.");
             TriggerReset();
             yield break;  // 코루틴 중지
         }
@@ -206,9 +206,9 @@ public abstract class BaseEnemy : MonoBehaviour
 
             if (!playerInputs.isAttacking)
             {
-                Debug.LogError($"{gameObject.name} is attempting to damage");
+                //Debug.LogError($"{gameObject.name} is attempting to damage");
                 playerStatus.TakeDamage(damageAmount);
-                ;
+                
 
                 enableDamaging = false;
             }
