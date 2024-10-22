@@ -21,7 +21,8 @@ public class FourthAreaManager : MonoBehaviour
     private float time;
     private bool isDrakarisFlyAttackActive = false;  // FlyAttack 중복 방지 플래그
     private bool isDrakarisAttackActive = false;     // Attack 중복 방지 플래그
-
+    private float particlePlayingTime;
+    public ParticleSystem flame;
     void Update()
     {
         time += Time.deltaTime;
@@ -37,14 +38,18 @@ public class FourthAreaManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        particlePlayingTime = flame.main.duration + flame.main.startLifetime.constant;//불쏘는거? 파티클 종료까지 시간
+    }
+
     private IEnumerator DrakarisAttack()
     {
-        isDrakarisAttackActive = true; // 중복 실행 방지
         dragons.SetActive(true);
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(particlePlayingTime);
         dragons.SetActive(false);
         time = 0f;
-        isDrakarisAttackActive = false; // 완료 후 다시 실행 가능
+        
     }
 
     private IEnumerator DrakarisFlyAttack()
