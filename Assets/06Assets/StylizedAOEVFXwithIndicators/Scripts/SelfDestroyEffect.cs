@@ -25,6 +25,7 @@ public class SelfDestroyEffect : MonoBehaviour
         if (effect.aliveParticleCount > 0 && !effectPlayed)
         {
             effectPlayed = true;
+            AudioManager.instance.Play("Meteor");
             Invoke("ActivateCollider", 1.3f);  // 1.3초 후에 콜라이더 활성화
         }
 

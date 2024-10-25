@@ -74,6 +74,7 @@ public class FourthAreaManager : MonoBehaviour
         isDrakarisFlyAttackActive = true; // 중복 실행 방지
 
         // 드래곤 활성
+        AudioManager.instance.Play("Dragon");
         dragon.SetActive(true);
 
         // 메테오 생성 코루틴 실행 (메테오가 떨어지는 동안에만 드래곤이 활성화됨)

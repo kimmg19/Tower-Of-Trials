@@ -1124,7 +1124,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 127, y: -214}
+  m_AnchoredPosition: {x: 127, y: 452}
   m_SizeDelta: {x: 800, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5268789780949299401
@@ -1816,7 +1816,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -375, y: -214}
+  m_AnchoredPosition: {x: -375, y: 452}
   m_SizeDelta: {x: 220, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4310453393625707504
@@ -2165,11 +2165,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9d2009825f5eba4da4fed2a475c3324, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HP: 0
   healthBar: {fileID: 5268789780949299401}
   animator: {fileID: 8970640263576406149}
   enableDamaging: 0
   isParried: 0
   isAttacking: 0
+  player: {fileID: 0}
   attackRange: 3
   rockDebrisEffect: {fileID: 2957789686425819746}
 --- !u!1 &6782054793773293081
