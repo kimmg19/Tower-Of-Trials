@@ -19,9 +19,9 @@ public class Upgrade : MonoBehaviour
     public Text InvenWeaponEnhanceText;
     public Text UpgradePosText;
     public Text UpgradeGoldText;
-    private int[] UpgradePerPoint = new int [8] { 10, 20, 30, 40, 50, 60, 70, 80 };
-    private int[] UpgradaePosibility = new int[9] { 90, 80, 70, 50, 40, 30, 20, 10, 0 };
-    private int[] UpgradeGoldArray = new int[9] { 100, 200, 300, 400, 500, 600, 700, 800, 0 };
+    private int[] UpgradePerPoint = new int [10] { 10, 15, 20, 25, 30, 35, 40, 45, 50, 100 };
+    private int[] UpgradaePosibility = new int[11] { 90, 80, 70, 60, 50, 40, 30, 20, 10, 5, 0 };
+    private int[] UpgradeGoldArray = new int[11] { 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 0 };
 
     void Start()
     {
@@ -76,200 +76,48 @@ public class Upgrade : MonoBehaviour
 
     public void WeaponUpgrade()
     {
-        if (WeaponEnhancePoint == 0 && playerstats.Gold >= UpgradeGoldArray[WeaponEnhancePoint])
+        if (WeaponEnhancePoint >= UpgradeGoldArray.Length || playerstats.Gold < UpgradeGoldArray[WeaponEnhancePoint])
         {
-
-            if (Random.Range(0, 100) < UpgradaePosibility[WeaponEnhancePoint]) // 90% 확률
-            {
-                playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
-                Debug.Log(UpgradaePosibility[WeaponEnhancePoint] + "% 의 확률을 뚫음");
-                WeaponEnhancePoint = 1;
-                WeaponATK = swordEft.SwordAttackPoint + UpgradePerPoint[WeaponEnhancePoint - 1];
-                Attack = PlayerAttack + swordEft.SwordAttackPoint + UpgradePerPoint[WeaponEnhancePoint - 1];
-                UpgradePos = UpgradaePosibility[WeaponEnhancePoint];
-                UpgradeGold = UpgradeGoldArray[WeaponEnhancePoint];
-                Debug.Log("무기 1강");
-
-                SaveWeaponEnhancePoint(); // 강화 성공 시 즉시 저장
-            }
-            else
-            {
-                playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
-                Debug.Log("강화 실패");
-
-                SaveWeaponEnhancePoint(); // 강화 성공 시 즉시 저장
-            }
+            Debug.Log("강화 불가능: 강화 포인트가 최대이거나 골드가 부족합니다.");
+            return;
         }
 
-        else if (WeaponEnhancePoint == 1 && playerstats.Gold >= UpgradeGoldArray[WeaponEnhancePoint])
+        // 강화 비용 차감
+        playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
+
+        // 강화 성공 여부 결정
+        bool isUpgradeSuccessful = Random.Range(0, 100) < UpgradaePosibility[WeaponEnhancePoint];
+        if (isUpgradeSuccessful)
         {
+            WeaponEnhancePoint++;
+            Debug.Log(UpgradaePosibility[WeaponEnhancePoint - 1] + "% 의 확률을 뚫음");
+            WeaponATK = swordEft.SwordAttackPoint + UpgradePerPoint[WeaponEnhancePoint - 1];
+            Attack = PlayerAttack + WeaponATK;
 
-            if (Random.Range(0, 100) < UpgradaePosibility[WeaponEnhancePoint]) // 80% 확률
-            {
-                playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
-                Debug.Log(UpgradaePosibility[WeaponEnhancePoint] + "% 의 확률을 뚫음");
-                WeaponEnhancePoint = 2;
-                WeaponATK = swordEft.SwordAttackPoint + UpgradePerPoint[WeaponEnhancePoint - 1];
-                Attack = PlayerAttack + swordEft.SwordAttackPoint + UpgradePerPoint[WeaponEnhancePoint - 1];
-                UpgradePos = UpgradaePosibility[WeaponEnhancePoint];
-                UpgradeGold = UpgradeGoldArray[WeaponEnhancePoint];
-                Debug.Log("무기 2강");
-
-                SaveWeaponEnhancePoint(); // 강화 성공 시 즉시 저장
-            }
-            else
-            {
-                playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
-                Debug.Log("강화 실패");
-
-                SaveWeaponEnhancePoint(); // 강화 성공 시 즉시 저장
-            }
+            Debug.Log("무기 " + WeaponEnhancePoint + "강");
+        }
+        else
+        {
+            Debug.Log("강화 실패");
         }
 
-        else if (WeaponEnhancePoint == 2 && playerstats.Gold >= UpgradeGoldArray[WeaponEnhancePoint])
+        // 강화 확률과 비용 정보 업데이트
+        if (WeaponEnhancePoint < UpgradeGoldArray.Length)
         {
-            if (Random.Range(0, 100) < UpgradaePosibility[WeaponEnhancePoint]) // 70% 확률
-            {
-                playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
-                Debug.Log(UpgradaePosibility[WeaponEnhancePoint] + "% 의 확률을 뚫음");
-                WeaponEnhancePoint = 3;
-                WeaponATK = swordEft.SwordAttackPoint + UpgradePerPoint[WeaponEnhancePoint - 1];
-                Attack = PlayerAttack + swordEft.SwordAttackPoint + UpgradePerPoint[WeaponEnhancePoint - 1];
-                UpgradePos = UpgradaePosibility[WeaponEnhancePoint];
-                UpgradeGold = UpgradeGoldArray[WeaponEnhancePoint];
-                Debug.Log("무기 3강");
-
-                SaveWeaponEnhancePoint(); // 강화 성공 시 즉시 저장
-            }
-            else
-            {
-                playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
-                Debug.Log("강화 실패");
-
-                SaveWeaponEnhancePoint(); // 강화 성공 시 즉시 저장
-            }
+            UpgradePos = UpgradaePosibility[WeaponEnhancePoint];
+            UpgradeGold = UpgradeGoldArray[WeaponEnhancePoint];
+        }
+        else
+        {
+            UpgradePos = 0; // 강화가 최대치에 도달했을 때 확률 표시를 0으로 설정
+            UpgradeGold = 0; // 비용도 0으로 설정
         }
 
-        else if (WeaponEnhancePoint == 3 && playerstats.Gold >= UpgradeGoldArray[WeaponEnhancePoint])
-        {
-            if (Random.Range(0, 100) < UpgradaePosibility[WeaponEnhancePoint]) // 50% 확률
-            {
-                playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
-                Debug.Log(UpgradaePosibility[WeaponEnhancePoint] + "% 의 확률을 뚫음");
-                WeaponEnhancePoint = 4;
-                WeaponATK = swordEft.SwordAttackPoint + UpgradePerPoint[WeaponEnhancePoint - 1];
-                Attack = PlayerAttack + swordEft.SwordAttackPoint + UpgradePerPoint[WeaponEnhancePoint - 1];
-                UpgradePos = UpgradaePosibility[WeaponEnhancePoint];
-                UpgradeGold = UpgradeGoldArray[WeaponEnhancePoint];
-                Debug.Log("무기 4강");
-
-                SaveWeaponEnhancePoint(); // 강화 성공 시 즉시 저장
-            }
-            else
-            {
-                playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
-                Debug.Log("강화 실패");
-
-                SaveWeaponEnhancePoint(); // 강화 성공 시 즉시 저장
-            }
-        }
-
-        else if (WeaponEnhancePoint == 4 && playerstats.Gold >= UpgradeGoldArray[WeaponEnhancePoint])
-        {
-            if (Random.Range(0, 100) < UpgradaePosibility[WeaponEnhancePoint]) // 40% 확률
-            {
-                playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
-                Debug.Log(UpgradaePosibility[WeaponEnhancePoint] + "% 의 확률을 뚫음");
-                WeaponEnhancePoint = 5;
-                WeaponATK = swordEft.SwordAttackPoint + UpgradePerPoint[WeaponEnhancePoint - 1];
-                Attack = PlayerAttack + swordEft.SwordAttackPoint + UpgradePerPoint[WeaponEnhancePoint - 1];
-                UpgradePos = UpgradaePosibility[WeaponEnhancePoint];
-                UpgradeGold = UpgradeGoldArray[WeaponEnhancePoint];
-                Debug.Log("무기 5강");
-
-                SaveWeaponEnhancePoint(); // 강화 성공 시 즉시 저장
-            }
-            else
-            {
-                playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
-                Debug.Log("강화 실패");
-
-                SaveWeaponEnhancePoint(); // 강화 성공 시 즉시 저장
-            }
-        }
-
-        else if (WeaponEnhancePoint == 5 && playerstats.Gold >= UpgradeGoldArray[WeaponEnhancePoint])
-        {
-            if (Random.Range(0, 100) < UpgradaePosibility[WeaponEnhancePoint]) // 30% 확률
-            {
-                playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
-                Debug.Log(UpgradaePosibility[WeaponEnhancePoint] + "% 의 확률을 뚫음");
-                WeaponEnhancePoint = 6;
-                WeaponATK = swordEft.SwordAttackPoint + UpgradePerPoint[WeaponEnhancePoint - 1];
-                Attack = PlayerAttack + swordEft.SwordAttackPoint + UpgradePerPoint[WeaponEnhancePoint - 1];
-                UpgradePos = UpgradaePosibility[WeaponEnhancePoint];
-                UpgradeGold = UpgradeGoldArray[WeaponEnhancePoint];
-                Debug.Log("무기 6강");
-
-                SaveWeaponEnhancePoint(); // 강화 성공 시 즉시 저장
-            }
-            else
-            {
-                playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
-                Debug.Log("강화 실패");
-                SaveWeaponEnhancePoint(); // 강화 성공 시 즉시 저장
-            }
-        }
-
-        else if (WeaponEnhancePoint == 6 && playerstats.Gold >= UpgradeGoldArray[WeaponEnhancePoint])
-        {
-            if (Random.Range(0, 100) < UpgradaePosibility[WeaponEnhancePoint]) // 20% 확률
-            {
-                playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
-                Debug.Log(UpgradaePosibility[WeaponEnhancePoint] + "% 의 확률을 뚫음");
-                WeaponEnhancePoint = 7;
-                WeaponATK = swordEft.SwordAttackPoint + UpgradePerPoint[WeaponEnhancePoint - 1];
-                Attack = PlayerAttack + swordEft.SwordAttackPoint + UpgradePerPoint[WeaponEnhancePoint - 1];
-                UpgradePos = UpgradaePosibility[WeaponEnhancePoint];
-                UpgradeGold = UpgradeGoldArray[WeaponEnhancePoint];
-                Debug.Log("무기 7강");
-
-                SaveWeaponEnhancePoint(); // 강화 성공 시 즉시 저장
-            }
-            else
-            {
-                playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
-                Debug.Log("강화 실패");
-                SaveWeaponEnhancePoint(); // 강화 성공 시 즉시 저장
-            }
-        }
-
-        else if (WeaponEnhancePoint == 7 && playerstats.Gold >= UpgradeGoldArray[WeaponEnhancePoint])
-        {
-            if (Random.Range(0, 100) < UpgradaePosibility[WeaponEnhancePoint]) // 10% 확률
-            {
-                playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
-                Debug.Log(UpgradaePosibility[WeaponEnhancePoint] + "% 의 확률을 뚫음");
-                WeaponEnhancePoint = 8;
-                WeaponATK = swordEft.SwordAttackPoint + UpgradePerPoint[WeaponEnhancePoint - 1];
-                Attack = PlayerAttack + swordEft.SwordAttackPoint + UpgradePerPoint[WeaponEnhancePoint - 1];
-                UpgradePos = UpgradaePosibility[WeaponEnhancePoint];
-                UpgradeGold = UpgradeGoldArray[WeaponEnhancePoint];
-                Debug.Log("무기 8강");
-
-                SaveWeaponEnhancePoint(); // 강화 성공 시 즉시 저장
-            }
-            else
-            {
-                playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
-                Debug.Log("강화 실패");
-                SaveWeaponEnhancePoint(); // 강화 성공 시 즉시 저장
-            }
-        }
-
-        // 업그레이드 후 값을 저장
+        // 강화 포인트 저장
         SaveWeaponEnhancePoint();
     }
+
+
 
     public void SaveWeaponEnhancePoint()
     {
