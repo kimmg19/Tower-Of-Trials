@@ -42,6 +42,7 @@ public class Dragon : MonoBehaviour
     {
 
         fireEmber.Play();
+        
 
     }
     public void FireFlame()
