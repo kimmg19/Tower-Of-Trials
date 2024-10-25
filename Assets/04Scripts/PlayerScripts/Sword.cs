@@ -16,8 +16,7 @@ public class Sword : MonoBehaviour
         {
             swordCollider.enabled = false; // 기본적으로 콜라이더 비활성화
             swordCollider.convex = true; // 물리 연산에 사용할 수 있도록 Convex로 설정
-        }
-        else
+        } else
         {
             Debug.LogError("Sword object does not have a MeshCollider component.");
         }
@@ -34,7 +33,7 @@ public class Sword : MonoBehaviour
         if (swordCollider != null)
         {
             swordCollider.enabled = true;
-            
+
         }
     }
 
@@ -49,23 +48,14 @@ public class Sword : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        
         if (swordCollider.enabled) // 콜라이더가 활성화된 상태에서만 충돌 처리
         {
             BaseEnemy enemy = other.GetComponent<BaseEnemy>();
             if (enemy != null)
-            {              
-
-                // 패링 상태와 관계없이 항상 데미지를 입힘
-                enemy.TakeDamage(damageAmount); 
-            }
-            /*else if (other.CompareTag("Dummy"))
             {
-                Dummy dummy = other.GetComponent<Dummy>();
-                if (dummy != null)
-                {
-                    dummy.TakeDamage(); // Dummy에 데미지를 준다.
-                }
-            }*/
+                enemy.TakeDamage(damageAmount);
+            }            
         }
     }
 }

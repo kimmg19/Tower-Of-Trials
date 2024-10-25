@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class FourthAreaManager : MonoBehaviour
 {
@@ -17,18 +18,28 @@ public class FourthAreaManager : MonoBehaviour
     [Header("Player Settings")]
     public Transform player;           // 플레이어 위치 참조
 
-    //"Other Settings"
+      
     private float time;
     private bool isDrakarisFlyAttackActive = false;  // FlyAttack 중복 방지 플래그
     private bool isDrakarisAttackActive = false;     // Attack 중복 방지 플래그
     private float particlePlayingTime;
+
+    [Header("Other Settings")]
     public ParticleSystem flame;
+    public GameObject inGameCanvas;
+    public GameObject playerUI;
+    bool isGameClear=false;
+    [SerializeField]PlayableDirector fourthAreaClearCinematic;
+
+    
+
     void Update()
     {
+        if (isGameClear) return;
         time += Time.deltaTime;
-
         if (time > 5f && !isDrakarisAttackActive)
         {
+            
             StartCoroutine(DrakarisAttack());
         }
 
@@ -45,9 +56,15 @@ public class FourthAreaManager : MonoBehaviour
 
     private IEnumerator DrakarisAttack()
     {
+        isDrakarisAttackActive = true;
         dragons.SetActive(true);
+        AudioManager.instance.Play("DragonFlameAttack");
         yield return new WaitForSeconds(particlePlayingTime);
+        AudioManager.instance.Stop("DragonFlameAttack");
+
         dragons.SetActive(false);
+        isDrakarisAttackActive = false;
+
         time = 0f;
         
     }
@@ -108,4 +125,18 @@ public class FourthAreaManager : MonoBehaviour
 
         return randomPosition;
     }
+
+    public void OnPrincessKilled()
+    {
+        isGameClear = true;
+        dragon.SetActive(false);
+        dragons.SetActive(false);
+        AudioManager.instance.Stop("4thAreaBgm"); // 보스 전투 BGM 멈추기
+        AudioManager.instance.Stop("DragonFlameAttack");
+        fourthAreaClearCinematic.Play();
+        
+        
+    }
+
+    
 }

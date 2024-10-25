@@ -3,14 +3,15 @@ using UnityEngine.AI;
 
 public class Princess : BaseEnemy
 {
+
     private NavMeshAgent agent;
-    [SerializeField] public float attackRange = 2f;
-    // public FourthAreaManager fourthAreaManager;
+    [HideInInspector] public float attackRange = 2f;
+    FourthAreaManager fourthAreaManager;
 
     // 골렘의 고유 스탯을 초기화
     protected override void InitializeStats()
     {
-        HP = 1000;
+        HP = 3000;
         damageAmount = 2;
     }
 
@@ -21,12 +22,17 @@ public class Princess : BaseEnemy
 
     protected override void Die()
     {
-        base.Die();
+        animator.SetTrigger("die");
+        AudioManager.instance.Play("MonsterDie");
+        GetComponent<Collider>().enabled = false;
+        enableDamaging = false;
+        fourthAreaManager.OnPrincessKilled();
     }
 
     protected override void Start()
     {
         base.Start();
+        fourthAreaManager = FindObjectOfType<FourthAreaManager>();
         animator.SetBool("isChasing", true);
         agent = GetComponent<NavMeshAgent>();
         if (playerStats == null)

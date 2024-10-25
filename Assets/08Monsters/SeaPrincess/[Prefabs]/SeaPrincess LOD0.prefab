@@ -1513,7 +1513,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 139396}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.033165656, y: -0.07527379, z: -0.08845693, w: 0.9926778}
+  m_LocalRotation: {x: 0.03316566, y: -0.07527379, z: -0.088456936, w: 0.9926778}
   m_LocalPosition: {x: -0.09213263, y: -0.008363662, z: -0.013567827}
   m_LocalScale: {x: 1, y: 1.0000001, z: 1.0000001}
   m_ConstrainProportionsScale: 0
@@ -3011,7 +3011,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 181784}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.15165827, y: 0.03165098, z: -0.09166073, w: 0.9836647}
+  m_LocalRotation: {x: -0.15165828, y: 0.031650983, z: -0.09166074, w: 0.98366475}
   m_LocalPosition: {x: -0.09336545, y: 0.00053891755, z: 0.0056693554}
   m_LocalScale: {x: 0.9999998, y: 0.9999997, z: 0.99999994}
   m_ConstrainProportionsScale: 0
@@ -3507,13 +3507,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee24fbe7b75270e4a9d71182ef943cc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 0
+  HP: 10
   healthBar: {fileID: 671701782299499839}
   animator: {fileID: 9552236}
   enableDamaging: 0
   isParried: 0
   isAttacking: 0
-  attackRange: 3
+  player: {fileID: 0}
+  attackRange: 2
 --- !u!114 &3232894544098214321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4297,7 +4298,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 198614}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.14156035, y: 0.095981434, z: -0.084267765, w: 0.9816553}
+  m_LocalRotation: {x: -0.14156036, y: 0.09598144, z: -0.08426777, w: 0.98165536}
   m_LocalPosition: {x: -0.07832766, y: 0.0011839656, z: 0.0020390453}
   m_LocalScale: {x: 1.0000004, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4616,7 +4617,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6087617749278569356}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -4655,7 +4656,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 127, y: -214}
+  m_AnchoredPosition: {x: 127, y: 470}
   m_SizeDelta: {x: 800, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &671701782299499839
@@ -4703,7 +4704,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 1
   m_MinValue: 0
-  m_MaxValue: 1000
+  m_MaxValue: 3000
   m_WholeNumbers: 0
   m_Value: 1
   m_OnValueChanged:
@@ -4743,7 +4744,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -375, y: -214}
+  m_AnchoredPosition: {x: -375, y: 470}
   m_SizeDelta: {x: 220, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5871759736213792645
