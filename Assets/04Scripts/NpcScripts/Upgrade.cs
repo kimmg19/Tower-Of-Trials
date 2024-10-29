@@ -27,16 +27,15 @@ public class Upgrade : MonoBehaviour
     {
         if (upgradePanel != null)
         {
-            //Debug.Log("Awake");
             upgradePanel.SetActive(false);
         }
 
-        // °ÔÀÓ ½ÃÀÛ ½Ã ÀúÀåµÈ °ª ºÒ·¯¿À±â
-        WeaponEnhancePoint = PlayerPrefs.GetInt("WeaponEnhancePoint", 0); // ±âº»°ª 0
-        WeaponATK = PlayerPrefs.GetInt("WeaponATK", 20); // ±âº»°ª 20
-        Attack = PlayerPrefs.GetInt("Attack", 40); // ±âº»°ª 40
-        UpgradePos = PlayerPrefs.GetInt("UpgradePos", 90); // ±âº»°ª 90
-        UpgradeGold = PlayerPrefs.GetInt("UpgradeGold", 100); // ±âº»°ª 100
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½
+        WeaponEnhancePoint = PlayerPrefs.GetInt("WeaponEnhancePoint", 0); // ï¿½âº»ï¿½ï¿½ 0
+        WeaponATK = PlayerPrefs.GetInt("WeaponATK", 20); // ï¿½âº»ï¿½ï¿½ 20
+        Attack = PlayerPrefs.GetInt("Attack", 40); // ï¿½âº»ï¿½ï¿½ 40
+        UpgradePos = PlayerPrefs.GetInt("UpgradePos", 90); // ï¿½âº»ï¿½ï¿½ 90
+        UpgradeGold = PlayerPrefs.GetInt("UpgradeGold", 100); // ï¿½âº»ï¿½ï¿½ 100
 
         //Debug.Log("Game data loaded.");
 
@@ -45,24 +44,15 @@ public class Upgrade : MonoBehaviour
         UpgradePosText.text = UpgradePos.ToString() + "%";
         UpgradeGoldText.text = UpgradeGold.ToString() + " / " + playerstats.Gold.ToString();
 
-        // UI °­Á¦ ¾÷µ¥ÀÌÆ®
+        // UI ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
         Canvas.ForceUpdateCanvases();
     }
-    /*
-    private void Update()
-    {
-        InvenWeaponEnhanceText.text = "+" + WeaponEnhancePoint.ToString();
-        WeaponEnhanceText.text = "+" + WeaponEnhancePoint.ToString();
-        UpgradePosText.text = UpgradePos.ToString() + "%";
-        UpgradeGoldText.text = UpgradeGold.ToString() + " / " + playerstats.Gold.ToString();
-    }
-    */
+  
     public void ShowUpgradePanel()
     {
         if (upgradePanel != null)
         {
             upgradePanel.SetActive(true);
-            Debug.Log("tq.");
         }
     }
 
@@ -78,30 +68,23 @@ public class Upgrade : MonoBehaviour
     {
         if (WeaponEnhancePoint >= UpgradeGoldArray.Length || playerstats.Gold < UpgradeGoldArray[WeaponEnhancePoint])
         {
-            Debug.Log("°­È­ ºÒ°¡´É: °­È­ Æ÷ÀÎÆ®°¡ ÃÖ´ëÀÌ°Å³ª °ñµå°¡ ºÎÁ·ÇÕ´Ï´Ù.");
             return;
         }
 
-        // °­È­ ºñ¿ë Â÷°¨
+        // ï¿½ï¿½È­ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         playerstats.Gold -= UpgradeGoldArray[WeaponEnhancePoint];
 
-        // °­È­ ¼º°ø ¿©ºÎ °áÁ¤
+        // ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         bool isUpgradeSuccessful = Random.Range(0, 100) < UpgradaePosibility[WeaponEnhancePoint];
         if (isUpgradeSuccessful)
         {
             WeaponEnhancePoint++;
-            Debug.Log(UpgradaePosibility[WeaponEnhancePoint - 1] + "% ÀÇ È®·üÀ» ¶ÕÀ½");
             WeaponATK = swordEft.SwordAttackPoint + UpgradePerPoint[WeaponEnhancePoint - 1];
             Attack = PlayerAttack + WeaponATK;
 
-            Debug.Log("¹«±â " + WeaponEnhancePoint + "°­");
         }
-        else
-        {
-            Debug.Log("°­È­ ½ÇÆÐ");
-        }
+     
 
-        // °­È­ È®·ü°ú ºñ¿ë Á¤º¸ ¾÷µ¥ÀÌÆ®
         if (WeaponEnhancePoint < UpgradeGoldArray.Length)
         {
             UpgradePos = UpgradaePosibility[WeaponEnhancePoint];
@@ -109,11 +92,11 @@ public class Upgrade : MonoBehaviour
         }
         else
         {
-            UpgradePos = 0; // °­È­°¡ ÃÖ´ëÄ¡¿¡ µµ´ÞÇßÀ» ¶§ È®·ü Ç¥½Ã¸¦ 0À¸·Î ¼³Á¤
-            UpgradeGold = 0; // ºñ¿ëµµ 0À¸·Î ¼³Á¤
+            UpgradePos = 0; // ï¿½ï¿½È­ï¿½ï¿½ ï¿½Ö´ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ È®ï¿½ï¿½ Ç¥ï¿½Ã¸ï¿½ 0ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            UpgradeGold = 0; // ï¿½ï¿½ëµµ 0ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
 
-        // °­È­ Æ÷ÀÎÆ® ÀúÀå
+        // ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
         SaveWeaponEnhancePoint();
     }
 
@@ -128,7 +111,7 @@ public class Upgrade : MonoBehaviour
         PlayerPrefs.SetInt("Attack", Attack);
         PlayerPrefs.SetInt("UpgradePos", UpgradePos);
         PlayerPrefs.SetInt("UpgradeGold", UpgradeGold);
-        PlayerPrefs.Save(); // º¯°æ»çÇ× ÀúÀå
+        PlayerPrefs.Save(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         //Debug.Log("Game data saved.");
 
         InvenWeaponEnhanceText.text = "+" + WeaponEnhancePoint.ToString();
@@ -136,7 +119,6 @@ public class Upgrade : MonoBehaviour
         UpgradePosText.text = UpgradePos.ToString() + "%";
         UpgradeGoldText.text = UpgradeGold.ToString() + " / " + playerstats.Gold.ToString();
 
-        // UI °­Á¦ ¾÷µ¥ÀÌÆ®
         Canvas.ForceUpdateCanvases();
     }
 

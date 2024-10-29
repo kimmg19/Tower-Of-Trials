@@ -55,7 +55,6 @@ public class AudioManager : MonoBehaviour
             if (s.source.isPlaying)
             {
                 s.source.Stop();
-                print("stop" + s.name);
             }
         }
     }
@@ -79,7 +78,6 @@ public class AudioManager : MonoBehaviour
         if (s.name.Contains("Bgm") && s.source.isPlaying)
         {
             s.source.Stop();
-            Debug.Log($"Stopped BGM: {s.name}");
         }
     }
 }

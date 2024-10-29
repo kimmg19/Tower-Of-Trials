@@ -183,7 +183,7 @@ public class PlayerInputs : MonoBehaviour
 
     private void OnRoll()
     {
-        if (isInteracting || isDodging || isJumping || isRollCooldown || isSkillAttacking
+        if (!playerStatus.playerAlive || isInteracting || isDodging || isJumping || isRollCooldown || isSkillAttacking
             || moveInput.magnitude == 0 || playerStats.currentStamina < rollStamina) return;
         
         playerMovement.Roll();
@@ -196,7 +196,6 @@ public class PlayerInputs : MonoBehaviour
     private void OnInteraction()
     {
         StartCoroutine(InteractingCoroutine(() => isGPress = false));
-        Debug.Log("G key pressed in PlayerInputs.");
     }
 
     private IEnumerator InteractingCoroutine(Action onComplete)
@@ -296,7 +295,6 @@ public class PlayerInputs : MonoBehaviour
     private void OnAttackSkill()
     {
         int skillUnlocked = CheckSkillUnlocked(attackSkill);
-        print("공격 스킬 해제 여부: " + skillUnlocked);
         if (skillUnlocked == 1)
         {
             if (isInteracting || canBlocking || isDodging || isJumping
@@ -307,13 +305,7 @@ public class PlayerInputs : MonoBehaviour
                 playerStatus.UseMp(attackSkillMp);
                 animator.SetTrigger("AttackSkill");
                 StartCoroutine(ActiveAttackSkill());
-            } else
-            {
-                Debug.Log("Not enough MP for Buff Skill.");
-            }
-        } else
-        {
-            print("공격 스킬 잠겨있음");
+            } 
         }
     }
     private IEnumerator ActiveAttackSkill()
@@ -325,7 +317,6 @@ public class PlayerInputs : MonoBehaviour
     void OnBuffSkill()
     {
         int skillUnlocked = CheckSkillUnlocked(buffSkill);
-        print("버프 스킬 해제 여부: " + skillUnlocked);
         if (skillUnlocked == 1)
         {
             if (isInteracting || isDodging || isJumping
@@ -337,10 +328,7 @@ public class PlayerInputs : MonoBehaviour
                 animator.SetTrigger("BuffSkill");
                 playerStatus.UseMp(buffSkillMp);
                 StartCoroutine(ActivateBuffSkill());
-            } else
-            {
-                Debug.Log("Not enough MP for Buff Skill.");
-            }
+            } 
         }
             
     }
@@ -373,7 +361,6 @@ public class PlayerInputs : MonoBehaviour
         playerStats.IncreaseSwordDamage(-10); // 공격력 감소
         playerMovement.Debuffspeed(); // 이동 속도 원래대로
 
-        Debug.Log("Buff skill has ended.");
     }
 
     void OnJump()
@@ -432,7 +419,6 @@ public class PlayerInputs : MonoBehaviour
     {
         if (isInteracting || animationEvent.IsAttacking())
         {
-            print("돌아가");
             return;
         }
         lockOnSystem.ToggleLockOn();

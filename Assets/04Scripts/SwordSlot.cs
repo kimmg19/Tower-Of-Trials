@@ -6,29 +6,23 @@ using UnityEngine.UI;
 
 public class SwordSlot : MonoBehaviour, IPointerClickHandler
 {
-    public Item item; // ÀåÂøÇÒ ¹«±â ¾ÆÀÌÅÛ
-    public Image itemIcon; // ¹«±â ¾ÆÀÌÄÜ
-    private PlayerStats playerStats; // ÇÃ·¹ÀÌ¾îÀÇ ½ºÅÈ Á¤º¸
+    public Item item; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public Image itemIcon; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    private PlayerStats playerStats; // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     void Start()
     {
         playerStats = FindObjectOfType<PlayerStats>();
 
-        if (playerStats == null)
-        {
-            //Debug.LogError("PlayerStats not found in the scene!");
-        }
-
         if (item != null && playerStats != null)
         {
-            // ¹«±â¸¦ ÀåÂøÇÏ°í È¿°ú Àû¿ë
-            //Debug.Log("Equipping sword...");
+  
             bool isUse = item.Use(playerStats);
 
             if (isUse)
             {
                 //Debug.Log("Sword equipped and effect applied.");
-                // ÀåÂø ÈÄ ÀÎº¥Åä¸®¿¡¼­ Á¦°ÅÇÒ ¼öµµ ÀÖÀ½
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 // Inventory.instance.RemoveItem(item.slotNum);
             }
             else
@@ -38,39 +32,12 @@ public class SwordSlot : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    /*
-    public void EquipSword()
-    {
-        if (item != null && playerStats != null)
-        {
-            // ¹«±â¸¦ ÀåÂøÇÏ°í È¿°ú Àû¿ë
-            Debug.Log("Equipping sword...");
-            bool isUse = item.Use(playerStats);
+   
 
-            if (isUse)
-            {
-                Debug.Log("Sword equipped and effect applied.");
-                // ÀåÂø ÈÄ ÀÎº¥Åä¸®¿¡¼­ Á¦°ÅÇÒ ¼öµµ ÀÖÀ½
-                // Inventory.instance.RemoveItem(item.slotNum);
-            }
-            else
-            {
-                Debug.LogWarning("Failed to equip sword.");
-            }
-        }
-        else
-        {
-            Debug.LogWarning("No sword or PlayerStats available for equipping.");
-        }
-    }
-    */
-
-    // ¹«±â ÀåÂø ½Ã UI ¾÷µ¥ÀÌÆ®
     public void UpdateSwordSlotUI()
     {
         if (itemIcon == null)
         {
-            Debug.LogError("ItemIcon is not assigned.");
             return;
         }
 
@@ -85,9 +52,7 @@ public class SwordSlot : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    // Å¬¸¯ ½Ã ¹«±â ÀåÂø
     public void OnPointerClick(PointerEventData eventData)
     {
-        //EquipSword(); // ¾ÆÀÌÅÛÀ» Å¬¸¯ÇÏ¸é ÀåÂø
     }
 }

@@ -32,7 +32,6 @@ public class PassiveShopUI : MonoBehaviour
 
     public void OnTogglePassiveShop(InputAction.CallbackContext context)
     {
-        Debug.Log("TogglePassiveShop triggered");
         if (context.performed)
         {
             TogglePassiveShop();
@@ -46,7 +45,7 @@ public class PassiveShopUI : MonoBehaviour
 
         if (activePassiveShop)
         {
-            RedrawSlotUI(); // »óÁ¡ UI°¡ ¿­¸± ¶§ ½½·Ô UI °»½Å
+            RedrawSlotUI(); // ï¿½ï¿½ï¿½ï¿½ UIï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ UI ï¿½ï¿½ï¿½ï¿½
         }
     }
 
@@ -79,7 +78,6 @@ public class PassiveShopUI : MonoBehaviour
     public void SelectItem(Item item)
     {
         selectedItem = item;
-        Debug.Log("Selected Item: " + selectedItem.itemName);
     }
 
 

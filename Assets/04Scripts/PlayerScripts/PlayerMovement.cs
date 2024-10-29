@@ -54,7 +54,6 @@ public class PlayerMovement : MonoBehaviour
         {
             Move(speed);
             ApplyGravity();
-            //Debug.Log(velocity.y);
         }
     }
 
@@ -157,13 +156,11 @@ public class PlayerMovement : MonoBehaviour
             {
                 velocity.y = -2.0f;
             }
-            Debug.Log("지면에 있음");
         }
         else
         {
             // 공중에 있을 때 중력 적용
             velocity.y += gravity * Time.deltaTime * 2;
-            Debug.Log("지면에 있지 않음");
         }
 
         // 속도에 따라 캐릭터 이동

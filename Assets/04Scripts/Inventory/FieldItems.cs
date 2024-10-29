@@ -13,8 +13,7 @@ public class FieldItems : MonoBehaviour
         item.itemImage = _item.itemImage;
         item.itemType = _item.itemType;
         item.efts = _item.efts;
-        item.quantity = _item.quantity; // quantity °ªÀ» º¹»ç
-        Debug.Log("SetItem called with quantity: " + item.quantity); // µð¹ö±ë ·Î±× Ãß°¡
+        item.quantity = _item.quantity; // quantity ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
         //image.sprite = item.itemImage;
     }

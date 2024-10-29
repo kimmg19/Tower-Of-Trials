@@ -14,19 +14,16 @@ public class ItemManaEft : ItemEffect
             if (playerStats.currentMp < playerStats.maxMp)
             {
                 playerStats.currentMp += ManaAmount;
-                playerStats.currentMp = Mathf.Clamp(playerStats.currentMp, 0, playerStats.maxMp); // ÃÖ´ë ¸¶³ª¸¦ ÃÊ°úÇÏÁö ¾Êµµ·Ï Á¦ÇÑ
-                Debug.Log("Player MP Add: " + ManaAmount);
+                playerStats.currentMp = Mathf.Clamp(playerStats.currentMp, 0, playerStats.maxMp); // ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Êµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 return true;
             }
             else
             {
-                Debug.Log("Player MP is already full.");
                 return false;
             }
         }
         else
         {
-            Debug.LogError("PlayerStats is null!");
             return false;
         }
     }

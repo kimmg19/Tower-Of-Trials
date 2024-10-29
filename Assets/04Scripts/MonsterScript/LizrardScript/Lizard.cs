@@ -20,8 +20,9 @@ public class Lizard : BaseEnemy
     {
         if (keyPrefab != null)
         {
-            // 몬스터의 위치에 키 아이템 생성
+            // 몬스터의 위치에서 Y축을 1로 조정하여 키 아이템 생성
             Vector3 dropPosition = transform.position;
+            dropPosition.y += 1f; // Y축을 1로 띄움
             GameObject item = Instantiate(keyPrefab, dropPosition, Quaternion.identity);
 
             GameObject particleEffect = null;
@@ -30,10 +31,6 @@ public class Lizard : BaseEnemy
             if (particleEffectPrefab != null)
             {
                 particleEffect = Instantiate(particleEffectPrefab, dropPosition, Quaternion.identity);
-            }
-            else
-            {
-                Debug.LogWarning($"{gameObject.name} has no particleEffectPrefab assigned.");
             }
 
             // 파티클을 키 아이템의 KeyItem 스크립트에 연결
@@ -55,11 +52,8 @@ public class Lizard : BaseEnemy
                     LeanTween.moveY(item, dropPosition.y, fallDuration)
                     .setEaseInOutQuad()); // 여기에 Ease 조정
         }
-        else
-        {
-            Debug.LogWarning($"{gameObject.name} has no keyPrefab assigned.");
-        }
     }
+
 
     // 시작 시 초기화
     protected override void Start()

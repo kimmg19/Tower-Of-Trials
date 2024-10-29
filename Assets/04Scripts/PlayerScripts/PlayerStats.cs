@@ -62,12 +62,8 @@ public class PlayerStats : MonoBehaviour
         if (sword != null)
         {
             sword.damageAmount += amount;
-            Debug.Log("Sword damageAmount is now: " + sword.damageAmount);
         }
-        else
-        {
-            Debug.LogWarning("playerSword is null.");
-        }
+        
         weaponATK = sword.damageAmount;
     }
 
@@ -75,7 +71,6 @@ public class PlayerStats : MonoBehaviour
     {
         Attack = upgrade.Attack;
         weaponATK = upgrade.WeaponATK;
-        //upgrade.SaveWeaponEnhancePoint();
     }
 
     public void OnApplicationQuit()
@@ -85,12 +80,7 @@ public class PlayerStats : MonoBehaviour
         PlayerPrefs.SetInt("PlayerMaxStamina", maxStamina);
         PlayerPrefs.SetInt("PlayerGold", Gold);
 
-        // ������� ���� �α� �߰�
-        Debug.Log("Saving PlayerPrefs: ");
-        /*Debug.Log("PlayerMpPotionRate: " + MpPotionRate);
-        Debug.Log("PlayerHpPotionRate: " + HpPotionRate);
-        Debug.Log("PlayerMaxStamina: " + maxStamina);
-        Debug.Log("PlayerGold: " + Gold);*/
+   
 
         PlayerPrefs.Save();
     }

@@ -32,7 +32,6 @@ public class ShopUI : MonoBehaviour
 
     public void OnToggleShop(InputAction.CallbackContext context)
     {
-        Debug.Log("ToggleShop triggered");
         if (context.performed)
         {
             ToggleShop();
@@ -46,7 +45,7 @@ public class ShopUI : MonoBehaviour
 
         if (activeShop)
         {
-            RedrawSlotUI(); // 상점 UI가 열릴 때 슬롯 UI 갱신
+            RedrawSlotUI(); 
         }
     }
 
@@ -79,7 +78,6 @@ public class ShopUI : MonoBehaviour
     public void SelectItem(Item item)
     {
         selectedItem = item;
-        Debug.Log("Selected Item: " + selectedItem.itemName);
     }
 
 

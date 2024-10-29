@@ -25,7 +25,8 @@ public class SelfDestroyEffect : MonoBehaviour
         if (effect.aliveParticleCount > 0 && !effectPlayed)
         {
             effectPlayed = true;
-            AudioManager.instance.Play("Meteor");
+            // AudioManager.instance.Play("Meteor");
+            Invoke("PlayMeteorSound", 1.3f);
             Invoke("ActivateCollider", 1.3f);  // 1.3초 후에 콜라이더 활성화
         }
 
@@ -50,5 +51,10 @@ public class SelfDestroyEffect : MonoBehaviour
             other.GetComponent<PlayerStatus>().TakeDamage(10);  // 플레이어에게 데미지 입힘
             meteorCollider.enabled = false; // 한번 맞았을 때 콜라이더 비활성화
         }
+    }
+
+    private void PlayMeteorSound()
+    {
+        AudioManager.instance.Play("Meteor");
     }
 }

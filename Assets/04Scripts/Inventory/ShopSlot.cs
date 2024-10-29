@@ -16,10 +16,10 @@ public class ShopSlot : MonoBehaviour
     {
         if (item != null)
         {
-            itemIcon.sprite = item.itemImage;  // ½½·Ô¿¡ ¾ÆÀÌÅÛ ÀÌ¹ÌÁö ¼³Á¤
+            itemIcon.sprite = item.itemImage;  // ï¿½ï¿½ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
 
-        // ±¸¸Å ¹öÆ°¿¡ onClick ÀÌº¥Æ® ¸®½º³Ê Ãß°¡
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°ï¿½ï¿½ onClick ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
         buyButton.onClick.AddListener(OnBuyButtonClick);
 
         playerStats = FindObjectOfType<PlayerStats>();
@@ -35,12 +35,12 @@ public class ShopSlot : MonoBehaviour
 
             if (playerStats.Gold >= itemPrice)
             {
-                // »õ Item °´Ã¼¸¦ »ý¼ºÇÏ¿© ÀÎº¥Åä¸®¿¡ Ãß°¡
+                // ï¿½ï¿½ Item ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½ß°ï¿½
                 Item newItem = new Item
                 {
                     itemName = item.itemName,
                     itemImage = item.itemImage,
-                    quantity = 1, // ±âº» ¼ö·®À» 1·Î ¼³Á¤
+                    quantity = 1, // ï¿½âº» ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                     StorePrice = item.StorePrice,
                     efts = new List<ItemEffect>(item.efts)
                 };
@@ -50,31 +50,16 @@ public class ShopSlot : MonoBehaviour
                 if (added)
                 {
                     playerStats.Gold -= itemPrice;
-                    Debug.Log("Item added to inventory: " + newItem.itemName);
-                    Debug.Log("Remaining Gold: " + playerStats.Gold + " G");
                     playerStats.OnApplicationQuit();
                     upgrade.SaveWeaponEnhancePoint();
                 }
-                else
-                {
-                    Debug.Log("Failed to add item to inventory. Inventory might be full.");
-                }
+     
             }
-            else
-            {
-                Debug.Log("Not enough gold to buy item: " + item.itemName + ". Required: " + itemPrice + " G");
-            }
+  
         }
-        else
-        {
-            Debug.LogError("PlayerStats not found!");
-        }
+  
     }
 
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+ 
 }

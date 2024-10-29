@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "ItemEft/Consumable/MpPotionPlus")]
 public class MpPlusPotionEft : ItemEffect
 {
-    public int MpPlusPoint = 0; // Hp Æ÷¼Ç È¸º¹·® Áõ°¡ ¼öÄ¡
+    public int MpPlusPoint = 0; // Hp ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
     public override bool ExecuteRole(PlayerStats playerStats)
     {
         if (playerStats != null)
@@ -13,19 +13,15 @@ public class MpPlusPotionEft : ItemEffect
             if (playerStats.MpPotionRate < 50)
             {
                 playerStats.MpPotionRate += MpPlusPoint;
-                //playerStats.currentMp = Mathf.Clamp(playerStats.currentMp, 0, playerStats.maxMp); // ÃÖ´ë ¸¶³ª¸¦ ÃÊ°úÇÏÁö ¾Êµµ·Ï Á¦ÇÑ
-                Debug.Log("Mp Potion È¸º¹·® Áõ°¡: " + MpPlusPoint + "%" + "ÃÑ È¸º¹·®: " + playerStats.MpPotionRate);
                 return true;
             }
             else
             {
-                Debug.Log("Mp Potion È¸º¹·®ÀÌ ÀÌ¹Ì 50ÀÓ");
                 return false;
             }
         }
         else
         {
-            Debug.LogError("PlayerStats is null!");
             return false;
         }
     }

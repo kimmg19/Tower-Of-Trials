@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class MoveUp : MonoBehaviour
 {
-    public GameObject objectToPush;  // ¿À¸¥ÂÊÀ¸·Î ¹Ð ¿ÀºêÁ§Æ®
-    public float pushForce = 5.0f;   // ¹Ð¾î³¾ ÈûÀÇ Å©±â
-    public int movingTime = 0;       // ¹ßÆÇÀÌ ¹æÇâÀ» ¹Ù²Ù´Â ÁÖ±â (sec)
-    public int maxMoveCount = 3;     // ¸î ¹ø ÀÌµ¿ÇÒ °ÍÀÎÁö ¼³Á¤
-    private float delta = 0;         // deltaTime °ªÀ» ´©ÀûÇØ¼­, ¾ó¸¶ÀÇ ½Ã°£ÀÌ Èê·¶´ÂÁö¸¦ ÆÇ´Ü
-    private int moveCount = 0;       // ÀÌµ¿ È½¼ö Ä«¿îÆ®
-    private bool movingFlag = true;  // ¾î´À ¹æÇâÀ¸·Î ¿òÁ÷ÀÏÁö °áÁ¤
-    public List<Vector3> directionList = new List<Vector3>();  // ÀÌµ¿ ¹æÇâ ¸®½ºÆ®
-    private int currentDirectionIndex = 0;  // ÇöÀç ¹æÇâÀ» °¡¸®Å°´Â ÀÎµ¦½º
+    public GameObject objectToPush;  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+    public float pushForce = 5.0f;   // ï¿½Ð¾î³¾ ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½
+    public int movingTime = 0;       // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²Ù´ï¿½ ï¿½Ö±ï¿½ (sec)
+    public int maxMoveCount = 3;     // ï¿½ï¿½ ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    private float delta = 0;         // deltaTime ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ê·¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç´ï¿½
+    private int moveCount = 0;       // ï¿½Ìµï¿½ È½ï¿½ï¿½ Ä«ï¿½ï¿½Æ®
+    private bool movingFlag = true;  // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public List<Vector3> directionList = new List<Vector3>();  // ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
+    private int currentDirectionIndex = 0;  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å°ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½
 
     void Update()
     {
-        // ÀÌµ¿ È½¼ö°¡ maxMoveCountº¸´Ù Å©¸é ¿ÀºêÁ§Æ®¸¦ Á¦°Å
+        // ï¿½Ìµï¿½ È½ï¿½ï¿½ï¿½ï¿½ maxMoveCountï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (moveCount >= maxMoveCount)
         {
             Destroy(gameObject);
@@ -29,14 +29,14 @@ public class MoveUp : MonoBehaviour
         {
             this.delta = 0;
             this.movingFlag = !this.movingFlag;
-            moveCount++; // ¹æÇâÀÌ ¹Ù²ð ¶§¸¶´Ù ÀÌµ¿ È½¼ö Áõ°¡
+            moveCount++; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ È½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-            // ´ÙÀ½ ¹æÇâÀ¸·Î ÀüÈ¯
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
             currentDirectionIndex = (currentDirectionIndex + 1) % directionList.Count;
         }
 
-        float speedMultiplier = 4.0f;  // ¼Óµµ¸¦ Á¶ÀýÇÒ °è¼ö
-        Vector3 currentDirection = directionList[currentDirectionIndex];  // ÇöÀç ÀÌµ¿ÇÒ ¹æÇâ
+        float speedMultiplier = 4.0f;  // ï¿½Óµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+        Vector3 currentDirection = directionList[currentDirectionIndex];  // ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
         if (this.movingFlag)
         {
@@ -52,7 +52,6 @@ public class MoveUp : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            Debug.Log("Player¿Í Ãæµ¹ÇßÀ½!");
 
             Rigidbody pushRigidbody = objectToPush?.GetComponent<Rigidbody>();
 

@@ -10,6 +10,8 @@ public class InventoryUI : MonoBehaviour
     Inventory inven;
     GameObject player;
     PlayerInputs playerInputs;
+
+    public GameObject iconCanvas;
     public GameObject inventoryPanel;
     bool activeInventory = false;
     public Slot[] slots;
@@ -57,10 +59,12 @@ public class InventoryUI : MonoBehaviour
         if (activeInventory)
         {
             AudioManager.instance.Play("InventoryOpen"); // 인벤토리 열기 오디오 재생
+            iconCanvas.SetActive(false);
         }
         else
         {
             AudioManager.instance.Play("InventoryClose"); // 인벤토리 닫기 오디오 재생
+            iconCanvas.SetActive(true);
         }
     }
 
@@ -87,7 +91,6 @@ public class InventoryUI : MonoBehaviour
         {
             slots[i].item = inven.items[i];
             slots[i].UpdateSlotUI();
-            Debug.Log($"Slot {i} updated with item '{slots[i].item.itemName}' (quantity: {slots[i].item.quantity}).");
         }
         //Debug.Log("RedrawSlotUI completed.");
     }

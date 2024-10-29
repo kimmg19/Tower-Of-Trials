@@ -5,13 +5,13 @@ using System.Collections;
 
 public class HpQuickSlot : MonoBehaviour
 {
-    public Text quantityText; // HP Æ÷¼ÇÀÇ ¼ö·®À» Ç¥½ÃÇÒ UI Text
+    public Text quantityText; // HP ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½ï¿½ UI Text
     private Inventory inventory;
     [HideInInspector] public bool UsingQuickHpPotion = false;
-    [SerializeField] float UsingHpPotionDuration = 1.5f; // Æ÷¼Ç ÄðÅ¸ÀÓ Áö¼Ó ½Ã°£
-    [SerializeField] Image UsingHpPotionImage; // Æ÷¼Ç ÄðÅ¸ÀÓÀ» Ç¥½ÃÇÒ Image
+    [SerializeField] float UsingHpPotionDuration = 1.5f; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
+    [SerializeField] Image UsingHpPotionImage; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½ï¿½ Image
 
-    private bool isHpPotionCooldown = false; // Æ÷¼Ç ÄðÅ¸ÀÓ »óÅÂ º¯¼ö
+    private bool isHpPotionCooldown = false; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     // Input Action Reference
     public InputActionReference useHpPotionAction;
@@ -22,17 +22,12 @@ public class HpQuickSlot : MonoBehaviour
         inventory = Inventory.instance;
         if (inventory == null)
         {
-            Debug.LogError("Inventory instance not found.");
             return;
         }
 
         if (useHpPotionAction != null)
         {
             useHpPotionAction.action.performed += UseQuickHpPotion;
-        }
-        else
-        {
-            Debug.LogError("InputActionReference not assigned.");
         }
 
         UpdateHpPotionQuantity();
@@ -72,9 +67,8 @@ public class HpQuickSlot : MonoBehaviour
 
     private void UseQuickHpPotion(InputAction.CallbackContext context)
     {
-        if (isHpPotionCooldown) return; // ÄðÅ¸ÀÓ ÁßÀÌ¸é ¾ÆÀÌÅÛ »ç¿ë ºÒ°¡
+        if (isHpPotionCooldown) return; // ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ò°ï¿½
 
-        Debug.Log("UseQuickHpPotion called.");
 
         Item hpPotion = inventory.items.Find(item => item.itemName == "Hp Potion");
 
@@ -83,7 +77,6 @@ public class HpQuickSlot : MonoBehaviour
             PlayerStats playerStats = FindObjectOfType<PlayerStats>();
             if (playerStats == null)
             {
-                Debug.LogError("PlayerStats not found.");
                 return;
             }
 
@@ -91,12 +84,10 @@ public class HpQuickSlot : MonoBehaviour
             if (isUse)
             {
                 hpPotion.quantity -= 1;
-                Debug.Log("Hp Potion used. Remaining quantity: " + hpPotion.quantity);
 
                 if (hpPotion.quantity == 0)
                 {
                     inventory.RemoveItem(inventory.items.IndexOf(hpPotion));
-                    Debug.Log("Hp Potion removed from inventory.");
                 }
 
                 inventory.SaveInventory();
@@ -104,18 +95,12 @@ public class HpQuickSlot : MonoBehaviour
 
                 UpdateAllSlotUIs();
 
-                // ÄðÅ¸ÀÓ ½ÃÀÛ
+                // ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 StartCoroutine(HpPotionCooldownCoroutine());
             }
-            else
-            {
-                Debug.LogWarning("Hp Potion use failed.");
-            }
+ 
         }
-        else
-        {
-            Debug.Log("No Hp Potion found in inventory or quantity is 0.");
-        }
+  
     }
 
     private IEnumerator HpPotionCooldownCoroutine()
@@ -142,7 +127,6 @@ public class HpQuickSlot : MonoBehaviour
 
     private void UpdateAllSlotUIs()
     {
-        Debug.Log("Updating all slot UIs...");
         foreach (var slot in FindObjectsOfType<Slot>(true))
         {
             if (slot.item != null && slot.item.itemName == "Hp Potion")

@@ -30,10 +30,7 @@ public class PlayerStatus : MonoBehaviour
 
 
         savePoint = FindObjectOfType<SavePoint>();
-        if (savePoint == null)
-        {
-            Debug.LogError("SavePoint를 찾을 수 없습니다.");
-        }
+  
     }
 
     public void TakeDamage(int damage, bool isParried = false)
@@ -41,14 +38,12 @@ public class PlayerStatus : MonoBehaviour
         // 무적 상태일 때 데미지를 무시
         if (isDamageIgnored)
         {
-            Debug.Log("무적 상태로 인해 데미지를 무시합니다.");
             return;
         }
 
         // 패링에 성공한 경우
         if (isParried)
         {
-            Debug.Log("공격이 패링되었습니다. 플레이어는 무적 상태입니다.");
             SetParrySuccess(true); // 패링 성공 상태 설정
             return;
         }
@@ -63,8 +58,6 @@ public class PlayerStatus : MonoBehaviour
                 playerHitEffect.ShowHitEffect();
                 playerStats.currentHp -= finalDamage;
                 AudioManager.instance.Play("PlayerHit");
-
-                Debug.Log("플레이어가 데미지를 입었습니다.");
 
                 if (playerStats.currentHp <= 0)
                 {
@@ -122,13 +115,9 @@ public class PlayerStatus : MonoBehaviour
         {
             //animator.SetTrigger("PlayerDie");
             savePoint.LoadPlayerPosition();
-            Debug.Log("세이브 포인트로 이동!");
             StartCoroutine(DeactivateAfterDelay());
         }
-        else
-        {
-            Debug.LogWarning("SavePoint가 null입니다.");
-        }
+
 
         //playerStats.OnApplicationQuit();
     }
@@ -145,16 +134,13 @@ public class PlayerStatus : MonoBehaviour
         isParried = success;
         if (success)
         {
-            Debug.Log("플레이어는 이제 무적 상태입니다.");
             StartCoroutine(IgnoreDamageForDuration()); // 패링 후 일정 시간 동안 무적 상태
         }
     }
     private IEnumerator IgnoreDamageForDuration()
     {
         isDamageIgnored = true;
-        Debug.Log("무적 상태가 " + ignoreDamageDuration + "초 동안 활성화됩니다.");
         yield return new WaitForSeconds(ignoreDamageDuration);
         isDamageIgnored = false;
-        Debug.Log("무적 상태가 종료되었습니다.");
     }
 }

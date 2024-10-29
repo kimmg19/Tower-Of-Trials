@@ -1,4 +1,5 @@
 using System.Collections;
+// using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -12,12 +13,11 @@ public class Golem : BaseEnemy
     private bool isJumping = false;
     
     public ParticleSystem rockDebrisEffect;
-    //[SerializeField] private Collider attackCollider; // Attack collider as a serialized field
 
     // 골렘의 고유 스탯을 초기화
     protected override void InitializeStats()
     {
-        HP = 500;
+        HP = 1000;
         damageAmount = 30;
     }
 
@@ -36,28 +36,6 @@ public class Golem : BaseEnemy
         firstAreaManager = FindObjectOfType<FirstAreaManager>();
         agent = GetComponent<NavMeshAgent>();
 
-        // Make sure attackCollider is assigned in the inspector
-        /*if (attackCollider == null)
-        {
-            Debug.LogError($"{gameObject.name} is missing the attack collider!");
-        }
-        else
-        {
-            attackCollider.enabled = false; // Disable collider by default
-        }*/
-
-        if (playerStats == null)
-        {
-            Debug.LogError("PlayerStats component not found on Player.");
-        }
-        if (agent == null)
-        {
-            Debug.LogError("NavMeshAgent not found on the Golem.");
-        }
-        if (healthBar == null)
-        {
-            Debug.LogWarning($"{gameObject.name} is missing a health bar!");
-        }
     }
 
     private void OnDrawGizmosSelected()
@@ -72,13 +50,12 @@ public class Golem : BaseEnemy
         {
             rockDebrisEffect.Play();
         }
-        Debug.Log("Golem performs a stomp attack.");
 
-        float distance = Vector3.Distance(player.transform.position, agent.transform.position);
-        if (distance <= attackRange * stompRangeMultiplier)
-        {
-            playerStatus.TakeDamage(damageAmount);
-        }
+        // float distance = Vector3.Distance(player.transform.position, agent.transform.position);
+        // if (distance <= attackRange * stompRangeMultiplier)
+        // {
+        //     playerStatus.TakeDamage(damageAmount);
+        // }
     }
 
     

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyAttackHandler : MonoBehaviour
 {
-    [SerializeField] private Collider attackCollider; // Inspector에서 할당할 수 있도록 다시 필드로 설정
+    [SerializeField] public Collider attackCollider; // Inspector에서 할당할 수 있도록 다시 필드로 설정
     private BaseEnemy enemy;
 
     void Start()
@@ -36,7 +36,6 @@ public class EnemyAttackHandler : MonoBehaviour
             if (attackCollider != null)
             {
                 attackCollider.enabled = true; // 공격 콜라이더 활성화
-                //Debug.Log($"{enemy.gameObject.name}이(가) 이제 플레이어에게 피해를 줄 수 있습니다.");
             }
         }
     }

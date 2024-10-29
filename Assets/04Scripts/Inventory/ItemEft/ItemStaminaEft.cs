@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "ItemEft/Consumable/Stamina")]
 public class ItemStaminaEft : ItemEffect
 {
-    public int staminaPoint = 0; // ½ºÅÂ¹Ì³ª È¸º¹ ¼öÄ¡
+    public int staminaPoint = 0; // ï¿½ï¿½ï¿½Â¹Ì³ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½Ä¡
     public override bool ExecuteRole(PlayerStats playerStats)
     {
         if (playerStats != null)
@@ -13,19 +13,16 @@ public class ItemStaminaEft : ItemEffect
             if (playerStats.maxStamina < 100)
             {
                 playerStats.maxStamina += staminaPoint;
-                //playerStats.maxStamina = Mathf.Clamp(playerStats.maxStamina, 50, 100); // ÃÖ´ë ½ºÅÂ¹Ì³ª¸¦ 100À¸·Î Á¦ÇÑ
-                Debug.Log("Player Stamina Add: " + staminaPoint);
+                //playerStats.maxStamina = Mathf.Clamp(playerStats.maxStamina, 50, 100); // ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½Â¹Ì³ï¿½ï¿½ï¿½ 100ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 return true;
             }
             else
             {
-                Debug.Log("Player Stamina is already full.");
                 return false;
             }
         }
         else
         {
-            Debug.LogError("PlayerStats is null!");
             return false;
         }
     }

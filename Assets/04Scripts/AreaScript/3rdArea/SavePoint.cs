@@ -17,9 +17,7 @@ public class SavePoint : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // ÇÃ·¹ÀÌ¾îÀÇ ÇöÀç À§Ä¡ ÀúÀå
             SavePlayerPosition(player.transform.position);
-            Debug.Log("¼¼ÀÌºêÆ÷ÀÎÆ® µµÂø");
 
             gameObject.SetActive(false);
         }
@@ -30,7 +28,7 @@ public class SavePoint : MonoBehaviour
         PlayerPrefs.SetFloat("PlayerPosX", position.x);
         PlayerPrefs.SetFloat("PlayerPosY", position.y);
         PlayerPrefs.SetFloat("PlayerPosZ", position.z);
-        PlayerPrefs.Save(); // º¯°æ »çÇ×À» ÀúÀå
+        PlayerPrefs.Save(); 
     }
 
     public void LoadPlayerPosition()
@@ -40,10 +38,9 @@ public class SavePoint : MonoBehaviour
             float x = PlayerPrefs.GetFloat("PlayerPosX");
             float y = PlayerPrefs.GetFloat("PlayerPosY");
             float z = PlayerPrefs.GetFloat("PlayerPosZ");
-            player.transform.position = new Vector3(x, y, z); // ÀúÀåµÈ À§Ä¡·Î ÀÌµ¿
+            player.transform.position = new Vector3(x, y, z); // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ìµï¿½
             playerMovement.VelocityNormalize();
-            Debug.Log($"ÀÌµ¿ÇÒ À§Ä¡: ({x}, {y}, {z})");
-            Debug.Log("¸®Æ® µå°¡ÀÚ");
+      
         }
     }
 }

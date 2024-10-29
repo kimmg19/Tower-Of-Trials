@@ -6,13 +6,13 @@ using UnityEngine.InputSystem;
 
 public class MpQuickSlot : MonoBehaviour
 {
-    public Text quantityText; // MP Æ÷¼ÇÀÇ ¼ö·®À» Ç¥½ÃÇÒ UI Text
+    public Text quantityText; // MP ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½ï¿½ UI Text
     private Inventory inventory;
     [HideInInspector] public bool UsingQuickHpPotion = false;
-    [SerializeField] float UsingMpPotionDuration = 1.5f; // Æ÷¼Ç ÄðÅ¸ÀÓ Áö¼Ó ½Ã°£
-    [SerializeField] Image UsingMpPotionImage; // Æ÷¼Ç ÄðÅ¸ÀÓÀ» Ç¥½ÃÇÒ Image
+    [SerializeField] float UsingMpPotionDuration = 1.5f; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
+    [SerializeField] Image UsingMpPotionImage; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½ï¿½ Image
 
-    private bool isMpPotionCooldown = false; // Æ÷¼Ç ÄðÅ¸ÀÓ »óÅÂ º¯¼ö
+    private bool isMpPotionCooldown = false; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     // Input Action Reference
     public InputActionReference useMpPotionAction;
@@ -23,7 +23,6 @@ public class MpQuickSlot : MonoBehaviour
         inventory = Inventory.instance;
         if (inventory == null)
         {
-            Debug.LogError("Inventory instance not found.");
             return;
         }
 
@@ -31,10 +30,7 @@ public class MpQuickSlot : MonoBehaviour
         {
             useMpPotionAction.action.performed += UseQuickMpPotion;
         }
-        else
-        {
-            Debug.LogError("InputActionReference not assigned.");
-        }
+ 
 
         UpdateMpPotionQuantity();
     }
@@ -73,9 +69,8 @@ public class MpQuickSlot : MonoBehaviour
 
     private void UseQuickMpPotion(InputAction.CallbackContext context)
     {
-        if (isMpPotionCooldown) return; // ÄðÅ¸ÀÓ ÁßÀÌ¸é ¾ÆÀÌÅÛ »ç¿ë ºÒ°¡
+        if (isMpPotionCooldown) return; 
 
-        Debug.Log("UseQuickMpPotion called.");
 
         Item mpPotion = inventory.items.Find(item => item.itemName == "Mp Potion");
 
@@ -84,7 +79,7 @@ public class MpQuickSlot : MonoBehaviour
             PlayerStats playerStats = FindObjectOfType<PlayerStats>();
             if (playerStats == null)
             {
-                Debug.LogError("PlayerStats not found.");
+               
                 return;
             }
 
@@ -92,12 +87,10 @@ public class MpQuickSlot : MonoBehaviour
             if (isUse)
             {
                 mpPotion.quantity -= 1;
-                Debug.Log("Mp Potion used. Remaining quantity: " + mpPotion.quantity);
 
                 if (mpPotion.quantity == 0)
                 {
                     inventory.RemoveItem(inventory.items.IndexOf(mpPotion));
-                    Debug.Log("Mp Potion removed from inventory.");
                 }
 
                 inventory.SaveInventory();
@@ -105,18 +98,12 @@ public class MpQuickSlot : MonoBehaviour
 
                 UpdateAllSlotUIs();
 
-                // ÄðÅ¸ÀÓ ½ÃÀÛ
+                // ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 StartCoroutine(MpPotionCooldownCoroutine());
             }
-            else
-            {
-                Debug.LogWarning("Mp Potion use failed.");
-            }
+ 
         }
-        else
-        {
-            Debug.Log("No Mp Potion found in inventory or quantity is 0.");
-        }
+ 
     }
 
     private IEnumerator MpPotionCooldownCoroutine()
@@ -143,7 +130,6 @@ public class MpQuickSlot : MonoBehaviour
 
     private void UpdateAllSlotUIs()
     {
-        Debug.Log("Updating all slot UIs...");
         foreach (var slot in FindObjectsOfType<Slot>(true))
         {
             if (slot.item != null && slot.item.itemName == "Mp Potion")

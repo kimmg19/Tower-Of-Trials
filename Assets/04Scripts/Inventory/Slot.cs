@@ -17,28 +17,18 @@ public class Slot : MonoBehaviour, IPointerUpHandler
     {
         // PlayerStats 객체를 찾습니다.
         playerStats = FindObjectOfType<PlayerStats>();
-        if (playerStats == null)
-        {
-            Debug.LogError("PlayerStats not found in the scene!");
-        }
+       
 
         // itemIcon과 quantityText가 할당되지 않았다면, 자식에서 검색하여 초기화
         if (itemIcon == null)
         {
             itemIcon = GetComponentInChildren<Image>();
-            if (itemIcon == null)
-            {
-                Debug.LogError("ItemIcon is not assigned in the Slot script and could not be found in children.");
-            }
         }
 
         if (quantityText == null)
         {
             quantityText = GetComponentInChildren<Text>();
-            if (quantityText == null)
-            {
-                Debug.LogError("QuantityText is not assigned in the Slot script and could not be found in children.");
-            }
+       
         }
     }
 
@@ -47,13 +37,11 @@ public class Slot : MonoBehaviour, IPointerUpHandler
     {
         if (itemIcon == null)
         {
-            Debug.LogError("ItemIcon가 할당되지 않았습니다.");
             return;
         }
 
         if (quantityText == null)
         {
-            Debug.LogError("QuantityText가 할당되지 않았습니다.");
             return;
         }
 
@@ -90,17 +78,14 @@ public class Slot : MonoBehaviour, IPointerUpHandler
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        Debug.Log("OnPointerUp called. Checking item and playerStats...");
 
         if (item == null)
         {
-            Debug.Log("No item assigned to this slot. No action will be taken.");
             return;
         }
 
         if (playerStats == null)
         {
-            Debug.LogError("PlayerStats is not assigned.");
             return;
         }
 
@@ -109,14 +94,11 @@ public class Slot : MonoBehaviour, IPointerUpHandler
             bool isUse = item.Use(playerStats);
             if (isUse)
             {
-                Debug.Log("Item used successfully. Removing item from inventory.");
                 Inventory.instance.RemoveItem(slotnum);
                 Inventory.instance.SaveInventory();
             }
-            else
-            {
-                Debug.LogWarning("Item use failed.");
-            }
+   
+       
         }
         catch (System.Exception ex)
         {

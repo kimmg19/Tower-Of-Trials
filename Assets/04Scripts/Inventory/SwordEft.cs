@@ -5,14 +5,13 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "ItemEft/Equipment/Sword")]
 public class SwordEft : ItemEffect
 {
-    public int SwordAttackPoint = 0; // ¹«±â °­È­ ¼öÄ¡
+    public int SwordAttackPoint = 0; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È­ ï¿½ï¿½Ä¡
 
     public override bool ExecuteRole(PlayerStats playerStats)
     {
         if (playerStats != null)
         {
             playerStats.IncreaseSwordDamage(SwordAttackPoint);
-            Debug.Log("Sword damageAmount increased by " + SwordAttackPoint);
             return true;
         }
 
