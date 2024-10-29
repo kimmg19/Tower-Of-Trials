@@ -225,7 +225,6 @@ public class FirstAreaManager : MonoBehaviour
     private IEnumerator PlayBossCinematic()
     {
         playerInputs.enabled = false;
-        playerInputs.isInteracting = true;
         yield return new WaitForSeconds(1f);
         if (bossCinematic != null)
         {
@@ -262,7 +261,6 @@ public class FirstAreaManager : MonoBehaviour
     private IEnumerator Play1stAreaCinematic()
     {
         playerInputs.enabled = false;
-        playerInputs.isInteracting = true;
 
         yield return new WaitForSeconds(1f);
         if (firstAreaCinematic != null)

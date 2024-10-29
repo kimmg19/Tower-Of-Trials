@@ -8,7 +8,7 @@ public class ThirdArea : MonoBehaviour
 {
     PlayerStatus playerstatus;
     GameObject player;
-    bool hasDescentTriggered = false; // ÀÌ¹Ì HP °¨¼Ò¿Í À§Ä¡ ÀÌµ¿ÀÌ µÇ¾ú´ÂÁö ¿©ºÎ¸¦ È®ÀÎ
+
     [SerializeField] PlayerInputs playerInputs;
     [SerializeField] PlayableDirector ThirdAreaCinematic;
     [SerializeField] GameObject playermesh;
@@ -21,25 +21,9 @@ public class ThirdArea : MonoBehaviour
         playerstatus = player.GetComponent<PlayerStatus>();
 
         StartCoroutine("Play3rdAreaCinematic");
-        //playermesh.SetActive(false);
-        //playerUI.SetActive(false);
-        //ingameCanvas.SetActive(false);
+
     }
-    /*
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player") && !hasDescentTriggered)
-        {
-            Debug.Log("Ãæµ¹!");
-            playerstatus.Descent(); // HP °¨¼Ò ¹× ¼¼ÀÌºê Æ÷ÀÎÆ®·Î ÀÌµ¿
-            //hasDescentTriggered = true; // ÇÑ ¹ø¸¸ È£ÃâµÇµµ·Ï ¼³Á¤
-        }
-    }
-    */
-    public void ResetDescentTrigger()
-    {
-        hasDescentTriggered = false;
-    }
+
 
     IEnumerator Play3rdAreaCinematic()
     {
@@ -50,9 +34,8 @@ public class ThirdArea : MonoBehaviour
         {
             ThirdAreaCinematic.Play();
         }
-        yield return new WaitForSeconds((float)ThirdAreaCinematic.duration);  //ThirdAreaCinematic.durationÀº ½Ã³×¸¶Æ½ÀÇ ÀüÃ¼ ±æÀÌ¸¦ ÃÊ ´ÜÀ§·Î ³ªÅ¸³¿
+        yield return new WaitForSeconds((float)ThirdAreaCinematic.duration);  //ThirdAreaCinematic.durationï¿½ï¿½ ï¿½Ã³×¸ï¿½Æ½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½
         playerInputs.isInteracting = false;
-        Debug.Log("ÄÆ¾À³¡");
         playermesh.SetActive(true);
         playerUI.SetActive(true);
         ingameCanvas.SetActive(true);

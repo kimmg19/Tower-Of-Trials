@@ -1476,9 +1476,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8652077053125830746}
   - component: {fileID: 8641490180858796950}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rig
-  m_TagString: Untagged
+  m_TagString: AttackCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1518,8 +1518,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 1.0355072, y: 2.7, z: 0.776062}
-  m_Center: {x: 0.017753601, y: 1.4, z: -0.111968994}
+  m_Size: {x: 1.0355072, y: 2.9192944, z: 1.3804321}
+  m_Center: {x: 0.017753601, y: 1.5096471, z: 0.62635803}
 --- !u!1 &5136867247030317744
 GameObject:
   m_ObjectHideFlags: 0
@@ -2035,6 +2035,7 @@ GameObject:
   - component: {fileID: 8042073445050996160}
   - component: {fileID: 6818090260590199927}
   - component: {fileID: 7769784990984530215}
+  - component: {fileID: 8734013217535051134}
   - component: {fileID: 9090638394485478610}
   m_Layer: 3
   m_Name: Stage1Boss
@@ -2123,7 +2124,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1544
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -2153,6 +2154,19 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &8734013217535051134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6743654984216213327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9372633c8245c343a0ca951a65b56a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackCollider: {fileID: 8641490180858796950}
 --- !u!114 &9090638394485478610
 MonoBehaviour:
   m_ObjectHideFlags: 0

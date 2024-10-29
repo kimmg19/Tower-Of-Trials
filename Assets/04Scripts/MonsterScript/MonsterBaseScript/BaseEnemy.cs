@@ -44,26 +44,6 @@ public abstract class BaseEnemy : MonoBehaviour
     }
     protected virtual void Update()
     {
-        //Debug.LogError("isAttacking:" + isAttacking);
-        //Debug.LogError("enableDamaging:" + enableDamaging);
-
-        /*AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        if (stateInfo.IsName("AttackState") || stateInfo.IsName("AttackState1") ||
-            stateInfo.IsName("AttackState2") || stateInfo.IsName("AttackState3"))
-        {
-            if (!isAttacking)
-            {
-                isAttacking = true;
-                //enableDamaging = true; // 공격 애니메이션이 시작될 때 enableDamaging을 켭니다.
-            }
-        } else
-        {
-            if (isAttacking)
-            {
-                isAttacking = false;
-                enableDamaging = false; // 공격 애니메이션이 끝나면 enableDamaging을 끕니다.
-            }
-        }*/
 
         // 헬스바를 개별적으로 업데이트
         if (healthBar != null)
@@ -99,7 +79,6 @@ public abstract class BaseEnemy : MonoBehaviour
 
     public int GetDamageAmount()
     {
-        Debug.Log($"Damage amount is {damageAmount} for {gameObject.name}");
         return damageAmount;
     }
 
@@ -129,15 +108,6 @@ public abstract class BaseEnemy : MonoBehaviour
         // 원래 속도로 복구
         animator.speed = originalSpeed;
 
-        // 패링 후 적의 공격 콜라이더를 다시 활성화
-        /*foreach (var collider in colliders)
-        {
-            if (collider.gameObject.layer == LayerMask.NameToLayer("EnemyAttackCollider"))
-            {
-                collider.enabled = true;
-                Debug.LogError($"{collider.gameObject.name} attack collider re-enabled after slow motion.");
-            }
-        }*/
 
         // 패링 후 다시 공격할 수 있도록 설정
         enableDamaging = true;
@@ -150,7 +120,14 @@ public abstract class BaseEnemy : MonoBehaviour
         animator.SetTrigger("die");
         AudioManager.instance.Play("MonsterDie");
         GetComponent<Collider>().enabled = false;
+        
+        // Disable attack collider and prevent damage dealing
         enableDamaging = false;
+        if (GetComponentInChildren<EnemyAttackHandler>()?.attackCollider != null)
+        {
+            GetComponentInChildren<EnemyAttackHandler>().attackCollider.enabled = false;
+        }
+        
         DropItem();
         Invoke("DestroyEnemy", 2f);
     }
@@ -213,13 +190,7 @@ public abstract class BaseEnemy : MonoBehaviour
                 enableDamaging = false;
             }
         }
-        /*else
-        {
-            Debug.LogError($"{gameObject.name}'s attack was parried or enemy is in slow motion. No damage to player.");
-            
-
-            enableDamaging = false;
-        }*/
+      
     }
 
 
@@ -235,7 +206,6 @@ public abstract class BaseEnemy : MonoBehaviour
         {
             int reducedDamage = Mathf.RoundToInt(GetDamageAmount() * (1 - shield.damageReductionPercentage / 100));
             playerStatus.TakeDamage(reducedDamage);
-            Debug.Log($"Blocked! Damage reduced to {reducedDamage}.");
         } else
         {
             playerStatus.TakeDamage(GetDamageAmount());

@@ -57,6 +57,7 @@ public class RewardChest : MonoBehaviour
                 AskRewardSelection.SetActive(false);
                 RewardsChest.SetActive(false);
                 playerInputs.isInteracting = false;
+                AudioManager.instance.Play("OpenChest");
                 RewardList.SetActive(true);
 
                 // 포탈을 활성화
@@ -73,9 +74,7 @@ public class RewardChest : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // ĵ���� Ȱ��ȭ
             AskRewardSelection.SetActive(true);
-            Debug.Log("���� �浹");
         }
     }
 
@@ -83,7 +82,6 @@ public class RewardChest : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // ĵ���� ��Ȱ��ȭ
             if (AskRewardSelection != null)
             {
                 AskRewardSelection.SetActive(false);

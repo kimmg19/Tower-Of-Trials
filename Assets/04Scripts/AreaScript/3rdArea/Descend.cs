@@ -6,7 +6,7 @@ public class Descend : MonoBehaviour
 {
     PlayerStatus playerstatus;
     GameObject player;
-    bool hasDescentTriggered = false; // ÀÌ¹Ì HP °¨¼Ò¿Í À§Ä¡ ÀÌµ¿ÀÌ µÇ¾ú´ÂÁö ¿©ºÎ¸¦ È®ÀÎ
+    bool hasDescentTriggered = false; 
     [SerializeField] PlayerInputs playerInputs;
 
     void Start()
@@ -19,9 +19,7 @@ public class Descend : MonoBehaviour
     {
         if (other.CompareTag("Player") && !hasDescentTriggered)
         {
-            Debug.Log("Ãæµ¹!");
-            playerstatus.Descent(); // HP °¨¼Ò ¹× ¼¼ÀÌºê Æ÷ÀÎÆ®·Î ÀÌµ¿
-            //hasDescentTriggered = true; // ÇÑ ¹ø¸¸ È£ÃâµÇµµ·Ï ¼³Á¤
+            playerstatus.Descent(); // HP ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ìµï¿½
         }
     }
 

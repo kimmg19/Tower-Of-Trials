@@ -16,9 +16,8 @@ public class SaveLastPoint : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // ÇÃ·¹ÀÌ¾îÀÇ ÇöÀç À§Ä¡ ÀúÀå
+            // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
             SaveResetPosition(player.transform.position);
-            Debug.Log("¼¼ÀÌºêÆ÷ÀÎÆ® ¸®¼Â");
 
             gameObject.SetActive(false);
         }
@@ -29,10 +28,9 @@ public class SaveLastPoint : MonoBehaviour
         PlayerPrefs.SetFloat("PlayerPosX", 0);
         PlayerPrefs.SetFloat("PlayerPosY", 0);
         PlayerPrefs.SetFloat("PlayerPosZ", 0);
-        PlayerPrefs.Save(); // º¯°æ »çÇ×À» ÀúÀå
+        PlayerPrefs.Save(); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         float x = PlayerPrefs.GetFloat("PlayerPosX");
         float y = PlayerPrefs.GetFloat("PlayerPosY");
         float z = PlayerPrefs.GetFloat("PlayerPosZ");
-        Debug.Log($"ÀÌµ¿ÇÒ À§Ä¡: ({x}, {y}, {z})");
     }
 }

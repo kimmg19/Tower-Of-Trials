@@ -47,10 +47,6 @@ public class BuffManagement : MonoBehaviour
             debuffyicon.SetActive(false);
         }
 
-        if (Randombuff == null)
-        {
-            Debug.LogError("Randombuff가 할당되지 않았습니다.");
-        }
     }
 
     // Update is called once per frame
@@ -63,11 +59,9 @@ public class BuffManagement : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // 랜덤하게 1 또는 2를 생성
             int randomNumber = Random.Range(1, 3);
             if(randomNumber == 1)
             {
-                print("버프 ㅊㅊ");
                 buff.SetActive(true);
                 buffyicon.SetActive(true);
                 Randombuff.SetActive(false);
@@ -83,7 +77,6 @@ public class BuffManagement : MonoBehaviour
             }
             else
             {
-                print("디버프 ㅋㅋ");
                 debuff.SetActive(true);
                 debuffyicon.SetActive(true);
                 Randombuff.SetActive(false);

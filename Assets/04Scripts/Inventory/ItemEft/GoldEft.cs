@@ -18,7 +18,6 @@ public class GoldEft : ItemEffect
         }
         else
         {
-            Debug.LogError("PlayeStats is null!");
             return false;
         }
     }

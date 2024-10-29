@@ -22,11 +22,9 @@ public class Shield : MonoBehaviour
         Collider collider = GetComponent<Collider>();
         if (collider == null)
         {
-            Debug.LogWarning("Shield requires a Collider component.");
         }
         else if (!collider.isTrigger)
         {
-            Debug.LogWarning("Shield Collider must be set to 'IsTrigger'.");
         }
     }
 
@@ -56,37 +54,13 @@ public class Shield : MonoBehaviour
         isParryWindowActive = false;
     }
 
-    /*private void OnTriggerEnter(Collider other)
-    {
-        BaseEnemy enemy = other.GetComponentInParent<BaseEnemy>();
-        if (other.CompareTag(enemyTag))
-        {
-            if (enemy != null)
-            {
-                if (isParryWindowActive && canParry) // 패링 창과 패링 가능 상태일 때만 패링 성공 처리
-                {
-                    HandleParrySuccess(enemy);
-                } else if (isBlocking)
-                {
-                    // 방패 막기 중: 데미지 감소 적용
-                    int reducedDamage = Mathf.RoundToInt(enemy.GetDamageAmount() * (1 - damageReductionPercentage / 100));
-                    playerStatus.TakeDamage(reducedDamage);
-                    Debug.Log($"Blocked! Damage reduced to {reducedDamage}.");
-                } else
-                {
-                    // 방패 막기 및 패링 실패 시: 일반 데미지 적용
-                    playerStatus.TakeDamage(enemy.GetDamageAmount());
-                }
-            }
-        }
-    }*/
+
 
     public void HandleParrySuccess(BaseEnemy enemy)
     {
         // 패링 성공 시 처리할 로직
         playerStatus.SetParrySuccess(true);
         enemy.TakeDamage(0, true); // 데미지 0, 패링 상태 true
-        Debug.Log("Parry Successful!");
 
         animator.SetTrigger("ParrySuccess");
 

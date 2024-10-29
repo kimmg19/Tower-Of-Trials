@@ -133,7 +133,6 @@ public class PatrolState : BaseState
         if (NavMesh.SamplePosition(randomDirection, out navHit, wanderRadius, NavMesh.AllAreas))
         {
             agent.SetDestination(navHit.position); // 무작위로 찾은 위치로 이동
-            Debug.Log("모든 웨이포인트가 사용 중이므로 랜덤하게 이동합니다.");
         }
     }
 }

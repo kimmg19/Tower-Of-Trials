@@ -43,8 +43,8 @@ public class Inventory : MonoBehaviour
 
     void Start()
     {
-        hpQuickSlot = FindObjectOfType<HpQuickSlot>(); // HpQuickSlot ÀÎ½ºÅÏ½º Ã£±â
-        mpQuickSlot = FindObjectOfType<MpQuickSlot>(); // MpQuickSlot ÀÎ½ºÅÏ½º Ã£±â
+        hpQuickSlot = FindObjectOfType<HpQuickSlot>(); // HpQuickSlot ï¿½Î½ï¿½ï¿½Ï½ï¿½ Ã£ï¿½ï¿½
+        mpQuickSlot = FindObjectOfType<MpQuickSlot>(); // MpQuickSlot ï¿½Î½ï¿½ï¿½Ï½ï¿½ Ã£ï¿½ï¿½
         LoadSlotCount(); // Load the slot count from PlayerPrefs
         LoadInventory();
     }
@@ -53,10 +53,10 @@ public class Inventory : MonoBehaviour
     {
         foreach (var item in items)
         {
-            if (item.itemName == _item.itemName) // µ¿ÀÏÇÑ ¾ÆÀÌÅÛÀÎÁö È®ÀÎ
+            if (item.itemName == _item.itemName) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
             {
-                item.quantity += _item.quantity; // µ¿ÀÏÇÑ ¾ÆÀÌÅÛÀÏ °æ¿ì ¼ö·® Áõ°¡
-                Debug.Log("Item added. New quantity: " + item.quantity); // µð¹ö±ë ·Î±× Ãß°¡
+                item.quantity += _item.quantity; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                Debug.Log("Item added. New quantity: " + item.quantity); // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ ï¿½ß°ï¿½
                 onChangeItem?.Invoke();
                 SaveInventory();
 
@@ -67,7 +67,7 @@ public class Inventory : MonoBehaviour
         if (items.Count < SlotCnt)
         {
             items.Add(_item);
-            Debug.Log("New item added. Quantity: " + _item.quantity); // µð¹ö±ë ·Î±× Ãß°¡
+            Debug.Log("New item added. Quantity: " + _item.quantity); // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ ï¿½ß°ï¿½
             onChangeItem?.Invoke();
             SaveInventory();
 
@@ -82,11 +82,11 @@ public class Inventory : MonoBehaviour
         if (_index >= 0 && _index < items.Count)
         {
             Item itemToRemove = items[_index];
-            itemToRemove.quantity--; // ¼ö·® °¨¼Ò
+            itemToRemove.quantity--; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
             if (itemToRemove.quantity <= 0)
             {
-                items.RemoveAt(_index); // ¼ö·®ÀÌ 0 ÀÌÇÏ°¡ µÇ¸é ¾ÆÀÌÅÛ Á¦°Å
+                items.RemoveAt(_index); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 0 ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ç¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 Debug.Log($"Item '{itemToRemove.itemName}' removed from inventory.");
             }
             else
@@ -157,7 +157,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    // ÀÎº¥Åä¸® ºÒ·¯¿À±â ¸Þ¼­µå
+    // ï¿½Îºï¿½ï¿½ä¸® ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½
     public void LoadInventory()
     {
         items.Clear();
@@ -175,7 +175,6 @@ public class Inventory : MonoBehaviour
         if (onChangeItem != null)
             onChangeItem.Invoke();
 
-        Debug.Log("Inventory loaded with " + items.Count + " items.");
 
         if (hpQuickSlot != null)
         {
@@ -218,10 +217,9 @@ public class Inventory : MonoBehaviour
 
     public void ResetSlot()
     {
-        items.Clear(); // ¾ÆÀÌÅÛ ¸®½ºÆ® ÃÊ±âÈ­
-        onChangeItem?.Invoke(); // UI °»½ÅÀ» À§ÇØ µ¨¸®°ÔÀÌÆ® È£Ãâ
-        SaveInventory(); // º¯°æµÈ ÀÎº¥Åä¸® »óÅÂ ÀúÀå
-        Debug.Log("Inventory has been reset. Current item count: " + items.Count);
+        items.Clear(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ê±ï¿½È­
+        onChangeItem?.Invoke(); // UI ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® È£ï¿½ï¿½
+        SaveInventory(); // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½ï¿½ä¸® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
 
 }

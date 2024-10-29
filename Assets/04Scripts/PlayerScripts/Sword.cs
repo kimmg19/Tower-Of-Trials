@@ -16,10 +16,7 @@ public class Sword : MonoBehaviour
         {
             swordCollider.enabled = false; // 기본적으로 콜라이더 비활성화
             swordCollider.convex = true; // 물리 연산에 사용할 수 있도록 Convex로 설정
-        } else
-        {
-            Debug.LogError("Sword object does not have a MeshCollider component.");
-        }
+        } 
     }
 
     private void Update()

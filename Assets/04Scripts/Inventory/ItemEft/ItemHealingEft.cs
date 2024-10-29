@@ -14,19 +14,16 @@ public class ItemHealthEft : ItemEffect
             if (playerStats.currentHp < playerStats.maxHp)
             {
                 playerStats.currentHp += HealingAmount;
-                playerStats.currentHp = Mathf.Clamp(playerStats.currentHp, 0, playerStats.maxHp); // ÃÖ´ë Ã¼·ÂÀ» ÃÊ°úÇÏÁö ¾Êµµ·Ï Á¦ÇÑ
-                Debug.Log("Player HP Add: " + HealingAmount);
+                playerStats.currentHp = Mathf.Clamp(playerStats.currentHp, 0, playerStats.maxHp); // ï¿½Ö´ï¿½ Ã¼ï¿½ï¿½ï¿½ï¿½ ï¿½Ê°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Êµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 return true;
             }
             else
             {
-                Debug.Log("Player HP is already full.");
                 return false;
             }
         }
         else
         {
-            Debug.LogError("PlayerStats is null!");
             return false;
         }
     }

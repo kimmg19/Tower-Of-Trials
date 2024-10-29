@@ -54,7 +54,7 @@ public class SecondAreaManager : MonoBehaviour
         if (cinematicDirector != null)
         {
             playerInputs.enabled = false; // 시네마틱 시작 시 입력 비활성화
-            playerInputs.isInteracting = true;
+            // playerInputs.isInteracting = true;
             cinematicDirector.Play(); // 시네마틱 재생
             cinematicDirector.playableGraph.GetRootPlayable(0).SetSpeed(cinematicSpeed); // 시네마틱 속도 설정
 
@@ -66,7 +66,7 @@ public class SecondAreaManager : MonoBehaviour
     void OnCinematicEnded(PlayableDirector director)
     {
         playerInputs.enabled = true; // 시네마틱 종료 시 입력 활성화
-        playerInputs.isInteracting = false;
+        // playerInputs.isInteracting = false;
         cinematicDirector.stopped -= OnCinematicEnded; // 이벤트 해제 (중복 방지)
     }
 

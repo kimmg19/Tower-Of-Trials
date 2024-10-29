@@ -20,8 +20,6 @@ public class ConversationStarter : MonoBehaviour
         playerInputs = player.GetComponent<PlayerInputs>();
         playerAnimator = player.GetComponent<Animator>(); // 플레이어 애니메이터 참조
 
-        // 초기화 로그 추가
-        Debug.Log("NPCInteraction Awake: Initialized player and playerInputs.");
     }
 
     void OnTriggerEnter(Collider other)

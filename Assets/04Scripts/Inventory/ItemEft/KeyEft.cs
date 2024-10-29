@@ -14,7 +14,6 @@ public class KeyEft : ItemEffect
         }
         else
         {
-            Debug.LogError("PlayeStats is null!");
             return false;
         }
     }

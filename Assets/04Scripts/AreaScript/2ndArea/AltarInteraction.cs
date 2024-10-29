@@ -77,7 +77,6 @@ public class AltarInteraction : MonoBehaviour
         Item keyItem = playerInventory.items.Find(item => item.itemName == requiredKeyItemName);
         if (keyItem != null && currentPillarIndex < pillars.Length)
         {
-            Debug.Log("Key item found! Interaction with altar successful.");
             TriggerAltarEvent();
 
             playerInventory.RemoveItem(playerInventory.items.IndexOf(keyItem));
@@ -106,7 +105,6 @@ public class AltarInteraction : MonoBehaviour
             }
         }
 
-        Debug.Log("Altar event triggered!");
     }
 
     void PlaySecondAreaClearScene()
@@ -114,14 +112,8 @@ public class AltarInteraction : MonoBehaviour
         if (secondAreaClearDirector != null)
         {
             playerInputs.enabled = false;
-            playerInputs.isInteracting = true;
             AudioManager.instance.Stop("2ndAreaBgm");
             secondAreaClearDirector.Play(); // 2nd Area Clear 타임라인 실행
-            Debug.Log("2nd Area Clear Scene played!");
-        }
-        else
-        {
-            Debug.LogWarning("secondAreaClearDirector is not assigned!");
         }
     }
 
@@ -133,7 +125,6 @@ public class AltarInteraction : MonoBehaviour
             // 타임라인이 끝났을 때 2구역 매니저의 클리어 패널 처리 로직을 1초 후에 실행
             StartCoroutine(DelayedClearPanelFade(1f)); // 1초 후에 실행
             playerInputs.enabled = true;
-            playerInputs.isInteracting = false;
         }
     }
 

@@ -6,8 +6,8 @@ using UnityEngine.InputSystem;
 
 public class ShowClear : MonoBehaviour
 {
-    [SerializeField] GameObject titlePanel;  // Å¸ÀÌÆ² ÆÐ³Î
-    [SerializeField] GameObject clearPanel; // Å¬¸®¾î ÆÐ³Î
+    [SerializeField] GameObject titlePanel;  // Å¸ï¿½ï¿½Æ² ï¿½Ð³ï¿½
+    [SerializeField] GameObject clearPanel; // Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½Ð³ï¿½
     [SerializeField] PlayerInputs playerInputs;
     private CanvasGroup titleCanvasGroup;
     private CanvasGroup clearPanelCanvasGroup;
@@ -33,7 +33,6 @@ public class ShowClear : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Å¬¸®¾îÆÐ³Î µîÀå");
             if (clearPanel != null)
             {
                 StartCoroutine(ShowClearPanel());
@@ -46,24 +45,24 @@ public class ShowClear : MonoBehaviour
         titlePanel.SetActive(true);
         if (titleCanvasGroup != null)
         {
-            titleCanvasGroup.alpha = 0f; // ÃÊ±â¿¡´Â ¿ÏÀüÈ÷ Åõ¸í
+            titleCanvasGroup.alpha = 0f; // ï¿½Ê±â¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             while (titleCanvasGroup.alpha < 1f)
             {
-                titleCanvasGroup.alpha += Time.deltaTime * 1; // ÆäÀÌµå ÀÎ ¼Óµµ Á¶Àý
+                titleCanvasGroup.alpha += Time.deltaTime * 1; // ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½
                 yield return null;
             }
-            titleCanvasGroup.alpha = 1f; // ¸¶Áö¸·¿¡´Â ¿ÏÀüÈ÷ ºÒÅõ¸í
+            titleCanvasGroup.alpha = 1f; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-            // Å¸ÀÌÆ²ÀÌ ÀÏÁ¤ ½Ã°£ ÈÄ¿¡ »ç¶óÁöµµ·Ï
+            // Å¸ï¿½ï¿½Æ²ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½Ä¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             yield return new WaitForSeconds(3f);
 
             while (titleCanvasGroup.alpha > 0f)
             {
-                titleCanvasGroup.alpha -= Time.deltaTime * 1; // ÆäÀÌµå ¾Æ¿ô ¼Óµµ Á¶Àý
+                titleCanvasGroup.alpha -= Time.deltaTime * 1; // ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Æ¿ï¿½ ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½
                 yield return null;
             }
-            titleCanvasGroup.alpha = 0f; // ¸¶Áö¸·¿¡´Â ¿ÏÀüÈ÷ Åõ¸í
-            titlePanel.SetActive(false); // Å¸ÀÌÆ² ºñÈ°¼ºÈ­
+            titleCanvasGroup.alpha = 0f; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            titlePanel.SetActive(false); // Å¸ï¿½ï¿½Æ² ï¿½ï¿½È°ï¿½ï¿½È­
         }
     }
 
@@ -71,23 +70,23 @@ public class ShowClear : MonoBehaviour
     {
         AudioManager.instance.Play("VictoryBgm");
         clearPanel.SetActive(true);
-        clearPanelCanvasGroup.alpha = 0f; // ÃÊ±â¿¡´Â ¿ÏÀüÈ÷ Åõ¸í
+        clearPanelCanvasGroup.alpha = 0f; // ï¿½Ê±â¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         while (clearPanelCanvasGroup.alpha < 1f)
         {
-            clearPanelCanvasGroup.alpha += Time.deltaTime * 1; // ÆäÀÌµå ÀÎ ¼Óµµ Á¶Àý
+            clearPanelCanvasGroup.alpha += Time.deltaTime * 1; // ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½
             yield return null;
         }
-        clearPanelCanvasGroup.alpha = 1f; // ¸¶Áö¸·¿¡´Â ¿ÏÀüÈ÷ ºÒÅõ¸í
+        clearPanelCanvasGroup.alpha = 1f; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-        // ÀÏÁ¤ ½Ã°£ ÈÄ¿¡ ÆäÀÌµå ¾Æ¿ô
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½Ä¿ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Æ¿ï¿½
         yield return new WaitForSeconds(7f);
 
         while (clearPanelCanvasGroup.alpha > 0f)
         {
-            clearPanelCanvasGroup.alpha -= Time.deltaTime * 1; // ÆäÀÌµå ¾Æ¿ô ¼Óµµ Á¶Àý
+            clearPanelCanvasGroup.alpha -= Time.deltaTime * 1; // ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Æ¿ï¿½ ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½
             yield return null;
         }
-        clearPanelCanvasGroup.alpha = 0f; // ¸¶Áö¸·¿¡´Â ¿ÏÀüÈ÷ Åõ¸í
-        clearPanel.SetActive(false); // Å¬¸®¾î ÆÐ³Î ºñÈ°¼ºÈ­
+        clearPanelCanvasGroup.alpha = 0f; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        clearPanel.SetActive(false); // Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½Ð³ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­
     }
 }
