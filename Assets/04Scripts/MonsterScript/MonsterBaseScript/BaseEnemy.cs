@@ -12,6 +12,7 @@ public abstract class BaseEnemy : MonoBehaviour
     [HideInInspector] public bool isParried = false; // 패링 상태를 추적하는 변수
     [HideInInspector] public bool isAttacking = false; // 공격 상태를 추적하는 변수
     [HideInInspector] public GameObject player;
+    [SerializeField]Collider attackCollider;
     protected PlayerStats playerStats;
     protected PlayerStatus playerStatus;
     protected PlayerInputs playerInputs;
@@ -149,6 +150,8 @@ public abstract class BaseEnemy : MonoBehaviour
     {
         animator.SetTrigger("die");
         AudioManager.instance.Play("MonsterDie");
+        if(attackCollider == null) { print("어택 콜라이더 없는 놈."); }
+        else attackCollider.enabled = false;
         GetComponent<Collider>().enabled = false;
         enableDamaging = false;
         DropItem();

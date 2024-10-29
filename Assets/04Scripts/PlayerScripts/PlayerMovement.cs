@@ -11,18 +11,22 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public Transform characterBody; // 캐릭터의 Transform 참조
     [HideInInspector] public Vector3 dodgeVec; // 회피 방향 벡터
     [SerializeField] public CharacterController characterController;
+
     Animator animator; // 애니메이터 참조
     AnimationEvent animationEvent; // 애니메이션 이벤트 참조
+
     PlayerStats playerStats; // 플레이어 스탯 관리
     PlayerStatus playerStatus; // 플레이어 상태 관리
     PlayerInputs playerInputs; // 플레이어 입력 관리
+
     Vector3 velocity; // 이동 속도 벡터
     float turnSmoothVelocity; // 회전 부드럽게 전환할 때 필요한 변수
     public float speed = 1.0f; // 기본 이동 속도
     float gravity = -9.8f; // 중력 값
     float jumpHeight = 2f; // 점프 높이
-    float smoothDampTime = 0.1f; // 회전 부드럽게 전환할 때 필요한 시간
-    float speedDampTime = 0.1f; // 속도 변화 부드럽게 전환할 때 필요한 시간
+
+    float smoothDampTime = 0.07f; // 회전 부드럽게 전환할 때 필요한 시간
+    float speedDampTime = 0.05f; // 속도 변화 부드럽게 전환할 때 필요한 시간
     LockOnSystem lockOnSystem;
 
     // 방어 중 이동 속도를 줄이기 위한 변수

@@ -8,6 +8,7 @@ public class Turtle : BaseEnemy
     public float attackRange = 2.2f;
     private FirstAreaManager firstAreaManager;
 
+
     // 거북이의 고유 스탯을 초기화
     protected override void InitializeStats()
     {

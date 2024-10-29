@@ -446,7 +446,7 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 257
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -826,6 +826,8 @@ MonoBehaviour:
   enableDamaging: 0
   isParried: 0
   isAttacking: 0
+  player: {fileID: 0}
+  attackCollider: {fileID: 1051077488022993650}
   attackRange: 2
 --- !u!195 &6329380273701166256
 NavMeshAgent:
@@ -1607,8 +1609,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 3419311310100710855}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

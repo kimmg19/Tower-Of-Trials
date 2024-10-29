@@ -250,11 +250,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7460305480918495681, guid: 928a1377c1cd4515b208fef3a396b8ea, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7460305480918495681, guid: 928a1377c1cd4515b208fef3a396b8ea, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7460305480918495681, guid: 928a1377c1cd4515b208fef3a396b8ea, type: 3}
       propertyPath: m_AnchorMin.x
@@ -306,7 +306,7 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 257
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -337,6 +337,8 @@ MonoBehaviour:
   enableDamaging: 0
   isParried: 0
   isAttacking: 0
+  player: {fileID: 0}
+  attackCollider: {fileID: 3832239205441963458}
   attackRange: 1.7
 --- !u!135 &1713151173264439852
 SphereCollider:
