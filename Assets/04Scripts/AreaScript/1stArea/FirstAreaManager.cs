@@ -253,7 +253,6 @@ public class FirstAreaManager : MonoBehaviour
                 }
             }
 
-            playerInputs.isInteracting = false;
             playerInputs.enabled = true;
         }
     }
@@ -268,7 +267,6 @@ public class FirstAreaManager : MonoBehaviour
             firstAreaCinematic.Play();
         }
         yield return new WaitForSeconds((float)firstAreaCinematic.duration);  //firstAreaCinematic.duration은 시네마틱의 전체 길이를 초 단위로 나타냄
-        playerInputs.isInteracting = false;
         playerInputs.enabled = true;
     }
 

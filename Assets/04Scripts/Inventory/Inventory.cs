@@ -87,7 +87,6 @@ public class Inventory : MonoBehaviour
             if (itemToRemove.quantity <= 0)
             {
                 items.RemoveAt(_index); // ������ 0 ���ϰ� �Ǹ� ������ ����
-                Debug.Log($"Item '{itemToRemove.itemName}' removed from inventory.");
             }
             else
             {
@@ -126,7 +125,6 @@ public class Inventory : MonoBehaviour
         }
         PlayerPrefs.SetInt("InventoryItemCount", items.Count);
         PlayerPrefs.Save();
-        Debug.Log("Inventory saved with " + items.Count + " items.");
 
         if (hpQuickSlot != null)
         {
