@@ -8,7 +8,7 @@ public class TriggerCutscene : MonoBehaviour
     public string playerTag = "Player";    // 플레이어의 태그
     private string cutscenePlayedKey = "CutscenePlayed"; // 컷씬 재생 상태를 저장할 PlayerPrefs 키
 
-    PlayerInputs playerInputs;
+    [SerializeField] PlayerInputs playerInputs;
 
     void Start()
     {
