@@ -13,6 +13,7 @@ public class ItemStaminaEft : ItemEffect
             if (playerStats.maxStamina < 100)
             {
                 playerStats.maxStamina += staminaPoint;
+                playerStats.OnApplicationQuit();
                 //playerStats.maxStamina = Mathf.Clamp(playerStats.maxStamina, 50, 100); // �ִ� ���¹̳��� 100���� ����
                 return true;
             }

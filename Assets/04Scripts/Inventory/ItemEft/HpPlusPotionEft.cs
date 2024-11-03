@@ -13,6 +13,7 @@ public class HpPlusPotionEft : ItemEffect
             if (playerStats.HpPotionRate < 50)
             {
                 playerStats.HpPotionRate += HpPlusPoint;
+                playerStats.OnApplicationQuit();
                 return true;
             }
             else

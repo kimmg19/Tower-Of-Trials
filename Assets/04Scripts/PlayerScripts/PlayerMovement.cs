@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
     float gravity = -9.8f; // 중력 값
     float jumpHeight = 2f; // 점프 높이
 
-    float smoothDampTime = 0.07f; // 회전 부드럽게 전환할 때 필요한 시간
+    float smoothDampTime = 0.1f; // 회전 부드럽게 전환할 때 필요한 시간
     float speedDampTime = 0.05f; // 속도 변화 부드럽게 전환할 때 필요한 시간
     LockOnSystem lockOnSystem;
 

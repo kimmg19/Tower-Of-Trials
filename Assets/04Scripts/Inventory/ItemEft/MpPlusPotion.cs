@@ -13,6 +13,7 @@ public class MpPlusPotionEft : ItemEffect
             if (playerStats.MpPotionRate < 50)
             {
                 playerStats.MpPotionRate += MpPlusPoint;
+                playerStats.OnApplicationQuit();
                 return true;
             }
             else
