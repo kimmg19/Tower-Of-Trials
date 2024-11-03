@@ -6,9 +6,9 @@ public abstract class BaseEnemy : MonoBehaviour
 {
     [SerializeField] protected int HP;
     protected int damageAmount;
-    public Slider healthBar;
-    public Animator animator;
-    public bool enableDamaging = false;
+    [HideInInspector] public Slider healthBar;
+    [HideInInspector] public Animator animator;
+    [HideInInspector] public bool enableDamaging = false;
     [HideInInspector] public bool isParried = false; // 패링 상태를 추적하는 변수
     [HideInInspector] public bool isAttacking = false; // 공격 상태를 추적하는 변수
     [HideInInspector] public GameObject player;
@@ -126,6 +126,9 @@ public abstract class BaseEnemy : MonoBehaviour
         if (GetComponentInChildren<EnemyAttackHandler>()?.attackCollider != null)
         {
             GetComponentInChildren<EnemyAttackHandler>().attackCollider.enabled = false;
+        } else
+        {
+            print("콜라 옶음");
         }
         
         DropItem();

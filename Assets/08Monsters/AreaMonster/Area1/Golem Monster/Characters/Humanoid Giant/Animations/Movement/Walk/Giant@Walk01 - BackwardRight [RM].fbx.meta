@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 412f85bfce82a284d9d9d4b231d7b955
 ModelImporter:
-  serializedVersion: 21300
+  serializedVersion: 22200
   internalIDToNameTable: []
   externalObjects: {}
   materials:
@@ -19,14 +19,7 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: "\nClip 'Giant@Walk01 - BackwardRight [RM]' has import
-      animation warnings that might lower retargeting quality:\nNote: Activate translation
-      DOF on avatar to improve retargeting quality.\n\t'B-thigh.L' has scale animation
-      that will be discarded.\n\t'B-shin.L' has scale animation that will be discarded.\n\t'B-foot.L'
-      has scale animation that will be discarded.\n\t'B-toe.L' has scale animation
-      that will be discarded.\n\t'B-thigh.R' has scale animation that will be discarded.\n\t'B-shin.R'
-      has scale animation that will be discarded.\n\t'B-foot.R' has scale animation
-      that will be discarded.\n\t'B-toe.R' has scale animation that will be discarded.\n"
+    animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -72,10 +65,11 @@ ModelImporter:
   meshes:
     lODScreenPercentages: []
     globalScale: 1
-    meshCompression: 0
+    meshCompression: 3
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
+    importPhysicalCameras: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
@@ -103,6 +97,7 @@ ModelImporter:
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 0
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -830,23 +825,15 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 1b1595a3eddd7394f8dff33a9b282ac0,
-    type: 3}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 1b1595a3eddd7394f8dff33a9b282ac0, type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1
   avatarSetup: 2
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 0
   remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 215414
-  packageName: Giant Animations
-  packageVersion: 
-  assetPath: Assets/Kevin Iglesias/Characters/Humanoid Giant/Animations/Movement/Walk/Giant@Walk01
-    - BackwardRight [RM].fbx
-  uploadId: 0

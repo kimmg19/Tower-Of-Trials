@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 9daad1a7eb6356240bc6f241a100a399
 ModelImporter:
-  serializedVersion: 21202
+  serializedVersion: 22200
   internalIDToNameTable:
   - first:
       74: 1146732849036009637
@@ -74,10 +74,11 @@ ModelImporter:
   meshes:
     lODScreenPercentages: []
     globalScale: 1
-    meshCompression: 0
+    meshCompression: 3
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
+    importPhysicalCameras: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
@@ -105,6 +106,7 @@ ModelImporter:
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -733,14 +735,12 @@ ModelImporter:
     - name: LeftFinger1_2
       parentName: LeftFinger1_1
       position: {x: -0.0321191, y: 0, z: 0.018152399}
-      rotation: {x: -0.00000001745329, y: -0.00000005235988, z: 0.000000026179938,
-        w: 1}
+      rotation: {x: -0.00000001745329, y: -0.00000005235988, z: 0.000000026179938, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: LeftFinger1_3
       parentName: LeftFinger1_2
       position: {x: -0.0293129, y: 0, z: 0.0165664}
-      rotation: {x: -0.00000003490658, y: -0.00000007853982, z: 0.00000003490658,
-        w: 1}
+      rotation: {x: -0.00000003490658, y: -0.00000007853982, z: 0.00000003490658, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: LeftFinger1_3_End
       parentName: LeftFinger1_3
@@ -895,6 +895,8 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

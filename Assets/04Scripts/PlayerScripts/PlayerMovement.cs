@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
 
     Vector3 velocity; // 이동 속도 벡터
     float turnSmoothVelocity; // 회전 부드럽게 전환할 때 필요한 변수
-    public float speed = 1.0f; // 기본 이동 속도
+    public float speed = 1f; // 기본 이동 속도
     float gravity = -9.8f; // 중력 값
     float jumpHeight = 2f; // 점프 높이
 
@@ -30,7 +30,6 @@ public class PlayerMovement : MonoBehaviour
     LockOnSystem lockOnSystem;
 
     // 방어 중 이동 속도를 줄이기 위한 변수
-    private float blockingSpeedMultiplier = 0.5f; // 방어 시 이동 속도 감소 비율
     private bool isBlocking = false; // 현재 방어 상태인지 여부
 
     void Start()
@@ -75,21 +74,15 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(float newSpeed)
     {
-        if ((animationEvent.IsAttacking() && !playerInputs.isDodging)|| playerInputs.isSkillAttacking) return;
-
-        // 방어 중인 경우 이동 속도 감소
-        if (isBlocking)
-        {
-            newSpeed *= blockingSpeedMultiplier;
-            playerInputs.isSprinting = false; // 방어 중에는 달리기 불가능
-        }
+        if ((animationEvent.IsAttacking() && !playerInputs.isDodging)) {  return; }        
 
         if (playerInputs.isWalking)
         {
             newSpeed = playerStats.walkSpeed;
         }
-
         float speed = (playerInputs.isSprinting && !isBlocking) ? playerStats.sprintSpeed : newSpeed; // 방어 중이면 스프린트 불가
+        
+
         Vector3 moveDirection = CalculateMoveDirection();
 
         if (!lockOnSystem.isLockOn)
@@ -123,6 +116,7 @@ public class PlayerMovement : MonoBehaviour
     // 캐릭터 이동 함수
     void MoveCharacter(Vector3 direction, float speed)
     {
+        if (speed <= 0) { return;}
         characterController.Move(direction * Time.deltaTime * playerStats.playerSpeed * speed);
     }
 

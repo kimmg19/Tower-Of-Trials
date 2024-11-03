@@ -121,7 +121,7 @@ public class PlayerInputs : MonoBehaviour
     private void OnMove(InputValue value)
     {
         if (isInteracting) return;
-
+        
         moveInput = value.Get<Vector2>();
 
         // 이동 입력이 0이면 스프린트 중지
@@ -133,7 +133,6 @@ public class PlayerInputs : MonoBehaviour
 
     private void OnSprint(InputValue value)
     {
-        // 방어 중에는 스프린트가 불가능하도록 처리
         if (canBlocking || playerStats.currentStamina < sprintStamina) return;
 
         isSprinting = value.isPressed;
@@ -326,6 +325,7 @@ public class PlayerInputs : MonoBehaviour
             {
                 AudioManager.instance.Play("BuffSkill");
                 animator.SetTrigger("BuffSkill");
+
                 playerStatus.UseMp(buffSkillMp);
                 StartCoroutine(ActivateBuffSkill());
             } 
