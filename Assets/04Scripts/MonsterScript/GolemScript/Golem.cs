@@ -18,7 +18,7 @@ public class Golem : BaseEnemy
     protected override void InitializeStats()
     {
         HP = 1000;
-        damageAmount = 30;
+        damageAmount = 15;
     }
 
     protected override void Die()

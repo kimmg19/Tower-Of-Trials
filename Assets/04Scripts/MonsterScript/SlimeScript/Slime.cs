@@ -13,7 +13,7 @@ public class Slime : BaseEnemy
     protected override void InitializeStats()
     {
         HP = 100; // 슬라임의 체력 설정
-        damageAmount = 10; // 슬라임의 공격력 설정
+        damageAmount = 5; // 슬라임의 공격력 설정
     }
 
     // 슬라임만의 고유한 죽음 로직

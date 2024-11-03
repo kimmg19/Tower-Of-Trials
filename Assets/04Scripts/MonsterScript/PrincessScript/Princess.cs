@@ -12,7 +12,7 @@ public class Princess : BaseEnemy
     protected override void InitializeStats()
     {
         HP = 3000;
-        damageAmount = 2;
+        damageAmount = 20;
     }
 
     protected override void Update()
